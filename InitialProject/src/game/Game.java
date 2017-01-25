@@ -1,12 +1,13 @@
 package game;
 
 import display.Display;
+import gfx.Assets;
 import gfx.SpriteSheet;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class Game implements Runnable{
+public class Game implements Runnable {
     private String title;
 
     private Display display;
@@ -19,8 +20,6 @@ public class Game implements Runnable{
     private boolean isRunning;
 
     //Testing
-    private int width = 95;
-    private int height = 130;
     private int i = 0;
 
 
@@ -29,16 +28,16 @@ public class Game implements Runnable{
     }
 
     private void init() {
-        this.display = new Display(this.title);
+        Assets.init();
 
-        this.sh = new SpriteSheet("/textures/player.png");
+        this.display = new Display(this.title);
+        this.sh = new SpriteSheet(Assets.player, 95, 130);
+      //  SpriteSheet background = new SpriteSheet(Assets.background, 800, 600);
     }
 
     private void tick() {
         i++;
-        if (i >= 7) {
-            i = 0;
-        }
+        if (i >= 7) i = 0;
 
     }
 
@@ -57,8 +56,7 @@ public class Game implements Runnable{
         //Start drawing
 
 
-
-            g.drawImage(this.sh.crop(i * width, 0 * height, width, height), 0, 0, null);
+        g.drawImage(this.sh.crop(0, i), 100, 100, null);
 
 
         //END drawing
@@ -71,15 +69,29 @@ public class Game implements Runnable{
     public void run() {
         this.init();
 
+        int fps = 14;
+        double timePerTick = 1_000_000_000.0 / fps;
+        double delta = 0;
+        //The current time in nanoseconds
+        long now;
+        long lastTime = System.nanoTime();
+
         while (isRunning) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            //Sets the variable to the current time in nanoseconds
+            now = System.nanoTime();
+
+            delta += (now - lastTime) / timePerTick;
+            lastTime = now;
+
+            if (delta >= 1) {
+                //If we don't want to lower the framerate take the this.tick() outside the while loop.
+                this.tick();
+                this.render();
+                delta--;
+
             }
 
-            this.tick();
-           this.render();
+
         }
 
         this.stop();
