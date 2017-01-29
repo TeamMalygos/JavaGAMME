@@ -6,7 +6,7 @@ import gfx.SpriteSheet;
 
 import java.awt.*;
 
-public class Player {
+public class Player extends Unit{
     // Seriously???
     private final int CHUCK_NORRIS = Integer.MAX_VALUE;
 
@@ -36,6 +36,7 @@ public class Player {
         this.col = 0;
     }
 
+    @Override
     public void tick() {
         if (isMovingRight) {
             col++;
@@ -49,6 +50,7 @@ public class Player {
             }
         }
 
+        //Isn't this supposed to be below the lower if() ???
         this.boundingBox.setBounds(this.x, this.y, this.width, this.height);
 
         if (isMovingRight) {
@@ -58,6 +60,7 @@ public class Player {
         }
     }
 
+    @Override
     public void render(Graphics g) {
         if (isMovingLeft || isMovingRight) {
             g.drawImage(this.playerImage.crop(0, col), this.x, this.y, null);
