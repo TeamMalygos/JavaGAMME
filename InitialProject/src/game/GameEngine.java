@@ -10,7 +10,7 @@ import states.StateManager;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class GameEngine extends Canvas implements Runnable {
+public class GameEngine implements Runnable {
     private String title;
 
     private Display display;
