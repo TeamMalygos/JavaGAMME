@@ -2,7 +2,11 @@ package display;
 
 
 import javax.swing.*;
+
+import events.MenuMouseClickEventListener;
+
 import java.awt.*;
+import java.awt.event.MouseListener;
 
 public class Display {
 
@@ -38,7 +42,9 @@ public class Display {
         this.canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.canvas.setMaximumSize(new Dimension(WIDTH, HEIGHT));
         this.canvas.setVisible(true);
-
+        
+        this.canvas.addMouseListener(new MenuMouseClickEventListener());
+        
         this.frame.add(canvas);
         this.frame.pack();
     }

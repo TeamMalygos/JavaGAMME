@@ -10,6 +10,6 @@ package events;
  */
 public interface MenuButtonClickListener {
 
-	public void onMenuButtonClick(MenuButtonClickEvent event);
+	public void onMenuButtonClick();
 	
 }

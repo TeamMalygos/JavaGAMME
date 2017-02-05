@@ -9,11 +9,14 @@ import java.awt.*;
 
 public class GameState extends State {
     private static final int GRAVITY = 2;
+    private final static int ID = 2;
+    
     public static Player player;
     public static EnemyShootingUnit firstEnemyShootingUnit;
     public static EnemyMeleeUnit firstMeleeEnemy;
 
     public GameState() {
+    	super(ID);
         init();
         
         player = new Player("Nakovkata", 95, 130, 100, 400);

@@ -2,16 +2,22 @@ package components;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import events.MenuButtonClickEvent;
 import events.MenuButtonClickListener;
+import states.GameState;
+import states.State;
 
 public class Button extends MenuComponent implements MenuButtonClickListener{
 	
 	private Color color;
+	private Rectangle areaRect;
+	private State stateInit;
 	
 	public Button(int x,int y,String name){
 		super(x,y,name);
+		areaRect = new Rectangle(x,y,0,0);
 	}
 	
 	public void setColor(Color color){
@@ -20,6 +26,15 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	
 	public void setSize(int w,int h){
 		super.setSize(w, h);
+		areaRect = new Rectangle(super.xAxisPosition,super.yAxisPosition,w,h);
+	}
+	
+	public Rectangle getArea(){
+		return areaRect;
+	}
+	
+	public void linkToState(State state){
+		stateInit = state;
 	}
 	
 	@Override
@@ -36,9 +51,11 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	}
 
 	@Override
-	public void onMenuButtonClick(MenuButtonClickEvent event) {
+	public void onMenuButtonClick() {
 		// TODO Auto-generated method stub
-		
+		if(stateInit != null){
+			MenuButtonClickEvent e = new MenuButtonClickEvent(this,stateInit);
+		}
 	}
-	
+
 }
