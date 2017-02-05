@@ -15,7 +15,7 @@ public class GameState extends State {
 
     public GameState() {
         init();
-
+        
         player = new Player("Nakovkata", 95, 130, 100, 400);
         firstEnemyShootingUnit = new EnemyShootingUnit("NekvaPachaSLesenSpriteSheet", 60, 60, 650, 450, 150, 50, 250);
         firstMeleeEnemy = new EnemyMeleeUnit("Melee", 100, 134, 450, 400, 5, 35, 700);
