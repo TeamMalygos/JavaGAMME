@@ -2,9 +2,10 @@ package map;
 
 import java.awt.image.*;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
-import javax.imageio.ImageIO;
+import java.io.InputStreamReader;
+
+import gfx.Assets;
 
 import java.awt.*;
 
@@ -26,8 +27,9 @@ public class TileMap {
 	public TileMap(String s,int tileSize,int tileHeight){
 		
 		try {
-
-			BufferedReader br = new BufferedReader(new FileReader(s));
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					TileMap.class.getResourceAsStream(s)));
 
 			mapWidth = Integer.parseInt(br.readLine());
 			mapHeight = Integer.parseInt(br.readLine());
@@ -56,7 +58,7 @@ public class TileMap {
 		
 		try {
 			
-			tileSet = ImageIO.read(new File(s));
+			tileSet = Assets.tileSheet;
 			int numTilesAcross = tileSet.getWidth() / tileSize;
 			int numTileRows = tileSet.getHeight() / tileHeight;
 			System.out.println(numTileRows);
@@ -102,7 +104,7 @@ public class TileMap {
 		
 	}
 	
-	public void draw(Graphics2D g){
+	public void draw(Graphics g){
 		
 		for(int row = 0 ; row < map.length; row++){
 			

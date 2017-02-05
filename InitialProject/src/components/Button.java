@@ -46,8 +46,9 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	public void render(Graphics g){
 		
 		g.setColor(color);
-		g.drawRect(super.xAxisPosition,super.yAxisPosition,width,height);
-		
+		g.fillRect(super.xAxisPosition,super.yAxisPosition,width,height);
+		g.setColor(Color.BLACK);
+		g.drawString(super.name, super.xAxisPosition + width/2, super.yAxisPosition + height/2);
 	}
 
 	@Override
@@ -57,5 +58,6 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 			MenuButtonClickEvent e = new MenuButtonClickEvent(this,stateInit);
 		}
 	}
+	
 
 }

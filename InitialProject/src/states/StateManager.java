@@ -9,6 +9,6 @@ public class StateManager {
     }
 
     public static void setCurrentState(State newState) {
-        currentState = newState;
+    	currentState = newState;
     }
 }

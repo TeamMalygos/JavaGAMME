@@ -5,6 +5,7 @@ import gfx.Assets;
 import gfx.SpriteSheet;
 import states.GameState;
 import states.MenuState;
+import states.State;
 import states.StateManager;
 
 import java.awt.*;
@@ -20,8 +21,7 @@ public class GameEngine implements Runnable {
     private Thread thread;
     private boolean isRunning;
 
-    private GameState gameState;
-    private MenuState menuState;
+    private State state;
 
     private InputHandler inputHandler;
 
@@ -33,12 +33,10 @@ public class GameEngine implements Runnable {
     private void init() {
 
         this.display = new Display(this.title);
-
-        gameState = new GameState();
-        menuState = new MenuState();
+        state = new MenuState();
 
         this.inputHandler = new InputHandler(this.display);
-        StateManager.setCurrentState(gameState);
+        StateManager.setCurrentState(state);
 
     }
 
