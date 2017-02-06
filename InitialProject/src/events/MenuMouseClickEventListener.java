@@ -1,12 +1,8 @@
 package events;
 
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import com.sun.glass.ui.Menu;
-
-import components.Button;
 import states.MenuState;
 import states.StateManager;
 

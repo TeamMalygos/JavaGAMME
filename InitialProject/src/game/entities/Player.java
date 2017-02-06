@@ -18,10 +18,11 @@ public class Player extends Unit{
 
     private SpriteSheet playerImage;
     private Rectangle boundingBox;
-
+    
     private int col;
 
     public Player(String name, int width, int height, int x, int y) {
+    
         this.name = name;
         this.width = width;
         this.height = height;
@@ -34,6 +35,7 @@ public class Player extends Unit{
         this.boundingBox = new Rectangle(x, y, width, height);
         this.playerImage = new SpriteSheet(Assets.player, width, height);
         this.col = 0;
+        
     }
 
     @Override
@@ -109,4 +111,5 @@ public class Player extends Unit{
     public void setHealth(int health) {
         this.health = health;
     }
+    
 }

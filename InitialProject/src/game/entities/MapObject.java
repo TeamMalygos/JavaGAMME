@@ -19,7 +19,7 @@ import utils.PVector;
  *
  */
 public abstract class MapObject {
-
+	
 	protected TileMap tileMap;
 	protected int tileSize;
 	
@@ -36,6 +36,15 @@ public abstract class MapObject {
 		tileSize = map.getTileSize();
 	}
 	
+	/**
+	 * 
+	 * This method return a boolean indicating
+	 * weather this object is in collision with
+	 * the argument.
+	 * 
+	 * @param MapObject o1
+	 * @return boolean isInCollisionWith
+	 */
 	protected boolean intersectsWith(MapObject o){
 		return this.getObjectRectangle().intersects(o.getObjectRectangle());
 	}

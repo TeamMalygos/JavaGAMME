@@ -20,5 +20,11 @@ public class MovementAttributes {
 	//Maximum falling speed*
 	private double terminalVelocity;
 	
+	//The reason for the two attributes is:
+	//When you hold the up arrow for longer you will jump higher.
+	//Eventually reaching the highest possible point
+	private double jumpStart;
+	private double stopJump;
+	
 	
 }

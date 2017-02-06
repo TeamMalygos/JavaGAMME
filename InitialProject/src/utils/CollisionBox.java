@@ -65,5 +65,7 @@ public class CollisionBox {
 		this.collidesTopRight = topRight;
 	}
 	
+	public int getCollisionWidth(){	return this.colisionWidth;}
+	public int getCollisionHeight(){return this.colisionHeight;}
 	
 }

@@ -63,6 +63,7 @@ public class Menu{
 	
 	
 	public void onMenuItemClick(MouseEvent args){
+		
 		if(isInside(start,args.getX(),args.getY())){
 			start.onMenuButtonClick();
 		}
@@ -70,6 +71,7 @@ public class Menu{
 		if(isInside(exit,args.getX(),args.getY())){
 			System.exit(1);
 		}
+		
 	}
 	
 	private boolean isInside(Button button, int mouseX,int mouseY){
