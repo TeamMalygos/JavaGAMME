@@ -1,4 +1,11 @@
+<<<<<<< HEAD
+=======
+/components/
+>>>>>>> fc5a84d8205c1c6870537be2f5ab855f97c33e07
 /states/
 /map/
 /utils/
 /game/
+/events/
+/gfx/
+/display/

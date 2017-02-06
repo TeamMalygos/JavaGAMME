@@ -4,6 +4,7 @@ import java.awt.*;
 
 public class MenuState extends State{
  
+
 	private Menu startMenu;
 	private final static int STATE_ID = 1;
 	
@@ -11,7 +12,7 @@ public class MenuState extends State{
 		super(STATE_ID);
     	startMenu = new Menu();
     	startMenu.init();
-    }
+	}
 
 	public Menu getMenu(){
 		return startMenu;
@@ -19,7 +20,7 @@ public class MenuState extends State{
 	
     @Override
     public void tick() {
-    	startMenu.tick();
+     startMenu.tick();
     }
 
     @Override
@@ -27,3 +28,5 @@ public class MenuState extends State{
     	startMenu.render(g);
     }
 }
+
+
