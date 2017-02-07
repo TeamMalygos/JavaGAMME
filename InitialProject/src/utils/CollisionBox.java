@@ -5,9 +5,6 @@ public class CollisionBox {
 	private int colisionWidth;
 	private int colisionHeight;
 	
-	private double destX;
-	private double destY;
-	
 	private boolean collidesTopLeft;
 	private boolean collidesTopRight;
 	private boolean collidesBottomLeft;
@@ -32,23 +29,6 @@ public class CollisionBox {
 	
 	/**
 	 * 
-	 * <p>This method will prepare the class for collision detection</p>
-	 * @param PVector currentObjectPositionOnTheMap
-	 * @param double increaseInXAxis
-	 * @param double increaseInYAxis 
-	 * 
-	 */
-	public void detectColision(PVector currentPosition
-			, double destinationX, double destinationY){
-		
-		destX = destinationX;
-		destY = destinationY;
-		this.currentPosition = currentPosition;
-		
-	}
-	
-	/**
-	 * 
 	 * <p>setCollisionBoundaries sets the four angles of collision<p>
 	 * @param topLeft
 	 * @param topRight
@@ -65,5 +45,9 @@ public class CollisionBox {
 		this.collidesTopRight = topRight;
 	}
 	
+	//Getters
+	public int getCollisionWidth(){	return this.colisionWidth;}
+	public int getCollisionHeight(){return this.colisionHeight;}
+
 	
 }

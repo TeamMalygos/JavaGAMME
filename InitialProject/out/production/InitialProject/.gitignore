@@ -1,4 +1,10 @@
+/components/
 /display/
+/events/
 /game/
 /gfx/
+/map/
 /states/
+/utils/
+/textures/
+/providable/

@@ -3,11 +3,11 @@ package game.entities;
 import java.awt.Rectangle;
 
 import map.TileMap;
-import utils.Animation;
 import utils.CollisionBox;
 import utils.MovementAttributes;
 import utils.MovementState;
 import utils.PVector;
+import utils.Animation;
 
 /**
  * 
@@ -22,6 +22,10 @@ public abstract class MapObject {
 
 	protected TileMap tileMap;
 	protected int tileSize;
+	
+	protected int width;
+	protected int height;
+	protected boolean facingRight;
 	
 	protected PVector position;
 	

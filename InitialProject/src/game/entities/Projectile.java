@@ -26,7 +26,7 @@ public class Projectile implements Shootable{
         this.velocityX = this.velocityY = 10;
 
         this.boundingBox = new Rectangle(x, y, width, height);
-        this.projectileImage = new SpriteSheet(Assets.projectile, width, height);
+       // this.projectileImage = new SpriteSheet(Assets.projectile, width, height);
 
         this.enemyShootingUnit = enemyShootingUnit;
 
@@ -61,7 +61,7 @@ public class Projectile implements Shootable{
     @Override
     public void render(Graphics graphics) {
 
-        graphics.drawImage(this.projectileImage.crop(8, 5), this.x, this.y, null);
+        //graphics.drawImage(this.projectileImage.crop(8, 5), this.x, this.y, null);
 
     }
 

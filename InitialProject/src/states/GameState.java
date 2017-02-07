@@ -29,7 +29,7 @@ public class GameState extends State {
       
         map = new TileMap("/map1", 64, 64);
         map.loadTiles("/textures/Sheet.png");
-        player = new Player("Nakovkata", 95, 130, 100, 400);
+        player = new Player("Nakovkata",map);
         firstEnemyShootingUnit = new EnemyShootingUnit("NekvaPachaSLesenSpriteSheet", 60, 60, 650, 450, 150, 50, 250);
         firstMeleeEnemy = new EnemyMeleeUnit("Melee", 100, 134, 450, 400, 5, 35, 700);
         
@@ -43,7 +43,7 @@ public class GameState extends State {
     		isRunning = true;
     	}
     	map.update();
-        player.tick();
+        //player.tick();
         firstEnemyShootingUnit.tick();
         firstMeleeEnemy.tick();
     }
@@ -51,7 +51,7 @@ public class GameState extends State {
     @Override
     public void render(Graphics g) {
     	map.draw(g);
-        player.render(g);
+        //player.render(g);
         firstEnemyShootingUnit.render(g);
         firstMeleeEnemy.render(g);
     }

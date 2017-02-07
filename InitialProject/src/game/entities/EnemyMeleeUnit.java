@@ -7,7 +7,7 @@ import states.GameState;
 
 import java.awt.*;
 
-public class EnemyMeleeUnit extends Unit {
+public class EnemyMeleeUnit implements UnitDrawable {
 
     private String name;
     private int width, height, x, y, velocityX, velocityY, health, initialX, sightRange, weaponRange, damage;
@@ -32,7 +32,7 @@ public class EnemyMeleeUnit extends Unit {
         this.health = health;
 
         this.boundingBox = new Rectangle(x, y, width, height);
-        this.enemyMeleeImage = new SpriteSheet(Assets.enemyMeleeUnit, width, height);
+       // this.enemyMeleeImage = new SpriteSheet(Assets.enemyMeleeUnit, width, height);
         this.colAttack = 9;
         this.colForward = 0;
         this.colBackwards = 0;
@@ -102,21 +102,21 @@ public class EnemyMeleeUnit extends Unit {
         Player currentPlayer = GameState.getPlayer();
 
         // Check whether player is within attack range and if yes - render attack graphics
-        if (isPlayerInAttackRange(currentPlayer)) {
-            graphics.drawImage(this.enemyMeleeImage.crop(2, colAttack), this.x, this.y, null);
+        //if (isPlayerInAttackRange(currentPlayer)) {
+        //    graphics.drawImage(this.enemyMeleeImage.crop(2, colAttack), this.x, this.y, null);
 
             // Check if player is in range and move FAST towards him.
-        } else if (isPlayerInSightRange(currentPlayer) && this.x >= this.initialX - this.sightRange) {
-            graphics.drawImage(this.enemyMeleeImage.crop(0, colForward), this.x, this.y, null);
+        //} else if (isPlayerInSightRange(currentPlayer) && this.x >= this.initialX - this.sightRange) {
+         //   graphics.drawImage(this.enemyMeleeImage.crop(0, colForward), this.x, this.y, null);
 
             // If neither - return slowly to initial position.
-        } else if (this.x < this.initialX) {
-            graphics.drawImage(this.enemyMeleeImage.crop(0, colBackwards), this.x, this.y, null);
+        //} else if (this.x < this.initialX) {
+         //   graphics.drawImage(this.enemyMeleeImage.crop(0, colBackwards), this.x, this.y, null);
 
             // If at initial position - render static graphics
-        } else {
-            graphics.drawImage(this.enemyMeleeImage.crop(0, 2), this.x, this.y, null);
-        }
+       // } else {
+       //     graphics.drawImage(this.enemyMeleeImage.crop(0, 2), this.x, this.y, null);
+       // }
 
     }
 

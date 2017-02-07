@@ -3,110 +3,143 @@ package game.entities;
 
 import gfx.Assets;
 import gfx.SpriteSheet;
+import map.TileMap;
+import providable.StateProvidable;
+import utils.Animation;
+import utils.CollisionBox;
+import utils.MovementAttributes;
+import utils.MovementState;
+import utils.PVector;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
-public class Player extends Unit{
+public class Player extends MapObject implements UnitDrawable,StateProvidable{
     // Seriously???
     private final int CHUCK_NORRIS = Integer.MAX_VALUE;
 
     private String name;
-    private int width, height, x, y, velocityX, velocityY, health;
+    private int health;
+    //private int width, height, x, y, velocityX, velocityY, health;
+    
+    private boolean isDead;
+    
+    //Animation frames - Containers and helpful prereqs
+    SpriteSheet sprite;
+    private final int[] numFrames = {
+    		0 , 0 , 0 , 0
+    };
 
-    public static boolean isMovingLeft;
-    public static boolean isMovingRight;
+    //States
+    private static final int IDLE = 0;
+    private static final int WALKING = 1;
+    private static final int JUMPING = 2;
+    private static final int FALLING = 3;
 
-    private SpriteSheet playerImage;
-    private Rectangle boundingBox;
-
-    private int col;
-
-    public Player(String name, int width, int height, int x, int y) {
+    public Player(String name,TileMap map) {
+    	super(map);
         this.name = name;
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
-        this.velocityX = this.velocityY = 4;
+        
+        super.cBox = new CollisionBox(20,20);
+        super.objectMovementAttr = new MovementAttributes();
+        
+        super.objectMovementAttr.setGravity(0.21875, 4.0);
+        super.objectMovementAttr.setJumpRate(-6.5, 0.3);
+        super.objectMovementAttr.setMovementRate(0.046875, 1.6, 0.5);
+        super.facingRight = true;
+        
+        super.position = new PVector();
+        super.position.setPositionX(2);
+        super.position.setPositionY(5);
+        
+        
+        
+        loadSprites();
         // Well...we are talking about nakovkata so...
         this.health = 500;
-
-        this.boundingBox = new Rectangle(x, y, width, height);
-        this.playerImage = new SpriteSheet(Assets.player, width, height);
-        this.col = 0;
+        super.movementState = new MovementState();
+        //this.boundingBox = new Rectangle(x, y, width, height);
+        
     }
-
+    
+    public void loadSprites(){
+    	
+    	sprite = new SpriteSheet(Assets.nakov_sheet,32,32);
+    	sprite.setFrameLayersCount(numFrames);
+    	super.animation = new Animation();
+    	
+    }
+    
+    private void getNextPosition(){
+    	super.position.getNewPosition(super.movementState
+    			, super.objectMovementAttr);
+    }
+    
     @Override
     public void tick() {
-        if (isMovingRight) {
-            col++;
-            if (col >= 7) {
-                col = 0;
-            }
-        } else if (isMovingLeft) {
-            col--;
-            if (col < 0) {
-                col = 6;
-            }
-        }
+        
 
         //Isn't this supposed to be below the lower if() ???
-        this.boundingBox.setBounds(this.x, this.y, this.width, this.height);
 
-        if (isMovingRight) {
-            this.x += this.velocityX;
-        } else if (isMovingLeft) {
-            this.x -= this.velocityX;
-        }
+        //if (isMovingRight) {
+         //   this.x += this.velocityX;
+       // } else if (isMovingLeft) {
+         //   this.x -= this.velocityX;
+        //}
     }
 
+    
+    
     @Override
     public void render(Graphics g) {
-        if (isMovingLeft || isMovingRight) {
-            g.drawImage(this.playerImage.crop(0, col), this.x, this.y, null);
-        } else {
-            g.drawImage(this.playerImage.crop(0, 0), this.x, this.y, null);
-        }
+        
+    	getNextPosition();
+    	
     }
 
-    public boolean intersects(Rectangle enemy) {
-        if (this.boundingBox.contains(enemy.x, enemy.y) ||
-            enemy.contains(this.boundingBox.x, this.boundingBox.y)) {
-            return true;
-        }
-
-        return false;
+    public boolean intersects(MapObject object) {
+        return super.intersectsWith(object);
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
+    public double getX() {return super.position.getPositionX();}
+    public void setX(int x) {super.position.setPositionX(x);}
+    public double getY() {return super.position.getPositionY();}
+    public void setY(int y) {super.position.setPositionY(y);}
     public Rectangle getBoundingBox() {
-        return boundingBox;
+        return new Rectangle(
+        		(int)super.position.getPositionX(),
+        		(int)super.position.getPositionY(),
+        		super.cBox.getCollisionWidth(),
+        		super.cBox.getCollisionHeight());
     }
+    public int getHealth() {return health;}
+    public void setHealth(int health) {this.health = health;}
+	@Override
+	public boolean isMovingLeft() {return super.movementState.isGoingLeft();}
+	@Override
+	public boolean isMovingRight() {return super.movementState.isGoingRight();}
+	@Override
+	public boolean isMovingUp() {return super.movementState.isGoingUp();}
+	@Override
+	public boolean isMovingFalling() {return super.movementState.isFalling();}
+	@Override
+	public boolean isJumping() {return super.movementState.isJumping();}
+	@Override
+	public boolean isGoingDown() {return super.movementState.isGoingDown();}
 
-    public void setBoundingBox(Rectangle boundingBox) {
-        this.boundingBox = boundingBox;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
+	//Setters for movement state
+	@Override
+	public void setLeft(boolean left) {super.movementState.setLeft(left);}
+	@Override
+	public void setRight(boolean right) {super.movementState.setRight(right);}
+	@Override
+	public void setDown(boolean down) {super.movementState.setDown(down);}
+	@Override
+	public void setUp(boolean up) {super.movementState.setUp(up);}
+	@Override
+	public void setJumping(boolean jump) {super.movementState.setJump(jump);}
+	@Override
+	public void setFalling(boolean fall) {super.movementState.setFalling(fall);}
+	
 }

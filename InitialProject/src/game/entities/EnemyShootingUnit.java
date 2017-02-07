@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class EnemyShootingUnit extends Unit {
+public class EnemyShootingUnit implements UnitDrawable {
 
     private String name;
     private int width, height, x, y, velocityX, velocityY, health, initialX, movementRange, shootingRange, damage;
@@ -38,7 +38,7 @@ public class EnemyShootingUnit extends Unit {
         this.health = health;
 
         this.boundingBox = new Rectangle(x, y, width, height);
-        this.enemyImage = new SpriteSheet(Assets.enemy, width, height);
+        //this.enemyImage = new SpriteSheet(Assets.enemy, width, height);
         this.col = 0;
 
         this.direction = "left";
@@ -97,15 +97,15 @@ public class EnemyShootingUnit extends Unit {
     public void render(Graphics graphics) {
 
         // See if player is in range. If yes - render static graphics.
-        if (isPlayerInRange(GameState.getPlayer())) {
-            graphics.drawImage(this.enemyImage.crop(1, 3), this.x, this.y, null);
-        } else {
-            if (direction.equals("left")) {
-                graphics.drawImage(this.enemyImage.crop(1, col), this.x, this.y, null);
-            } else {
-                graphics.drawImage(this.enemyImage.crop(2, col), this.x, this.y, null);
-            }
-        }
+        //if (isPlayerInRange(GameState.getPlayer())) {
+            //graphics.drawImage(this.enemyImage.crop(1, 3), this.x, this.y, null);
+        //} else {
+           // if (direction.equals("left")) {
+            //    graphics.drawImage(this.enemyImage.crop(1, col), this.x, this.y, null);
+            //} else {
+       //         graphics.drawImage(this.enemyImage.crop(2, col), this.x, this.y, null);
+            //}
+     //   }
 
         // If there are any projectiles fired call their render().
         for (Projectile projectile : projectiles) {

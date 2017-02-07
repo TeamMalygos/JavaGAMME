@@ -5,6 +5,9 @@ public class PVector {
 	private double x;
 	private double y;
 	
+	private double destX;
+	private double destY;
+	
 	/**
 	 * <p>Position vector constructor - initializes the position to 0/0</p> 
 	 */
@@ -24,20 +27,66 @@ public class PVector {
 		this.y = y;
 	}
 	
-	public void setPositionX(double x){
-		this.x = x;
+	public void getNewPosition(MovementState movementState
+			,MovementAttributes objectMovementAttr){
+	double newDestX = 0d;
+	if(movementState.isGoingLeft()){
+		newDestX = this.destX - 
+				objectMovementAttr.getUnitAcceleration();
+		
+		if(newDestX > -objectMovementAttr.getUnitMaximumSpeed()){
+			newDestX = -objectMovementAttr.getUnitMaximumSpeed();
+		}
+		
+		this.destX = newDestX;
+		
+	}else if(movementState.isGoingRight()){
+		
+		newDestX = this.destX 
+				+ objectMovementAttr.getUnitAcceleration();
+		
+		if(newDestX > objectMovementAttr.getUnitMaximumSpeed()){
+			newDestX = objectMovementAttr.getUnitMaximumSpeed();
+		}
+		this.destX = newDestX;
+		//Else if we are not moving left or right
+	}else {
+		if(this.destX > 0){
+		
+			newDestX = this.destX
+					- objectMovementAttr.getUnitAcceleration();
+			if(newDestX < 0){
+				newDestX = 0;
+			}
+			
+		}else if(this.destX < 0){
+			
+			newDestX = this.destX 
+					+ objectMovementAttr.getUnitAcceleration();
+			if(newDestX > 0){
+				newDestX = 0;
+			}
+			
+		}
+		this.destX = newDestX;
 	}
 	
-	public void setPositionY(double y){
-		this.y = y;
+	//TODO: Make it so that player can't attack while moving
+}
+	
+	//Setters
+	public void setPositionX(double x){this.x = x;}
+	public void setPositionY(double y){this.y = y;}
+	public void setDestinationX(double x){this.destX = x;}
+	public void setDestinationY(double y){this.destY = y;}
+	public void setDestinationXY(double x,double y){
+		this.destX = x;
+		this.destY = y;
 	}
 	
-	public double getPositionX(){
-		return x;
-	}
-	
-	public double getPositionY(){
-		return y;
-	}
+	public double getPositionX(){return x;}
+	public double getPositionY(){return y;}
+	public double getDestinationX() { return this.destX;}
+	public double getDestinationY(){ return this.destY;}
 	
 }
