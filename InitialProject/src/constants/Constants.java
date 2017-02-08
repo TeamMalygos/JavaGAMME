@@ -13,6 +13,7 @@ public class Constants {
     public static final int INITIAL_PLAYER_LEVEL = 1;
     public static final int INITIAL_PLAYER_EXPERIENCE = 1;
     public static final int INITIAL_LEVEL_TOTAL_EXPERIENCE = 200;
+    public static final int REGENERATION_TIME = 100;
 
     // Player level up values
     public static final double TOTAL_LEVEL_EXPERIENCE_INCREMENT_RATE = 2;

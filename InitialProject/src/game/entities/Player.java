@@ -101,8 +101,7 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
 
     public void takeDamage(double damage) {
 
-        this.getPlayerStats().setCurrentHealth(
-                this.getPlayerStats().getCurrentHealth() - (damage - this.getPlayerStats().getArmor() * DAMAGE_REDUCE_RATE));
+        this.playerStats.takeDamage(damage);
 
     }
 

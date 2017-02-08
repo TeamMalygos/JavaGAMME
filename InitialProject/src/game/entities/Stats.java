@@ -54,7 +54,7 @@ public class Stats {
 
         regenerationTimer++;
 
-        if (regenerationTimer >= 100) {
+        if (regenerationTimer >= REGENERATION_TIME) {
             regenerateHealth();
             regenerateMana();
 
@@ -84,7 +84,6 @@ public class Stats {
         this.currentMana += (this.currentMana * this.manaRegenerationRate);
     }
 
-    // This is alternative version of the Player.takeDamage() method. We will have to choose which one to leave!
     public void takeDamage(double damage) {
         this.currentHealth -= (damage - this.armor * DAMAGE_REDUCE_RATE);
     }
