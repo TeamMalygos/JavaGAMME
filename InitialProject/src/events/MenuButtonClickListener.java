@@ -11,5 +11,7 @@ package events;
 public interface MenuButtonClickListener {
 
 	public void onMenuButtonClick();
+	public void onMenuButtonRelease();
+	public void onMenuButtonHover();
 	
 }

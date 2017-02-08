@@ -12,11 +12,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import components.Button;
-import sun.audio.AudioData;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
-
+import gfx.Assets;
 
 public class Menu{
 	
@@ -31,19 +27,13 @@ public class Menu{
 	public void init(){
 		
 		start = new Button(300,250,"Start");
-		start.setColor(Color.ORANGE);
-		start.setSize(200,25);
+		start.setFrames(Assets.playButton);
 		start.linkToState(new GameState());
-		
 		load = new Button(300,282,"Load");
-		load.setColor(Color.ORANGE);
-		load.setSize(200, 25);
-		
+	
 		exit = new Button(300,314,"Exit");
-		exit.setColor(Color.ORANGE);
-		exit.setSize(200, 25);
-		
-		initMusic();
+		exit.setFrames(Assets.quitButton);
+		initMusic();		
 		
 	}
 	
@@ -65,11 +55,49 @@ public class Menu{
 	public void onMenuItemClick(MouseEvent args){
 		if(isInside(start,args.getX(),args.getY())){
 			start.onMenuButtonClick();
+		}else {
+			start.setPressed(false);
 		}
 		
 		if(isInside(exit,args.getX(),args.getY())){
-			System.exit(1);
+			exit.onMenuButtonClick();
+		}else {
+			exit.setPressed(false);
 		}
+	}
+	
+	public void onMenuItemHover(MouseEvent args){
+		
+		if(isInside(start,args.getX(),args.getY())){
+			start.onMenuButtonHover();
+		}else {
+			start.setHover(false);
+		}
+		if(isInside(exit,args.getX(),args.getY())){
+			exit.onMenuButtonHover();
+		}else {
+			exit.setHover(false);
+		}
+		
+	}
+	
+	public void onMenuItemRelease(MouseEvent args){
+		
+		if(isInside(start,args.getX(),args.getY())){
+			start.onMenuButtonRelease();
+			player.stop();
+		}else {
+			start.setHover(false);
+			start.setPressed(false);
+		}
+		if(isInside(exit,args.getX(),args.getY())){
+			System.exit(0);
+		}else {
+			exit.setHover(false);
+			exit.setPressed(false);
+			
+		}
+		
 	}
 	
 	private boolean isInside(Button button, int mouseX,int mouseY){
@@ -77,7 +105,6 @@ public class Menu{
 		Rectangle rect = button.getArea();
 		if(mouseX >= rect.getMinX() && mouseY >= rect.getMinY()
 				&& mouseX <= rect.getMaxX() && mouseY <= rect.getMaxY()){
-			player.stop();
 			return true;
 		}
 		
@@ -85,7 +112,8 @@ public class Menu{
 	}
 	
 	public void tick(){
-
+		start.tick();
+		exit.tick();
 	}
 	
 	public void render(Graphics g){
@@ -93,6 +121,5 @@ public class Menu{
 		load.render(g);
 		exit.render(g);
 	}
-	
 	
 }

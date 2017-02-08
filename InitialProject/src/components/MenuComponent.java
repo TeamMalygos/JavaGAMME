@@ -1,9 +1,14 @@
 package components;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 public abstract class MenuComponent {
 
+	protected BufferedImage frames;
+	protected BufferedImage currentFrame;
+	protected boolean isPressed;
+	protected boolean hover;
 	protected int xAxisPosition;
 	protected int yAxisPosition;
 	protected int width;
@@ -16,6 +21,8 @@ public abstract class MenuComponent {
 		width = 0;
 		height = 0;
 		this.name = name;
+		isPressed = false;
+		hover = false;
 	}
 	
 	protected abstract void render(Graphics g);

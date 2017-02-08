@@ -27,7 +27,7 @@ public class GameState extends State {
     private void init() {
         Assets.init();
       
-        map = new TileMap("/map1", 64, 64);
+        map = new TileMap("/map1", 32, 32);
         map.loadTiles("/textures/Sheet.png");
         player = new Player("Nakovkata",map);
         firstEnemyShootingUnit = new EnemyShootingUnit("NekvaPachaSLesenSpriteSheet", 60, 60, 650, 450, 150, 50, 250);

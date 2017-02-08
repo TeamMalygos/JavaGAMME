@@ -24,9 +24,7 @@ public class InputHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
     
-    	if(StateManager.getCurrentState().getID() != 2){
-    		return;
-    	}
+    	if(!isGameState()){return;}
     	
     	state = (GameState) StateManager.getCurrentState();
     	
@@ -41,6 +39,7 @@ public class InputHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
     	
+    	if(!isGameState()){return;}
     	state = (GameState) StateManager.getCurrentState();
     	
         int keyCode = e.getKeyCode();
@@ -50,5 +49,9 @@ public class InputHandler implements KeyListener {
         if(keyCode == KeyEvent.VK_DOWN){state.player.setDown(false);}
         if(keyCode == KeyEvent.VK_SPACE){state.player.setJumping(false);}
       
+    }
+    
+    private boolean isGameState(){
+    	return StateManager.getCurrentState().getID() == 2;
     }
 }

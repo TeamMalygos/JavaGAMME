@@ -4,6 +4,7 @@ package display;
 import javax.swing.*;
 
 import events.MenuMouseClickEventListener;
+import events.MenuMouseMotionListener;
 
 import java.awt.*;
 import java.awt.event.MouseListener;
@@ -44,6 +45,7 @@ public class Display {
         this.canvas.setVisible(true);
         
         this.canvas.addMouseListener(new MenuMouseClickEventListener());
+        this.canvas.addMouseMotionListener(new MenuMouseMotionListener());
         
         this.frame.add(canvas);
         this.frame.pack();

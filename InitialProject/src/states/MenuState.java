@@ -2,6 +2,8 @@ package states;
 
 import java.awt.*;
 
+import gfx.Assets;
+
 public class MenuState extends State{
  
 	private Menu startMenu;
@@ -9,6 +11,9 @@ public class MenuState extends State{
 	
 	public MenuState() {
 		super(STATE_ID);
+		
+		Assets.init();
+		
     	startMenu = new Menu();
     	startMenu.init();
     }

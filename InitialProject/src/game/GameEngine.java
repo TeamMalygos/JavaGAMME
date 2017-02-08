@@ -1,9 +1,6 @@
 package game;
 
 import display.Display;
-import gfx.Assets;
-import gfx.SpriteSheet;
-import states.GameState;
 import states.MenuState;
 import states.State;
 import states.StateManager;

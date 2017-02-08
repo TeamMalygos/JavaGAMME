@@ -3,6 +3,7 @@ package components;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 import events.MenuButtonClickEvent;
 import events.MenuButtonClickListener;
@@ -11,52 +12,83 @@ import states.State;
 
 public class Button extends MenuComponent implements MenuButtonClickListener{
 	
-	private Color color;
+	private BufferedImage pressed;
+	private BufferedImage normal;
+	private BufferedImage hover;
 	private Rectangle areaRect;
 	private State stateInit;
 	
 	public Button(int x,int y,String name){
 		super(x,y,name);
-		areaRect = new Rectangle(x,y,0,0);
 	}
 	
-	public void setColor(Color color){
-		this.color = color;
+	
+	public void setFrames(BufferedImage frames){		
+		super.setSize(96, 28);
+		super.frames = frames;
+		areaRect = new Rectangle(super.xAxisPosition,super.yAxisPosition,96,28);
+		loadFrameHolders();
 	}
 	
-	public void setSize(int w,int h){
-		super.setSize(w, h);
-		areaRect = new Rectangle(super.xAxisPosition,super.yAxisPosition,w,h);
+	private void loadFrameHolders(){
+		
+		normal = super.frames.getSubimage(0, 0, 96, 28);
+		pressed = super.frames.getSubimage(96,0,96,28);
+		hover = super.frames.getSubimage(192, 0, 96, 28);
+		super.currentFrame = normal;
 	}
 	
-	public Rectangle getArea(){
-		return areaRect;
-	}
 	
 	public void linkToState(State state){
 		stateInit = state;
 	}
 	
+	public Rectangle getArea(){return areaRect;}
+	public void setHover(boolean hover){super.hover = hover;}
+	public void setPressed(boolean pressed){super.isPressed = pressed;}
+	
 	@Override
 	public void tick(){
 		//I have no fucking idea what this does but it looks fabulous
+		if(super.hover){
+			super.currentFrame = this.hover;
+		}else if(super.isPressed){
+			super.currentFrame = this.pressed;
+		}else {
+			super.currentFrame = normal;
+		}
 	}
 	
 	@Override
 	public void render(Graphics g){
 		
-		g.setColor(color);
-		g.fillRect(super.xAxisPosition,super.yAxisPosition,width,height);
-		g.setColor(Color.BLACK);
-		g.drawString(super.name, super.xAxisPosition + width/2, super.yAxisPosition + height/2);
+		g.drawImage(super.currentFrame, super.xAxisPosition
+				, super.yAxisPosition,null);
+		
+
 	}
 
 	@Override
 	public void onMenuButtonClick() {
 		// TODO Auto-generated method stub
+		super.isPressed = true;
+		super.hover = false;
+	}
+
+
+	@Override
+	public void onMenuButtonRelease() {
 		if(stateInit != null){
 			MenuButtonClickEvent e = new MenuButtonClickEvent(this,stateInit);
 		}
+	}
+
+
+	@Override
+	public void onMenuButtonHover() {
+		// TODO Auto-generated method stub
+		super.isPressed = false;
+		super.hover = true;
 	}
 	
 
