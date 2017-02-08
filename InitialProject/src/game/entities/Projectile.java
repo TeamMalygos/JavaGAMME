@@ -45,10 +45,12 @@ public class Projectile implements Shootable{
         // Projectile hits target
         if (this.intersects(player.getBoundingBox())) {
 
-            player.setHealth(player.getHealth() - this.damage);
+         //   player.getPlayerStats().takeDamage(this.damage); - alternative damage deal with Stats method
+
+            player.takeDamage(this.damage);
             GameState.setPlayer(player);
 
-            System.out.println(GameState.getPlayer().getHealth());
+            System.out.println(GameState.getPlayer().getPlayerStats().getCurrentHealth());
 
             this.enemyShootingUnit.getProjectiles().remove(this);
 

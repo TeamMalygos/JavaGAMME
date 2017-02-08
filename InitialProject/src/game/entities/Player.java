@@ -12,15 +12,15 @@ import utils.MovementState;
 import utils.PVector;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+
+import static constants.Constants.DAMAGE_REDUCE_RATE;
 
 public class Player extends MapObject implements UnitDrawable,StateProvidable{
-    // Seriously???
-    private final int CHUCK_NORRIS = Integer.MAX_VALUE;
 
     private String name;
-    private int health;
+
+    private Stats playerStats;
+
     //private int width, height, x, y, velocityX, velocityY, health;
     
     private boolean isDead;
@@ -40,6 +40,8 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
     public Player(String name,TileMap map) {
     	super(map);
         this.name = name;
+
+        this.playerStats = new Stats(this);
         
         super.cBox = new CollisionBox(20,20);
         super.objectMovementAttr = new MovementAttributes();
@@ -56,8 +58,7 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
         
         
         loadSprites();
-        // Well...we are talking about nakovkata so...
-        this.health = 500;
+
         super.movementState = new MovementState();
         //this.boundingBox = new Rectangle(x, y, width, height);
         
@@ -98,8 +99,24 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
     	
     }
 
+    public void takeDamage(double damage) {
+
+        this.getPlayerStats().setCurrentHealth(
+                this.getPlayerStats().getCurrentHealth() - (damage - this.getPlayerStats().getArmor() * DAMAGE_REDUCE_RATE));
+
+    }
+
     public boolean intersects(MapObject object) {
         return super.intersectsWith(object);
+    }
+
+
+    public Stats getPlayerStats() {
+        return playerStats;
+    }
+
+    public void setPlayerStats(Stats playerStats) {
+        this.playerStats = playerStats;
     }
 
     public double getX() {return super.position.getPositionX();}
@@ -113,8 +130,7 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
         		super.cBox.getCollisionWidth(),
         		super.cBox.getCollisionHeight());
     }
-    public int getHealth() {return health;}
-    public void setHealth(int health) {this.health = health;}
+
 	@Override
 	public boolean isMovingLeft() {return super.movementState.isGoingLeft();}
 	@Override

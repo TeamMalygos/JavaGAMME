@@ -58,14 +58,13 @@ public class EnemyMeleeUnit implements UnitDrawable {
                 }
 
             if (attackTimer <= 0) {
-                int playerRemainingHealth = currentPlayer.getHealth() - this.damage;
-                currentPlayer.setHealth(playerRemainingHealth);
+                currentPlayer.takeDamage(this.damage);
                 GameState.setPlayer(currentPlayer);
 
                 // Reset attack timer
                 attackTimer = 20;
 
-                System.out.println("Remaining player health: " + GameState.getPlayer().getHealth());
+                System.out.println("Remaining player health: " + GameState.getPlayer().getPlayerStats().getCurrentHealth());
 
             } else {
                 attackTimer--;
