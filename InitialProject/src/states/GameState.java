@@ -3,6 +3,7 @@ package states;
 import game.entities.EnemyMeleeUnit;
 import game.entities.EnemyShootingUnit;
 import game.entities.Player;
+import game.entities.Shop;
 import gfx.Assets;
 import map.TileMap;
 
@@ -18,6 +19,7 @@ public class GameState extends State {
     public static Player player;
     public static EnemyShootingUnit firstEnemyShootingUnit;
     public static EnemyMeleeUnit firstMeleeEnemy;
+    public static Shop shop;
 
     public GameState() {
     	super(ID);
@@ -32,7 +34,7 @@ public class GameState extends State {
         player = new Player("Nakovkata", 95, 130, 100, 400);
         firstEnemyShootingUnit = new EnemyShootingUnit("NekvaPachaSLesenSpriteSheet", 60, 60, 650, 450, 150, 50, 250);
         firstMeleeEnemy = new EnemyMeleeUnit("Melee", 100, 134, 450, 400, 5, 35, 700);
-        
+        shop = new Shop();
     }
 
 

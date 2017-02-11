@@ -10,6 +10,7 @@ public class Assets {
     public static BufferedImage projectile;
     public static BufferedImage enemyMeleeUnit;
     public static BufferedImage tileSheet;
+    public static BufferedImage weapons;
 
     public static void init() {
         background = ImageLoader.loadImage("/textures/bckg.jpg");
@@ -18,5 +19,6 @@ public class Assets {
         projectile = ImageLoader.loadImage("/textures/blast.png");
         enemyMeleeUnit = ImageLoader.loadImage("/textures/meleeEnemy.png");
         tileSheet = ImageLoader.loadImage("/textures/Sheet.png");
+        //weapons = ImageLoader.loadImage("/textures/weapons.png");
     }
 }

@@ -2,6 +2,7 @@ package game;
 
 
 import display.Display;
+import game.entities.Shop;
 import states.GameState;
 
 import java.awt.event.KeyEvent;
@@ -15,12 +16,15 @@ public class InputHandler implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+
 
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
+
 
         if (keyCode == KeyEvent.VK_LEFT) {
             GameState.player.isMovingLeft = true;
