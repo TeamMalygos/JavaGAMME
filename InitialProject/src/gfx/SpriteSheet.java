@@ -5,19 +5,21 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import constants.Constants;
+
 public class SpriteSheet {
 	
 	private BufferedImage sheet;
     private ArrayList<BufferedImage[]> frameSet;
     private int[] frameLayers;
     
-    private int frameWidth;
     private int frameHeight;
+    private int frameWidth;
 
-    public SpriteSheet(BufferedImage sheet,int width,int height) {
+    public SpriteSheet(BufferedImage sheet) {
         this.sheet = sheet;
-        this.frameWidth = width;
-        this.frameHeight = height;
+        this.frameWidth = Constants.PLAYER_WIDTH;
+        this.frameHeight = Constants.PLAYER_HEIGHT;
         frameSet = new ArrayList<BufferedImage[]>();
     }
     
@@ -36,8 +38,8 @@ public class SpriteSheet {
     			for(int j = 0 ; j < frameLayers[i]; j++){
     				
     				actionSet[j] = this.sheet.getSubimage(
-    						i * this.frameWidth,
-    						j * this.frameHeight,
+    						j * this.frameWidth,
+    						i * this.frameHeight,
     						this.frameWidth,
     						this.frameHeight
     						);

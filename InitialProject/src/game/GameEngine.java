@@ -4,6 +4,7 @@ import display.Display;
 import states.MenuState;
 import states.State;
 import states.StateManager;
+import constants.Constants;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -53,7 +54,7 @@ public class GameEngine implements Runnable {
 
         this.g = this.bs.getDrawGraphics();
 
-        g.clearRect(0, 0, Display.WIDTH, Display.HEIGHT);
+        g.clearRect(0, 0, Constants.WIDTH, Constants.HEIGHT);
 
         //Start drawing
 

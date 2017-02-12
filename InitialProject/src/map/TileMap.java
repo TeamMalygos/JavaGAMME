@@ -10,19 +10,35 @@ import gfx.Assets;
 import java.awt.*;
 
 public class TileMap {
+	//Position
+	private double x;
+	private double y;
 	
-	private int x;
-	private int y;
+	private double xmin;
+	private double xmax;
+	private double ymin;
+	private double ymax;
 	
+	//Original map
 	private int tileSize;
 	private int tileHeight;
 	private int[][] map;
-	
+	//Dimensions
 	private int mapWidth;
 	private int mapHeight;
 	
+	//Tileset
 	private BufferedImage tileSet;
 	private Tile[][] tiles;
+	
+	//Offset drawing
+	private int rowOffset;
+	private int colOffset;
+	private int columnsToDraw;
+	private int rowsToDraw;
+	
+	//Camera movement
+	private double cameraSpeed;
 	
 	public TileMap(String s,int tileSize,int tileHeight){
 		
@@ -31,11 +47,13 @@ public class TileMap {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					TileMap.class.getResourceAsStream(s)));
 
-			mapWidth = Integer.parseInt(br.readLine());
-			mapHeight = Integer.parseInt(br.readLine());
+			this.cameraSpeed = 0.07;
+			
+			this.mapWidth = Integer.parseInt(br.readLine());
+			this.mapHeight = Integer.parseInt(br.readLine());
 			this.tileSize = tileSize;
 			this.tileHeight = tileHeight;
-			map = new int[mapHeight][mapWidth];
+			this.map = new int[mapHeight][mapWidth];
 			
 			for(int row = 0 ; row < mapHeight; row ++){
 				
@@ -43,7 +61,7 @@ public class TileMap {
 				
 				for(int col = 0 ; col < mapWidth; col++){
 					
-					map[row][col] = Integer.parseInt(line[col]);
+					this.map[row][col] = Integer.parseInt(line[col]);
 				}
 				
 			}
@@ -86,9 +104,12 @@ public class TileMap {
 		
 	}
 	
-	public int getX() {return x;}
-	public int getY() { return y; }
-	public int getTileSize() {return tileSize;}
+	public int getX() {return (int)x;}
+	public int getY() { return (int)y; }
+	public int getWidth() {return this.mapWidth;}
+	public int getHeight() { return this.mapHeight;}
+	public int getTileWidth() {return this.tileSize;}
+	public int getTileHeight(){return this.tileHeight;}
 	public int getTile(int row, int col){
 		return map[row][col];
 	}
@@ -100,15 +121,35 @@ public class TileMap {
 		return tiles[r][c].getType();
 	}
 	
+	public void setPosition(double x,double y){
+		this.x += (x - this.x) * this.cameraSpeed;
+		this.y += (y - this.y) * this.cameraSpeed;
+		
+		fixBoundaries();
+		
+		//Where to start drawing from
+		
+		colOffset = (int)-this.x / tileSize;
+		rowOffset = (int)-this.y / tileHeight;
+		
+	}
+	
+	private void fixBoundaries(){
+		if(x > xmax){ x = xmax;}
+		if(x < xmin){ x = xmin;}
+		if(y > ymax){ y = ymax;}
+		if(y < ymin){ y = ymin;}
+	}
+	
 	public void update(){
 		
 	}
 	
 	public void draw(Graphics g){
 		
-		for(int row = 0 ; row < map.length; row++){
+		for(int row = this.rowOffset ; row < map.length; row++){
 			
-			for(int col = 0 ; col < map[0].length; col++){
+			for(int col = this.colOffset ; col < map[0].length; col++){
 				int rc =  map [row][col]-1;
 				
 				if(rc == -2 || rc == -1){
@@ -120,8 +161,8 @@ public class TileMap {
 				
 				g.drawImage(
 						tiles[rw][cl].getImage(),
-						x + col * tileSize,
-						y + row * tileSize,
+						(int)x + col * tileSize,
+						(int)y + row * tileSize,
 						null);
 		
 			}

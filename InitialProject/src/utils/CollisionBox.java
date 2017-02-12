@@ -48,6 +48,10 @@ public class CollisionBox {
 	//Getters
 	public int getCollisionWidth(){	return this.colisionWidth;}
 	public int getCollisionHeight(){return this.colisionHeight;}
+	public boolean isTopLeftBlocked(){ return this.collidesTopLeft;}
+	public boolean isTopRightBlocked(){return this.collidesTopRight;}
+	public boolean isBottomLeftBlocked(){return this.collidesBottomLeft;}
+	public boolean isBottomRightBlocked(){return this.collidesBottomRight;}
 
 	
 }
