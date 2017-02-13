@@ -21,6 +21,8 @@ public class EnemyMeleeUnit implements UnitDrawable {
 
     private int experienceAwardedOnKill;
 
+    private boolean isDead;
+
     public EnemyMeleeUnit(String name, int width, int height, int x, int y, int weaponRange, int damage, int health) {
         this.name = name;
         this.width = width;
@@ -45,17 +47,24 @@ public class EnemyMeleeUnit implements UnitDrawable {
         this.attackTimer = 0;
 
         this.experienceAwardedOnKill = 40;
+        this.isDead = false;
 
     }
 
     @Override
     public void tick() {
+        // Check if enemy is alive
+        if (isDead) {
+            return;
+        }
+
         // Get the player from GameState
         Player currentPlayer = GameState.getPlayer();
 
         if (this.health <= 0) {
             currentPlayer.gainExperience(this.experienceAwardedOnKill);
             GameState.setPlayer(currentPlayer);
+            this.isDead = true;
 
             System.out.println("Enemy " + this.name + " killed! " + experienceAwardedOnKill + " experience awarded!");
 
@@ -109,6 +118,11 @@ public class EnemyMeleeUnit implements UnitDrawable {
 
     @Override
     public void render(Graphics graphics) {
+
+        // Check if enemy is alive
+        if (isDead) {
+            return;
+        }
 
         // Get the player from GameState
         Player currentPlayer = GameState.getPlayer();

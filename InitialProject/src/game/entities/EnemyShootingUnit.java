@@ -25,6 +25,7 @@ public class EnemyShootingUnit implements UnitDrawable {
     private Set<Projectile> projectiles;
 
     private int experienceAwardedOnKill;
+    private boolean isDead;
 
 
     public EnemyShootingUnit(String name, int width, int height, int x, int y, int shootingRange, int damage, int health) {
@@ -52,17 +53,23 @@ public class EnemyShootingUnit implements UnitDrawable {
         this.projectiles = new HashSet<>();
 
         this.experienceAwardedOnKill = 40;
+        this.isDead = false;
 
     }
 
     @Override
     public void tick() {
+        // Check if enemy is alive
+        if (isDead) {
+            return;
+        }
 
         Player currentPlayer = GameState.getPlayer();
 
         if (this.health <= 0) {
             currentPlayer.gainExperience(this.experienceAwardedOnKill);
             GameState.setPlayer(currentPlayer);
+            this.isDead = true;
 
             System.out.println("Enemy " + this.name + " killed! " + experienceAwardedOnKill + " experience awarded!");
 
@@ -112,6 +119,11 @@ public class EnemyShootingUnit implements UnitDrawable {
 
     @Override
     public void render(Graphics graphics) {
+
+        // Check if enemy is alive
+        if (isDead) {
+            return;
+        }
 
         // See if player is in range. If yes - render static graphics.
         //if (isPlayerInRange(GameState.getPlayer())) {
