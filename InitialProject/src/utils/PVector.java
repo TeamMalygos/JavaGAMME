@@ -5,8 +5,14 @@ public class PVector {
 	private double x;
 	private double y;
 	
+	private double directionX;
+	private double directionY;
+	
 	private double destX;
 	private double destY;
+
+	private double tempX;
+	private double tempY;
 	
 	/**
 	 * <p>Position vector constructor - initializes the position to 0/0</p> 
@@ -25,6 +31,10 @@ public class PVector {
 	public PVector(double x,double y){
 		this.x = x;
 		this.y = y;
+		this.destX = x;
+		this.destY = y;
+		this.directionX = 0;
+		this.directionY = 0;
 	}
 	
 	public void getNewPosition(MovementState movementState
@@ -77,6 +87,10 @@ public class PVector {
 	//Setters
 	public void setPositionX(double x){this.x = x;}
 	public void setPositionY(double y){this.y = y;}
+	public void setTemporaryX(double x) {this.tempX = x;}
+	public void setTemporaryY(double y) {this.tempY = y;}
+	public void setDirectionX(double x) {this.directionX = x;}
+	public void setDirectionY(double y) { this.directionY = y;}
 	public void setDestinationX(double x){this.destX = x;}
 	public void setDestinationY(double y){this.destY = y;}
 	public void setDestinationXY(double x,double y){
@@ -88,5 +102,9 @@ public class PVector {
 	public double getPositionY(){return y;}
 	public double getDestinationX() { return this.destX;}
 	public double getDestinationY(){ return this.destY;}
+	public double getTemporaryX() { return this.tempX;}
+	public double getTemporaryY() { return this.tempY;}
+	public double getDirectionX(){ return this.directionX;}
+	public double getDirectionY(){ return this.directionY;}
 	
 }

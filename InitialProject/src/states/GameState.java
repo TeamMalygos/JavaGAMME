@@ -14,7 +14,9 @@ public class GameState extends State {
     private final static int ID = 2;
     
     private TileMap map;
+    private InGameMenu menu;
     private boolean isRunning;
+    private boolean isMenuOpen;
     public static Player player;
     public static EnemyShootingUnit firstEnemyShootingUnit;
     public static EnemyMeleeUnit firstMeleeEnemy;
@@ -29,9 +31,11 @@ public class GameState extends State {
       
         map = new TileMap("/map1", 32, 32);
         map.loadTiles("/textures/Sheet.png");
+        map.setPosition(0, 0);
+        menu = new InGameMenu();
         player = new Player("Nakovkata",map);
-        firstEnemyShootingUnit = new EnemyShootingUnit("NekvaPachaSLesenSpriteSheet", 60, 60, 650, 450, 150, 50, 250);
-        firstMeleeEnemy = new EnemyMeleeUnit("Melee", 100, 134, 450, 400, 5, 35, 700);
+        //firstEnemyShootingUnit = new EnemyShootingUnit("NekvaPachaSLesenSpriteSheet", 60, 60, 650, 450, 150, 50, 250);
+        //firstMeleeEnemy = new EnemyMeleeUnit("Melee", 100, 134, 450, 400, 5, 35, 700);
         
     }
 
@@ -43,17 +47,23 @@ public class GameState extends State {
     		isRunning = true;
     	}
     	map.update();
-        //player.tick();
-        firstEnemyShootingUnit.tick();
-        firstMeleeEnemy.tick();
+        player.tick();
+        //firstEnemyShootingUnit.tick();
+        //firstMeleeEnemy.tick();
+        if(this.isMenuOpen){
+        	menu.tick();
+        }
     }
 
     @Override
     public void render(Graphics g) {
     	map.draw(g);
-        //player.render(g);
-        firstEnemyShootingUnit.render(g);
-        firstMeleeEnemy.render(g);
+        player.render(g);
+        //firstEnemyShootingUnit.render(g);
+        //firstMeleeEnemy.render(g);
+        if(this.isMenuOpen){
+        	menu.render(g);;
+        }
     }
 
     public static int getGRAVITY() {
@@ -63,6 +73,17 @@ public class GameState extends State {
     public static Player getPlayer() {
         return player;
     }
+    public boolean isInMenuState(){
+    	return this.isMenuOpen;
+    }
+    public void toggleMenu() {
+		if(this.isMenuOpen){
+			this.isMenuOpen = false;
+			return;
+		}
+		
+		this.isMenuOpen = true;
+	}
 
     public static void setPlayer(Player player) {
         GameState.player = player;
@@ -75,4 +96,6 @@ public class GameState extends State {
     public static void setFirstEnemyShootingUnit(EnemyShootingUnit firstEnemyShootingUnit) {
         GameState.firstEnemyShootingUnit = firstEnemyShootingUnit;
     }
+
+	
 }

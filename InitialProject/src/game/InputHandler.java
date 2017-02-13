@@ -28,6 +28,11 @@ public class InputHandler implements KeyListener {
     	
     	state = (GameState) StateManager.getCurrentState();
     	
+    	if(state.isInMenuState()){
+    		System.out.println("Sorry you are in menu state");
+    		return;
+    	}
+    	
         int keyCode = e.getKeyCode();
         if(keyCode == KeyEvent.VK_LEFT){state.player.setLeft(true);}
         if(keyCode == KeyEvent.VK_RIGHT){state.player.setRight(true);}
@@ -43,6 +48,12 @@ public class InputHandler implements KeyListener {
     	state = (GameState) StateManager.getCurrentState();
     	
         int keyCode = e.getKeyCode();
+        if(keyCode == KeyEvent.VK_ESCAPE){state.toggleMenu();}
+        
+        if(state.isInMenuState()){
+        	return;
+        }
+        
         if(keyCode == KeyEvent.VK_LEFT){state.player.setLeft(false);}
         if(keyCode == KeyEvent.VK_RIGHT){state.player.setRight(false);}
         if(keyCode == KeyEvent.VK_UP){state.player.setUp(false);}

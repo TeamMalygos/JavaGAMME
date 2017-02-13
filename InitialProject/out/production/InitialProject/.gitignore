@@ -1,11 +1,11 @@
 /components/
+/constants/
 /display/
 /events/
 /game/
 /gfx/
 /map/
+/providable/
 /states/
 /utils/
 /textures/
-/providable/
-/constants/

@@ -1,13 +1,14 @@
 package components;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import constants.Constants;
+
 import events.MenuButtonClickEvent;
 import events.MenuButtonClickListener;
-import states.GameState;
+
 import states.State;
 
 public class Button extends MenuComponent implements MenuButtonClickListener{
@@ -24,17 +25,17 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	
 	
 	public void setFrames(BufferedImage frames){		
-		super.setSize(96, 28);
+		super.setSize(Constants.MENU_BUTTON_WIDTH, Constants.MENU_BUTTON_HEIGHT);
 		super.frames = frames;
-		areaRect = new Rectangle(super.xAxisPosition,super.yAxisPosition,96,28);
+		areaRect = new Rectangle(super.xAxisPosition,super.yAxisPosition,super.width,super.height);
 		loadFrameHolders();
 	}
 	
 	private void loadFrameHolders(){
 		
-		normal = super.frames.getSubimage(0, 0, 96, 28);
-		pressed = super.frames.getSubimage(96,0,96,28);
-		hover = super.frames.getSubimage(192, 0, 96, 28);
+		normal = super.frames.getSubimage(0,0,super.width,super.height);
+		pressed = super.frames.getSubimage(super.width,0,super.width,super.height);
+		hover = super.frames.getSubimage(super.width*2, 0, super.width, super.height);
 		super.currentFrame = normal;
 	}
 	

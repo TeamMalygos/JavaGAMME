@@ -9,9 +9,12 @@ import utils.Animation;
 import utils.CollisionBox;
 import utils.MovementAttributes;
 import utils.MovementState;
+import utils.ObjectState;
 import utils.PVector;
 
 import java.awt.*;
+
+import constants.Constants;
 
 import static constants.Constants.DAMAGE_REDUCE_RATE;
 
@@ -26,37 +29,28 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
     private boolean isDead;
     
     //Animation frames - Containers and helpful prereqs
-    SpriteSheet sprite;
+    private SpriteSheet sprite;
     private final int[] numFrames = {
-    		0 , 0 , 0 , 0
+    		8,8,2
     };
 
     //States
-    private static final int IDLE = 0;
-    private static final int WALKING = 1;
-    private static final int JUMPING = 2;
-    private static final int FALLING = 3;
+    private ObjectState state;
 
     public Player(String name,TileMap map) {
     	super(map);
         this.name = name;
-
-        this.playerStats = new Stats(this);
-        
-        super.cBox = new CollisionBox(20,20);
-        super.objectMovementAttr = new MovementAttributes();
-        
-        super.objectMovementAttr.setGravity(0.21875, 4.0);
-        super.objectMovementAttr.setJumpRate(-6.5, 0.3);
-        super.objectMovementAttr.setMovementRate(0.046875, 1.6, 0.5);
         super.facingRight = true;
+        this.playerStats = new Stats(this);
+        state = state.Idle;
         
-        super.position = new PVector();
-        super.position.setPositionX(2);
-        super.position.setPositionY(5);
+        super.cBox = new CollisionBox(Constants.PLAYER_COLLISION_WIDTH,Constants.PLAYER_COLLISION_HEIGHT);
+        super.width = Constants.PLAYER_WIDTH;
+        super.height = Constants.PLAYER_HEIGHT;
         
-        
-        
+        initPhysics();
+        initPosition();
+
         loadSprites();
 
         super.movementState = new MovementState();
@@ -64,9 +58,25 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
         
     }
     
+    private void initPosition(){
+        super.position = new PVector();
+        super.position.setPositionX(Constants.PLAYER_START_X);
+        super.position.setPositionY(Constants.PLAYER_START_Y);
+        
+    }
+    
+    private void initPhysics(){
+        super.objectMovementAttr = new MovementAttributes();
+        
+        super.objectMovementAttr.setGravity(Constants.PLAYER_GRAVITY, Constants.PLAYER_TERMINAL_VELOCITY);
+        super.objectMovementAttr.setJumpRate(Constants.PLAYER_JUMP, Constants.PLAYER_STOP_JUMP);
+        super.objectMovementAttr.setMovementRate(Constants.PLAYER_ACCELERATION
+        		, Constants.PLAYER_MAXIMUM_SPEED, Constants.PLAYER_DEACCELERATION);
+    }
+    
     public void loadSprites(){
     	
-    	sprite = new SpriteSheet(Assets.nakov_sheet,32,32);
+    	sprite = new SpriteSheet(Assets.nakov_sheet);
     	sprite.setFrameLayersCount(numFrames);
     	super.animation = new Animation();
     	
@@ -96,9 +106,13 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
     public void render(Graphics g) {
         
     	getNextPosition();
-    	
+    	super.animation.setFrames(this.sprite.getFrameSet(state.ordinal()));
+    	super.animation.setDelay(1);
+    	g.drawImage(super.animation.getImage()
+    			, (int)super.position.getPositionX()
+    			, (int)super.position.getPositionY(), null);
     }
-
+    
     public void takeDamage(double damage) {
 
         this.playerStats.takeDamage(damage);

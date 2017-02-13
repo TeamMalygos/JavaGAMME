@@ -3,6 +3,7 @@ package display;
 
 import javax.swing.*;
 
+import constants.Constants;
 import events.MenuMouseClickEventListener;
 import events.MenuMouseMotionListener;
 
@@ -10,9 +11,6 @@ import java.awt.*;
 import java.awt.event.MouseListener;
 
 public class Display {
-
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
 
     private String name;
     private JFrame frame;
@@ -30,7 +28,7 @@ public class Display {
 
     private void init(String name) {
         this.frame = new JFrame(name);
-        this.frame.setSize(new Dimension(WIDTH, HEIGHT));
+        this.frame.setSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.frame.setVisible(true);
         this.frame.setFocusable(true);
@@ -39,9 +37,9 @@ public class Display {
         this.frame.setLocationRelativeTo(null);
 
         this.canvas = new Canvas();
-        this.canvas.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        this.canvas.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        this.canvas.setMaximumSize(new Dimension(WIDTH, HEIGHT));
+        this.canvas.setMinimumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+        this.canvas.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+        this.canvas.setMaximumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         this.canvas.setVisible(true);
         
         this.canvas.addMouseListener(new MenuMouseClickEventListener());
