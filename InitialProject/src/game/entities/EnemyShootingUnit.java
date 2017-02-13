@@ -24,6 +24,9 @@ public class EnemyShootingUnit implements UnitDrawable {
     private int shootingTimer;
     private Set<Projectile> projectiles;
 
+    private int experienceAwardedOnKill;
+
+
     public EnemyShootingUnit(String name, int width, int height, int x, int y, int shootingRange, int damage, int health) {
         this.name = name;
         this.width = width;
@@ -47,10 +50,24 @@ public class EnemyShootingUnit implements UnitDrawable {
 
         this.shootingTimer = 0;
         this.projectiles = new HashSet<>();
+
+        this.experienceAwardedOnKill = 40;
+
     }
 
     @Override
     public void tick() {
+
+        Player currentPlayer = GameState.getPlayer();
+
+        if (this.health <= 0) {
+            currentPlayer.gainExperience(this.experienceAwardedOnKill);
+            GameState.setPlayer(currentPlayer);
+
+            System.out.println("Enemy " + this.name + " killed! " + experienceAwardedOnKill + " experience awarded!");
+
+            return;
+        }
 
         // See if player is in range. If yes - stop and fire at him.
         if (isPlayerInRange(GameState.getPlayer())) {

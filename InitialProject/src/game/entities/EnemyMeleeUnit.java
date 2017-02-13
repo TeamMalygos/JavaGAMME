@@ -19,6 +19,8 @@ public class EnemyMeleeUnit implements UnitDrawable {
 
     private int attackTimer;
 
+    private int experienceAwardedOnKill;
+
     public EnemyMeleeUnit(String name, int width, int height, int x, int y, int weaponRange, int damage, int health) {
         this.name = name;
         this.width = width;
@@ -42,12 +44,23 @@ public class EnemyMeleeUnit implements UnitDrawable {
 
         this.attackTimer = 0;
 
+        this.experienceAwardedOnKill = 40;
+
     }
 
     @Override
     public void tick() {
         // Get the player from GameState
         Player currentPlayer = GameState.getPlayer();
+
+        if (this.health <= 0) {
+            currentPlayer.gainExperience(this.experienceAwardedOnKill);
+            GameState.setPlayer(currentPlayer);
+
+            System.out.println("Enemy " + this.name + " killed! " + experienceAwardedOnKill + " experience awarded!");
+
+            return;
+        }
 
         // Check whether player is within attack range and if yes - attack
         if (isPlayerInAttackRange(currentPlayer)) {

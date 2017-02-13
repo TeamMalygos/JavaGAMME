@@ -63,6 +63,13 @@ public class Stats {
 
     }
 
+    public void gainExperience(int experience) {
+        this.currentExperience += experience;
+        System.out.println("Gained " + experience + " experience.");
+        System.out.println("Current experience: " + currentExperience);
+        System.out.println(totalLevelExperience - currentExperience + " experience left to level up.");
+    }
+
     public void calculateLevel() {
         if (this.currentExperience >= this.totalLevelExperience) {
             level++;
@@ -73,6 +80,9 @@ public class Stats {
             // We will later decide wether currents stats will fully regenerate on level up
             currentHealth = health;
             currentMana = mana;
+
+            System.out.println("Leveled up to level " + level);
+            System.out.println("Next level total exp needed: " + totalLevelExperience);
         }
     }
 

@@ -105,6 +105,10 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
 
     }
 
+    public void gainExperience(int experience) {
+        this.playerStats.gainExperience(experience);
+    }
+
     public boolean intersects(MapObject object) {
         return super.intersectsWith(object);
     }
