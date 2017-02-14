@@ -4,6 +4,7 @@ import game.entities.EnemyMeleeUnit;
 import game.entities.EnemyShootingUnit;
 import game.entities.Player;
 import gfx.Assets;
+import map.ObjectLayer;
 import map.TileMap;
 
 import java.awt.*;
@@ -15,8 +16,11 @@ public class GameState extends State {
     
     private TileMap map;
     private InGameMenu menu;
+    private ObjectLayer objects;
+    
     private boolean isRunning;
     private boolean isMenuOpen;
+    
     public static Player player;
     public static EnemyShootingUnit firstEnemyShootingUnit;
     public static EnemyMeleeUnit firstMeleeEnemy;
@@ -32,6 +36,9 @@ public class GameState extends State {
         map = new TileMap("/map1", 32, 32);
         map.loadTiles("/textures/Sheet.png");
         map.setPosition(0, 0);
+        
+        objects = new ObjectLayer();
+        
         menu = new InGameMenu();
         player = new Player("Nakovkata",map);
         //firstEnemyShootingUnit = new EnemyShootingUnit("NekvaPachaSLesenSpriteSheet", 60, 60, 650, 450, 150, 50, 250);

@@ -1,0 +1,9 @@
+[submodule "InitialProject/src/src"]
+	path = InitialProject/src/src
+	url = https://github.com/google/gson.git
+[submodule "InitialProject/src/gson"]
+	path = InitialProject/src/gson
+	url = https://github.com/google/gson.git
+[submodule "InitialProject/gson"]
+	path = InitialProject/gson
+	url = https://github.com/google/gson.git
