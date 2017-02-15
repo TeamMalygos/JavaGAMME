@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class MenuState extends State{
  
-
+	private Menu optionsMenu;
 	private Menu startMenu;
 	private final static int STATE_ID = 1;
 	

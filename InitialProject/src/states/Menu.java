@@ -39,11 +39,15 @@ public class Menu{
 		load = new Button(300,282,"Load");
 		load.setColor(Color.ORANGE);
 		load.setSize(200, 25);
-		
-		exit = new Button(300,314,"Exit");
+
+		options = new Button(300, 314, "Options");
+		options.setColor(Color.ORANGE);
+		options.setSize(200, 25);
+
+		exit = new Button(300,346,"Exit");
 		exit.setColor(Color.ORANGE);
 		exit.setSize(200, 25);
-		
+
 		initMusic();
 		
 	}
@@ -94,6 +98,7 @@ public class Menu{
 	public void render(Graphics g){
 		start.render(g);
 		load.render(g);
+		options.render(g);
 		exit.render(g);
 	}
 	
