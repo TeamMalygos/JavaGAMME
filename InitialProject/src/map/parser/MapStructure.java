@@ -1,4 +1,4 @@
-package map;
+package map.parser;
 
 import java.util.List;
 
@@ -7,7 +7,8 @@ public class MapStructure {
 	private int height;
 	private int width;
 	
-	private Layers layers;
+	private Layered[] layers;
+	
 	private int nextobjectid;
 	
 	private String orientation;
@@ -26,8 +27,11 @@ public class MapStructure {
 	public int getWidth() {
 		return width;
 	}
-	public Layers getLayers() {
-		return layers;
+	public TileLayer getTileLayer() {
+		return (TileLayer)layers[0];
+	}
+	public ObjectsLayer getObjectsLayer() {
+		return (ObjectsLayer)layers[1];
 	}
 	public int getNextobjectid() {
 		return nextobjectid;
@@ -53,7 +57,7 @@ public class MapStructure {
 	
 	public void setHeight(int height){this.height = height;}
 	public void setWidth(int width){this.width = width;}
-	public void setLayers(Layers layers){this.layers = layers;}
+	public void setLayer(Layered[] layers){this.layers = layers;}
 	public void setNextObjectId(int nextobjectid){this.nextobjectid = nextobjectid;}
 	public void setOrientation(String orientation){this.orientation = orientation;}
 	public void setRenderOrder(String renderorder){this.renderorder = renderorder;}

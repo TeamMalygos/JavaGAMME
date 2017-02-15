@@ -1,4 +1,4 @@
-package map;
+package map.parser;
 
 public class Tileset {
 	

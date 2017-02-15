@@ -11,7 +11,7 @@ public interface Collectible {
 
     public abstract void render(Graphics graphics);
 
-    public void isCollected(Player player);
+    public void isCollected(Rectangle playerBounds);
     
     public void loadSprite();
     

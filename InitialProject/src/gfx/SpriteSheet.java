@@ -18,13 +18,13 @@ public class SpriteSheet {
 
     public SpriteSheet(BufferedImage sheet) {
         this.sheet = sheet;
-        this.frameWidth = Constants.PLAYER_WIDTH;
-        this.frameHeight = Constants.PLAYER_HEIGHT;
         frameSet = new ArrayList<BufferedImage[]>();
     }
     
-    public void setFrameLayersCount(int[] layersCount){
+    public void setFrameLayersCount(int[] layersCount,int frameWidth,int frameHeight){
     	this.frameLayers = layersCount;
+    	this.frameWidth = frameWidth;
+    	this.frameHeight = frameHeight;
     	prepare();
     }
     

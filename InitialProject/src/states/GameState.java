@@ -6,9 +6,10 @@ import game.entities.Player;
 import gfx.Assets;
 import map.ObjectLayer;
 import map.TileMap;
+import map.parser.LevelLoader;
+import utils.Level;
 
 import java.awt.*;
-import java.io.File;
 
 public class GameState extends State {
     private static final int GRAVITY = 2;
@@ -21,23 +22,30 @@ public class GameState extends State {
     private boolean isRunning;
     private boolean isMenuOpen;
     
+    private Level level;
     public static Player player;
     public static EnemyShootingUnit firstEnemyShootingUnit;
     public static EnemyMeleeUnit firstMeleeEnemy;
 
-    public GameState() {
+    public GameState(Level level) {
     	super(ID);
+    	this.level = level;
     	isRunning = false;
     }
 
     private void init() {
         Assets.init();
       
-        map = new TileMap("/map1", 32, 32);
+        LevelLoader loader = new LevelLoader(this.level);
+
+        map = new TileMap(loader.getLevelData().getTileLayer().getData()
+        		,loader.getLevelData().getTileLayer().getWidth()
+        		,loader.getLevelData().getTileLayer().getHeight());
+        
         map.loadTiles("/textures/Sheet.png");
         map.setPosition(0, 0);
         
-        objects = new ObjectLayer();
+        objects = new ObjectLayer(loader.getLevelData().getObjectsLayer());
         
         menu = new InGameMenu();
         player = new Player("Nakovkata",map);
@@ -54,6 +62,7 @@ public class GameState extends State {
     		isRunning = true;
     	}
     	map.update();
+    	objects.tick();
         player.tick();
         //firstEnemyShootingUnit.tick();
         //firstMeleeEnemy.tick();
@@ -65,6 +74,7 @@ public class GameState extends State {
     @Override
     public void render(Graphics g) {
     	map.draw(g);
+    	objects.render(g);
         player.render(g);
         //firstEnemyShootingUnit.render(g);
         //firstMeleeEnemy.render(g);

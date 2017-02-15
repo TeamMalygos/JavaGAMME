@@ -42,11 +42,13 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
         this.name = name;
         super.facingRight = true;
         this.playerStats = new Stats(this);
-        state = state.Idle;
+        state = ObjectState.Idle;
         
         super.cBox = new CollisionBox(Constants.PLAYER_COLLISION_WIDTH,Constants.PLAYER_COLLISION_HEIGHT);
         super.width = Constants.PLAYER_WIDTH;
         super.height = Constants.PLAYER_HEIGHT;
+        
+        
         
         initPhysics();
         initPosition();
@@ -77,8 +79,9 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
     public void loadSprites(){
     	
     	sprite = new SpriteSheet(Assets.nakov_sheet);
-    	sprite.setFrameLayersCount(numFrames);
+    	sprite.setFrameLayersCount(numFrames,Constants.PLAYER_WIDTH,Constants.PLAYER_HEIGHT);
     	super.animation = new Animation();
+    	super.animation.setDelay(1);
     	
     }
     
@@ -89,8 +92,9 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
     
     @Override
     public void tick() {
-        
-
+    	
+    	super.animation.setFrames(this.sprite.getFrameSet(state.ordinal()));
+    	super.animation.update();
         //Isn't this supposed to be below the lower if() ???
 
         //if (isMovingRight) {
@@ -104,10 +108,9 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
     
     @Override
     public void render(Graphics g) {
-        
+
     	getNextPosition();
-    	super.animation.setFrames(this.sprite.getFrameSet(state.ordinal()));
-    	super.animation.setDelay(1);
+  
     	g.drawImage(super.animation.getImage()
     			, (int)super.position.getPositionX()
     			, (int)super.position.getPositionY(), null);

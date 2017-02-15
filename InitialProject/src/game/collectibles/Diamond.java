@@ -21,15 +21,14 @@ public class Diamond extends LootObject {
 		
 		super.animation.setFrames(sheet.getFrameSet(0));
 		super.animation.setFrame(0);
+		super.animation.setDelay(65);
 		
 	}
 	
 	@Override
 	public void tick() {
-		
-		if(!collected){
-			
-		}
+		super.animation.update();
+
 	}
 
 	@Override
@@ -42,21 +41,15 @@ public class Diamond extends LootObject {
 		super.t.scale(1, 1);
 		
 		super.g2d = (Graphics2D)g;
-		g2d.drawImage(super.animation.getImage(),super.t,null);
-		
+		super.g2d.drawImage(super.animation.getImage(),super.t,null);
 	}
 
 	@Override
 	public void loadSprite() {
 		
 		sheet = new SpriteSheet(Assets.diamond);
-		sheet.setFrameLayersCount(frameCount);
+		sheet.setFrameLayersCount(frameCount,Constants.DIAMOND_WIDTH,Constants.DIAMOND_HEIGHT);
 		
-	}
-	
-	public boolean collected(Player player){
-		super.isCollected(player);
-		return super.checkCollected();
 	}
 
 }

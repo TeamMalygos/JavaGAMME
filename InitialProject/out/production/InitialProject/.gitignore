@@ -1,3 +1,11 @@
-/tests/
-/collectibles/
+/components/
+/constants/
+/display/
+/events/
 /game/
+/gfx/
+/map/
+/providable/
+/states/
+/tests/
+/utils/

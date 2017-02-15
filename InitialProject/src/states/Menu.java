@@ -13,6 +13,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import components.Button;
 import gfx.Assets;
+import utils.Level;
 
 public class Menu{
 	
@@ -28,7 +29,7 @@ public class Menu{
 		
 		start = new Button(300,250,"Start");
 		start.setFrames(Assets.playButton);
-		start.linkToState(new GameState());
+		start.linkToState(new GameState(Level.Level1));
 		load = new Button(300,282,"Load");
 	
 		exit = new Button(300,314,"Exit");

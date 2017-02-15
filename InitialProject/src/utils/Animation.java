@@ -24,7 +24,7 @@ public class Animation{
  	public void setFrames(BufferedImage[] frames){
  		this.frames = frames;
  		this.startTime = System.nanoTime();
-		currentFrame = -1;
+		currentFrame = 0;
  	}
  	
  	public void setDelay(long d){
@@ -42,12 +42,12 @@ public class Animation{
  	}
  		
  	long timeElapsed = (System.nanoTime() - startTime)/1000000;
- 		
+
  	if(timeElapsed > delay){
  			currentFrame++;
- startTime = System.nanoTime();
+ 			startTime = System.nanoTime();
 		}
- 		
+ 	
  		if(this.currentFrame == frames.length){
  			currentFrame = 0;
  			playedOnce = true;

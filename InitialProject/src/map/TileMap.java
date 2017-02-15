@@ -4,6 +4,7 @@ import java.awt.image.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import gfx.Assets;
 
@@ -40,36 +41,27 @@ public class TileMap {
 	//Camera movement
 	private double cameraSpeed;
 	
-	public TileMap(String s,int tileSize,int tileHeight){
-		
-		try {
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					TileMap.class.getResourceAsStream(s)));
+	public TileMap(List<Integer> map,int mapWidth,int mapHeight){
 
 			this.cameraSpeed = 0.07;
 			
-			this.mapWidth = Integer.parseInt(br.readLine());
-			this.mapHeight = Integer.parseInt(br.readLine());
-			this.tileSize = tileSize;
-			this.tileHeight = tileHeight;
+			this.mapWidth = mapWidth;
+			this.mapHeight = mapHeight;
+			this.tileSize = 32;
+			this.tileHeight = 32;
 			this.map = new int[mapHeight][mapWidth];
 			
+			int counter = 0;
 			for(int row = 0 ; row < mapHeight; row ++){
-				
-				String[] line = br.readLine().split("\\s+");
 				
 				for(int col = 0 ; col < mapWidth; col++){
 					
-					this.map[row][col] = Integer.parseInt(line[col]);
+					this.map[row][col] = map.get(counter);
+					counter++;
 				}
 				
 			}
 			
-			
-		}catch(Exception ex){
-			ex.printStackTrace();
-		}
 	}
 	
 	public void loadTiles(String s){

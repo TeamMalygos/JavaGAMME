@@ -36,9 +36,11 @@ public abstract class LootObject implements Collectible {
 		this.animation = new Animation();
 		this.t = new AffineTransform();
 		
+		this.collected = false;
+		
 	}
 	
-	public void setPosition(double x,double y){
+	protected void setPosition(double x,double y){
 		this.position = new PVector(x,y);
 		
 		boundingBox = new Rectangle((int)this.position.getPositionX(),(int)this.position
@@ -46,19 +48,20 @@ public abstract class LootObject implements Collectible {
 		
 	}
 
-	public void setName(String name){
+	protected void setName(String name){
 		this.name = name;
 	}
 	
 	@Override
-	public void isCollected(Player player){
-		if (this.boundingBox.contains(player.getX(), player.getY()) ||
-            this.boundingBox.contains(player.getBoundingBox().getMaxX(), player.getBoundingBox().getY()) ||
-            this.boundingBox.contains(player.getBoundingBox().getX(), player.getBoundingBox().getMaxY()) ||
-            this.boundingBox.contains(player.getBoundingBox().getMaxX(), player.getBoundingBox().getMaxY())) {
+	public void isCollected(Rectangle playerBounds){
+		if (this.boundingBox.contains(playerBounds.getX(), playerBounds.getY()) ||
+            this.boundingBox.contains(playerBounds.getMaxX(), playerBounds.getY()) ||
+            this.boundingBox.contains(playerBounds.getX(), playerBounds.getMaxY()) ||
+            this.boundingBox.contains(playerBounds.getMaxX(), playerBounds.getMaxY())) {
 			this.collected = true;
-    	}
 
+    	}
+		
     	this.collected = false;
 	}
 	
