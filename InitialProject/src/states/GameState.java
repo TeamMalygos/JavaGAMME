@@ -10,6 +10,7 @@ import map.parser.LevelLoader;
 import utils.Level;
 
 import java.awt.*;
+import java.io.*;
 
 public class GameState extends State {
     private static final int GRAVITY = 2;
@@ -33,7 +34,7 @@ public class GameState extends State {
     	isRunning = false;
     }
 
-    private void init() {
+    private void init() throws IOException {
         Assets.init();
       
         LevelLoader loader = new LevelLoader(this.level);
@@ -48,18 +49,78 @@ public class GameState extends State {
         objects = new ObjectLayer(loader.getLevelData().getObjectsLayer());
         
         menu = new InGameMenu();
-        player = new Player("Nakovkata",map);
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        loadOrStartNewGame(reader);
+
         //firstEnemyShootingUnit = new EnemyShootingUnit("NekvaPachaSLesenSpriteSheet", 60, 60, 650, 450, 150, 50, 250);
         //firstMeleeEnemy = new EnemyMeleeUnit("Melee", 100, 134, 450, 400, 5, 35, 700);
         
+    }
+
+    private void loadOrStartNewGame(BufferedReader reader) throws IOException {
+        System.out.println("Start new game or load player?");
+        System.out.print("new/load:");
+        String userChoice = reader.readLine();
+        switch (userChoice) {
+            case "new":
+                createNewPlayer(reader);
+                break;
+            case "load":
+                loadPlayer(reader);
+                break;
+            default:
+                System.out.println("Unrecognized command.");
+                loadOrStartNewGame(reader);
+                break;
+        }
+    }
+
+    private void loadPlayer(BufferedReader reader) throws IOException {
+        String playerName;
+        System.out.println("Load character.");
+        System.out.print("Player name: ");
+        playerName = reader.readLine();
+        String playerFilePath = "/players/" + playerName + ".ser";
+        File playerFile = new File (playerFilePath);
+        if (playerFile.exists()) {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(playerFile));
+            try {
+                player = (Player) ois.readObject();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Player with such name does not exist.");
+            loadPlayer(reader);
+        }
+    }
+
+    private void createNewPlayer(BufferedReader reader) throws IOException {
+        String playerName;
+        System.out.println("Creating new character.");
+        System.out.print("Player name: ");
+        playerName = reader.readLine();
+        String playerFilePath = "/players/" + playerName + ".ser";
+        File playerFile = new File (playerFilePath);
+        if (playerFile.exists()) {
+            System.out.println("Player with such name already exists. Please choose new one.");
+            createNewPlayer(reader);
+        } else {
+            player = new Player(playerName,map);
+        }
     }
 
 
     @Override
     public void tick() {
     	if(!isRunning){
-    		init();
-    		isRunning = true;
+            try {
+                init();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            isRunning = true;
     	}
     	map.update();
     	objects.tick();

@@ -63,11 +63,23 @@ public class Stats {
 
     }
 
-    public void gainExperience(int experience) {
-        this.currentExperience += experience;
-        System.out.println("Gained " + experience + " experience.");
+    public void gainExperience(int experienceAmount) {
+        this.currentExperience += experienceAmount;
+        System.out.println("Gained " + experienceAmount + " experience.");
         System.out.println("Current experience: " + currentExperience);
         System.out.println(totalLevelExperience - currentExperience + " experience left to level up.");
+    }
+
+    public void gainHealth(int healthAmount) {
+        this.currentHealth += healthAmount;
+        System.out.println("Gained " + healthAmount + " health.");
+        System.out.println("Current experience: " + currentHealth);
+    }
+
+    public void gainMana(int manaAmount) {
+        this.currentMana += manaAmount;
+        System.out.println("Gained " + manaAmount + " mana.");
+        System.out.println("Current mana: " + currentMana);
     }
 
     public void calculateLevel() {

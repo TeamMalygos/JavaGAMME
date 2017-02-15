@@ -122,8 +122,16 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
 
     }
 
-    public void gainExperience(int experience) {
-        this.playerStats.gainExperience(experience);
+    public void gainExperience(int experienceAmount) {
+        this.playerStats.gainExperience(experienceAmount);
+    }
+
+    public void gainHealth(int healthAmount) {
+        this.playerStats.gainHealth(healthAmount);
+    }
+
+    public void gainMana(int manaAmount) {
+        this.playerStats.gainMana(manaAmount);
     }
 
     public boolean intersects(MapObject object) {
