@@ -3,13 +3,31 @@ package events;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import states.GameState;
 import states.MenuState;
 import states.StateManager;
 
 public class MenuMouseClickEventListener implements MouseListener{
 
+	private boolean isInGameMenu;
+	private boolean isMenu;
+	
 	private boolean isMenuState(){
 		return StateManager.getCurrentState().getID() == 1;
+	}
+	
+	private boolean isInGameMenuOpen(){
+		try{
+			if(StateManager.getCurrentState().getID() == 2){
+				GameState state = (GameState)StateManager.getCurrentState();
+				return state.isInMenuState();
+			}
+		}catch(NullPointerException ex){
+			ex.printStackTrace();
+		}catch(ClassCastException ex){
+			ex.printStackTrace();
+		}
+		return false;
 	}
 	
 	@Override
@@ -45,12 +63,29 @@ public class MenuMouseClickEventListener implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent mouseArgs) {
 		// TODO Auto-generated method stub
-		if(!this.isMenuState()){
-			return;
+		
+		this.isInGameMenu = this.isInGameMenuOpen();
+		this.isMenu = this.isMenuState();
+		
+		try{
+		
+			if(isMenu){
+				MenuState menu = (MenuState) StateManager.getCurrentState();
+				menu.getMenu().onMenuItemRelease(mouseArgs);
+			}
+		
+			if(isInGameMenu){
+				GameState inGameMenu = (GameState) StateManager.getCurrentState();
+				inGameMenu.menu().onMenuItemRelease(mouseArgs);
+			}
+			
+		}catch(NullPointerException ex){
+			ex.printStackTrace();
+		}catch(ClassCastException ex){
+			ex.printStackTrace();
 		}
 		
-		MenuState menu = (MenuState) StateManager.getCurrentState();
-		menu.getMenu().onMenuItemRelease(mouseArgs);
+		
 	}
 
 }

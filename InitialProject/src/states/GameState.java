@@ -162,6 +162,10 @@ public class GameState extends State {
 		
 		this.isMenuOpen = true;
 	}
+    
+    public InGameMenu menu(){
+    	return this.menu;
+    }
 
     public static void setPlayer(Player player) {
         GameState.player = player;

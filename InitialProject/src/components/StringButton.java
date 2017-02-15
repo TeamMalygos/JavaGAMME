@@ -3,7 +3,12 @@ package components;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import events.MenuButtonClickEvent;
+import states.State;
+
 public class StringButton extends MenuComponent {
+	
+	private State state;
 	
 	public StringButton(int x,int y, String text){
 		super(x,y,text);
@@ -18,7 +23,13 @@ public class StringButton extends MenuComponent {
 	}
 	
 	public void onStringMenuItemRelease(){
+		if(state != null){
+			MenuButtonClickEvent e = new MenuButtonClickEvent(this,state);
+		}
+	}
 	
+	public void linkToState(State state){
+		this.state = state;
 	}
 	
 	public void onStringMenuItemHover(){
@@ -34,6 +45,14 @@ public class StringButton extends MenuComponent {
 	public void render(Graphics g){
 		g.setColor(Color.WHITE);
 		g.drawString(super.name, super.xAxisPosition, super.yAxisPosition);
+	}
+	
+	public int getPositionX(){
+		return super.xAxisPosition; 
+	}
+	
+	public int getPositionY(){
+		return super.yAxisPosition;
 	}
 	
 	

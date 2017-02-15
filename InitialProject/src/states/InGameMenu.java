@@ -1,7 +1,10 @@
 package states;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 
+import components.Button;
 import components.StringButton;
 import game.entities.UnitDrawable;
 
@@ -29,7 +32,29 @@ public class InGameMenu implements UnitDrawable{
 
 		exit = new StringButton(350,350,"Exit level");
 		exit.setSize(100, 50);
+		exit.linkToState(new MenuState());
 	}
+	
+	
+public void onMenuItemRelease(MouseEvent args){
+		
+		if(isInside(exit,args.getX(),args.getY())){
+			exit.onStringMenuItemRelease();
+		}
+		
+	}
+	
+	private boolean isInside(StringButton button, int mouseX,int mouseY){
+		
+		Rectangle rect = new Rectangle(button.getPositionX(),button.getPositionY(),100,50);
+		if(mouseX >= rect.getMinX() && mouseY >= rect.getMinY()
+				&& mouseX <= rect.getMaxX() && mouseY <= rect.getMaxY()){
+			return true;
+		}
+		
+		return false;
+	}
+	
 	
 	@Override
 	public void tick() {
