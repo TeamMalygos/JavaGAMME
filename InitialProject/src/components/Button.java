@@ -32,7 +32,7 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	public Rectangle getArea(){
 		return areaRect;
 	}
-	
+
 	public void linkToState(State state){
 		stateInit = state;
 	}
