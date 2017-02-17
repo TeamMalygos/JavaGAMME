@@ -7,6 +7,7 @@ import gfx.Assets;
 public class MenuState extends State{
  
 	private Menu startMenu;
+
 	private final static int STATE_ID = 1;
 	
 	public MenuState() {
@@ -16,7 +17,7 @@ public class MenuState extends State{
 		
     	startMenu = new Menu();
     	startMenu.init();
-    }
+	}
 
 	public Menu getMenu(){
 		return startMenu;
@@ -24,11 +25,13 @@ public class MenuState extends State{
 	
     @Override
     public void tick() {
+    	
     	startMenu.tick();
     }
 
     @Override
     public void render(Graphics g) {
+    	g.drawImage(Assets.background, 0, 0, null);
     	startMenu.render(g);
     }
 }

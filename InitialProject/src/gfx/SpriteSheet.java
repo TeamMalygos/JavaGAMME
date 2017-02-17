@@ -3,6 +3,7 @@ package gfx;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import constants.Constants;

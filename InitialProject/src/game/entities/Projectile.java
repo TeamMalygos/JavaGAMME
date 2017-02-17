@@ -1,82 +1,124 @@
 package game.entities;
 
-
-import gfx.Assets;
 import gfx.SpriteSheet;
 import states.GameState;
+import utils.CollisionBox;
+import utils.MovementAttributes;
+import utils.MovementState;
+import utils.PVector;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
-public class Projectile implements Shootable{
+public class Projectile extends MapObject implements Shootable{
+    
+    
+	protected int damage;
 
-    private int width, height, x, y, velocityX, velocityY, damage;
+    protected SpriteSheet sheet;
+    protected Rectangle boundingBox;
 
-    private SpriteSheet projectileImage;
-    private Rectangle boundingBox;
+    protected int width;
+    protected int height;
+    
+    protected boolean flyingRight;
+    
+    protected int col;
 
-    private int col;
+    protected MapObject shooter;
 
-    private EnemyShootingUnit enemyShootingUnit;
+    protected Projectile(MapObject obj) {
+    	super(obj.tileMap);
+        this.shooter = obj;
+        
+    	super.position = new PVector(obj.position.getPositionX()
+    			,obj.position.getPositionY());
+    }
+    
+    private void init(){
 
-    public Projectile(int width, int height, int x, int y, EnemyShootingUnit enemyShootingUnit) {
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
-        this.velocityX = this.velocityY = 10;
+    	super.position.setDirectionY(0);
+        
+        super.cBox = new CollisionBox(this.width,this.height);
 
-        this.boundingBox = new Rectangle(x, y, width, height);
-       // this.projectileImage = new SpriteSheet(Assets.projectile, width, height);
+        super.objectMovementAttr = new MovementAttributes();
+        super.movementState = new MovementState();
+        
+        this.boundingBox = new Rectangle((int)super.position.getPositionX()
+        		, (int)super.position.getPositionY(), this.width, this.height);
 
-        this.enemyShootingUnit = enemyShootingUnit;
-
-        this.damage = enemyShootingUnit.getDamage();
+        //this.damage = shooter.getDamage();
+    }
+    
+    private void isFlyingRight(){
+    	if(this.shooter.facingRight){
+    		this.flyingRight = true;
+    		this.position.setDirectionX(1);
+    		
+    		this.movementState.setRight(true);
+    		this.movementState.setLeft(false);
+    	}else {
+    		this.flyingRight = false;
+    		this.position.setDirectionX(-1);
+    		
+    		this.movementState.setLeft(true);
+    		this.movementState.setRight(false);
+    	}
+    }
+    
+    public void loadSprite(BufferedImage sheet,int[] framesCount,int w, int h){
+    	
+    	this.sheet = new SpriteSheet(sheet);
+    	this.sheet.setFrameLayersCount(framesCount, w,h );
+    	init();
     }
 
     @Override
     public void tick() {
         // Flying in left direction
-        this.x -= this.velocityX;
+        //this.x -= this.velocityX;
 
-        this.boundingBox.setBounds(this.x, this.y, this.width, this.height);
-
-        Player player = GameState.getPlayer();
+        this.boundingBox.setBounds((int)super.position.getPositionX()
+        		, (int)super.position.getPositionY(), this.width, this.height);
+        
+        
+    }
 
         // Projectile hits target
-        if (this.intersects(player.getBoundingBox())) {
+        //if (super.intersects(player.getBoundingBox())) {
 
-            player.takeDamage(this.damage);
-            GameState.setPlayer(player);
+           // player.takeDamage(this.damage);
+            //GameState.setPlayer(player);
 
-            System.out.println(GameState.getPlayer().getPlayerStats().getCurrentHealth());
+            //System.out.println(GameState.getPlayer().getPlayerStats().getCurrentHealth());
 
-            this.enemyShootingUnit.getProjectiles().remove(this);
+           // this.enemyShootingUnit.getProjectiles().remove(this);
 
-        } else if (!this.isInRange()) {
-            // Check whether projectile is out of range
-            this.enemyShootingUnit.getProjectiles().remove(this);
-        }
+       // } else if (!this.isInRange()) {
+       //     // Check whether projectile is out of range
+         //   this.enemyShootingUnit.getProjectiles().remove(this);
+      //  }
+   // }
+//
+    @Override
+    public void render(Graphics g) {
+
+    	super.position.getNewPosition(this.movementState, this.objectMovementAttr);
+    	super.tileMap.setPosition(this.position.getTemporaryX(), this.position.getTemporaryY());
+    	
+        g.drawImage(super.animation.getImage(), (int)super.position.getPositionX(), (int)super.position.getPositionY(), null);
+
     }
 
     @Override
-    public void render(Graphics graphics) {
-
-        //graphics.drawImage(this.projectileImage.crop(8, 5), this.x, this.y, null);
-
-    }
-
-    @Override
-    public boolean intersects(Rectangle player) {
-        if (this.boundingBox.contains(player.x, player.y) ||
-                player.contains(this.boundingBox.x, this.boundingBox.y)) {
-            return true;
-        }
-
-        return false;
+    public boolean intersects(MapObject o) {
+        return super.intersectsWith(o);
     }
 
     @Override
     public boolean isInRange() {
-        return this.x >= enemyShootingUnit.getX() - enemyShootingUnit.getShootingRange();
+    	EnemyShootingUnit u = (EnemyShootingUnit)this.shooter;
+        return super.position.getPositionX() >= shooter.position.getPositionX() - u.getShootingRange();
+        
     }
 }

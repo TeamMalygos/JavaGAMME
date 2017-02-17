@@ -3,16 +3,18 @@ package game.entities;
 
 import gfx.Assets;
 import gfx.SpriteSheet;
+import map.TileMap;
 import states.GameState;
+import utils.PVector;
 
 import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class EnemyShootingUnit implements UnitDrawable {
+public class EnemyShootingUnit extends MapObject implements UnitDrawable {
 
     private String name;
-    private int width, height, x, y, velocityX, velocityY, health, initialX, movementRange, shootingRange, damage;
+    private int width, height, velocityX, velocityY, health, initialX, movementRange, shootingRange, damage;
 
     private String direction;
 
@@ -28,12 +30,15 @@ public class EnemyShootingUnit implements UnitDrawable {
     private boolean isDead;
 
 
-    public EnemyShootingUnit(String name, int width, int height, int x, int y, int shootingRange, int damage, int health) {
+    public EnemyShootingUnit(String name, int width, int height, int x, int y, int shootingRange, int damage, int health,TileMap map) {
+    	super(map);
+    	
+    	super.position = new PVector(x,y);
+    	
         this.name = name;
-        this.width = width;
-        this.height = height;
-        this.x = x;
-        this.y = y;
+        
+        super.width = width;
+        super.height = height;
 
         this.shootingRange = shootingRange;
         this.damage = damage;
@@ -41,7 +46,9 @@ public class EnemyShootingUnit implements UnitDrawable {
         this.velocityX = this.velocityY = 4;
         this.health = health;
 
-        this.boundingBox = new Rectangle(x, y, width, height);
+        this.boundingBox = new Rectangle((int)super.position.getPositionX()
+        		, (int)super.position.getPositionY()
+        		, super.width, super.height);
         //this.enemyImage = new SpriteSheet(Assets.enemy, width, height);
         this.col = 0;
 
@@ -79,8 +86,8 @@ public class EnemyShootingUnit implements UnitDrawable {
         // See if player is in range. If yes - stop and fire at him.
         if (isPlayerInRange(GameState.getPlayer())) {
             if (shootingTimer <= 0) {
-                Projectile projectile = new Projectile(13, 30, this.x, this.y, this);
-                projectiles.add(projectile);
+               // Projectile projectile = new Projectile(13, 30, (int)super.position.getPositionX(), (int)super.position.getPositionY(), this);
+                //projectiles.add(projectile);
                 shootingTimer = 30;
             } else {
                 shootingTimer--;
@@ -94,21 +101,22 @@ public class EnemyShootingUnit implements UnitDrawable {
             }
 
             if (direction.equals("left")) {
-                this.x -= this.velocityX;
+                super.position.setPositionX(super.position.getPositionX() - this.velocityX);
 
-                if (this.x <= initialX - movementRange) {
+                if (super.position.getPositionX() <= initialX - movementRange) {
                     direction = "right";
                 }
 
             } else if (direction.equals("right")) {
-                this.x += this.velocityX;
+                super.position.setPositionX(super.position.getPositionX() + this.velocityX);
 
-                if (this.x >= initialX + movementRange) {
+                if (super.position.getPositionX() >= initialX + movementRange) {
                     direction = "left";
                 }
             }
 
-            this.boundingBox.setBounds(this.x, this.y, this.width, this.height);
+            this.boundingBox.setBounds((int)super.position.getPositionX()
+            		,(int) super.position.getPositionY(), this.width, this.height);
         }
 
         // If there are any projectiles fired call their tick().
@@ -143,23 +151,23 @@ public class EnemyShootingUnit implements UnitDrawable {
     }
 
     public boolean isPlayerInRange(Player player) {
-        return this.x - this.shootingRange <= player.getBoundingBox().getMaxX();
+        return super.position.getPositionX() - this.shootingRange <= player.getBoundingBox().getMaxX();
     }
 
     public int getX() {
-        return x;
+        return (int)super.position.getPositionX();
     }
 
     public void setX(int x) {
-        this.x = x;
+        super.position.setPositionX(x);
     }
 
     public int getY() {
-        return y;
+        return (int)super.position.getPositionY();
     }
 
     public void setY(int y) {
-        this.y = y;
+        super.position.setPositionY(y);
     }
 
     public int getShootingRange() {

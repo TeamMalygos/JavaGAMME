@@ -5,7 +5,14 @@
 /game/
 /gfx/
 /map/
+/map0.json
+/map1
+/map1.json
+/menu.wav
+/players/
 /providable/
 /states/
 /tests/
+/textures/
 /utils/
+/map2.json

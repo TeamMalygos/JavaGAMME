@@ -7,6 +7,10 @@ public class Tile {
 	private BufferedImage image;
 	private boolean blocked;
 	
+	public static final int FREE = 0;
+	public static final int BLOCKED = 1;
+	public static final int CLIMBABLE = 2;
+	
 	/**
 	 * 
 	 * <p>Constructor for the Tile object</p>

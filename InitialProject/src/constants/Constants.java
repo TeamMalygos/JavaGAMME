@@ -25,23 +25,27 @@ public class Constants {
     public static final double LEVEL_UP_MANA_INCREASE = 10;
     
     //Player
-    public static final int PLAYER_START_X = 15;
-    public static final int PLAYER_START_Y = 356;
-    public static final int PLAYER_COLLISION_WIDTH = 20;
-    public static final int PLAYER_COLLISION_HEIGHT = 20;
+    public static final int PLAYER_START_X = 25;
+    public static final int PLAYER_START_Y = 200;
+    public static final int PLAYER_COLLISION_WIDTH = 25;
+    public static final int PLAYER_COLLISION_HEIGHT = 60;
     
     //Player physics
-    public static final double PLAYER_GRAVITY = 0.21875;
+    public static final double PLAYER_GRAVITY = 2;
     public static final double PLAYER_TERMINAL_VELOCITY = 4.0;
-    public static final double PLAYER_ACCELERATION = 0.046875;
-    public static final double PLAYER_STOP_JUMP = 0.3;
-    public static final double PLAYER_JUMP = -6.5;
-    public static final double PLAYER_DEACCELERATION = 0.5;
-    public static final double PLAYER_MAXIMUM_SPEED = 1.6;
+    public static final double PLAYER_ACCELERATION = 0.9;
+    public static final double PLAYER_STOP_JUMP = 0.5;
+    public static final double PLAYER_JUMP = -16;
+    public static final double PLAYER_DEACCELERATION = 1.4;
+    public static final double PLAYER_MAXIMUM_SPEED = 4;
     
     //Menu components default size
     public static final int MENU_BUTTON_WIDTH = 209;
     public static final int MENU_BUTTON_HEIGHT = 61;
+    
+    //Projectiles
+    public static final int PROJECTILE_KEY_WIDTH = 9;
+    public static final int PROJECTILE_KEY_HEIGHT = 9;
     
     
     //Object dimensions
@@ -49,5 +53,11 @@ public class Constants {
     public static final int DIAMOND_WIDTH = 33;
     public static final int PLAYER_WIDTH = 32;
     public static final int PLAYER_HEIGHT = 63;
-
+    
+    //HUD dimensions
+    public static final int HEALTH_BAR_WIDTH = 54;
+    public static final int HEALTH_BAR_HEIGHT = 55;
+    public static final int HEALTH_BAR_X = Constants.WIDTH-60;
+    public static final int HEALTH_BAR_Y = 10;
+    
 }

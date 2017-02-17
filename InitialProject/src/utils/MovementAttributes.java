@@ -99,5 +99,4 @@ public class MovementAttributes {
 	public double getUnitStartJump(){return this.jumpStart;}
 	public double getUnitStopJump(){return this.stopJump;}
  	
- 	
 }

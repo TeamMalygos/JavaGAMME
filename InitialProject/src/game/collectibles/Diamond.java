@@ -2,6 +2,8 @@ package game.collectibles;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.Rectangle2D;
 
 import constants.Constants;
 import game.entities.Player;
@@ -28,6 +30,7 @@ public class Diamond extends LootObject {
 	@Override
 	public void tick() {
 		super.animation.update();
+		
 
 	}
 
@@ -37,11 +40,14 @@ public class Diamond extends LootObject {
 			return;
 		}
 		
-		super.t.translate(this.position.getPositionX(), this.position.getPositionY());
-		super.t.scale(1, 1);
+		//super.g2d = (Graphics2D)g;
+		//super.g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		super.g2d = (Graphics2D)g;
-		super.g2d.drawImage(super.animation.getImage(),super.t,null);
+		//super.g2d.drawImage(super.animation.getImage(),super.t,null);
+		g.drawImage(super.animation.getImage()
+				, (int)super.position.getPositionX()
+				, (int)super.position.getPositionY(), null);
+		//super.g2d.draw(new Rectangle2D.Double(super.position.getPositionX(),super.position.getPositionY(),super.width,super.height));
 	}
 
 	@Override

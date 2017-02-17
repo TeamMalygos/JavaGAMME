@@ -31,7 +31,22 @@ public class MapStructure {
 		return (TileLayer)layers[0];
 	}
 	public ObjectsLayer getObjectsLayer() {
-		return (ObjectsLayer)layers[1];
+		try{
+			return (ObjectsLayer)layers[1];
+		}catch(ArrayIndexOutOfBoundsException ex){
+			
+		}
+		return null;
+	}
+	public TileLayer getLootLayer(){
+		try{
+			return (TileLayer)layers[2];
+		}catch(ArrayIndexOutOfBoundsException ex){
+			ex.printStackTrace();
+		}catch(ClassCastException ex){
+			ex.printStackTrace();
+		}
+		return null;
 	}
 	public int getNextobjectid() {
 		return nextobjectid;

@@ -30,7 +30,7 @@ public class LevelParser {
 		
 		
 		try {
-			mapData =  gson.fromJson(new FileReader(LevelParser.class.getResource(path).getPath()), MapStructure.class);
+			mapData =  gson.fromJson(new FileReader(System.getProperty("user.dir") + "/maps" + path), MapStructure.class);
 		} catch (JsonSyntaxException e) {
 			e.printStackTrace();
 			

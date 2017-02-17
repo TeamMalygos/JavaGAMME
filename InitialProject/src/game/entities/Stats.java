@@ -3,11 +3,13 @@ package game.entities;
 
 import constants.Constants;
 
+import java.io.Serializable;
+
 import static constants.Constants.*;
 
-public class Stats {
+public class Stats implements Serializable {
 
-    private Player player;
+    private String playerName;
 
     private double health;
     private double currentHealth;
@@ -26,9 +28,8 @@ public class Stats {
     private int currentExperience;
     private int totalLevelExperience;
 
-    public Stats(Player player) {
-        this.player = player;
-
+    public Stats(String playerName) {
+        this.playerName = playerName;
         this.init();
     }
 
@@ -108,6 +109,10 @@ public class Stats {
 
     public void takeDamage(double damage) {
         this.currentHealth -= (damage - this.armor * DAMAGE_REDUCE_RATE);
+    }
+
+    public String getPlayerName() {
+        return playerName;
     }
 
     public double getCurrentHealth() {

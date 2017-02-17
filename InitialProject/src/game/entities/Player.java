@@ -16,12 +16,10 @@ import java.awt.*;
 
 import constants.Constants;
 
-import static constants.Constants.DAMAGE_REDUCE_RATE;
-
-public class Player extends MapObject implements UnitDrawable,StateProvidable{
+public class Player extends MapObject implements UnitDrawable,StateProvidable {
 
     private String name;
-
+    
     private Stats playerStats;
 
     //private int width, height, x, y, velocityX, velocityY, health;
@@ -39,17 +37,11 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
 
     public Player(String name,TileMap map) {
     	super(map);
+    	
         this.name = name;
-        super.facingRight = true;
-        this.playerStats = new Stats(this);
-        state = ObjectState.Idle;
+        this.playerStats = new Stats(name);
         
-        super.cBox = new CollisionBox(Constants.PLAYER_COLLISION_WIDTH,Constants.PLAYER_COLLISION_HEIGHT);
-        super.width = Constants.PLAYER_WIDTH;
-        super.height = Constants.PLAYER_HEIGHT;
-        
-        
-        
+        init();
         initPhysics();
         initPosition();
 
@@ -57,6 +49,35 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
 
         super.movementState = new MovementState();
         //this.boundingBox = new Rectangle(x, y, width, height);
+        
+    }
+
+    public Player(String name,TileMap map, Stats loadedStats) {
+        super(map);
+
+        this.name = name;
+        this.playerStats = loadedStats;
+        
+        init();
+        initPhysics();
+        initPosition();
+
+        loadSprites();
+
+        super.movementState = new MovementState();
+        //this.boundingBox = new Rectangle(x, y, width, height);
+
+    }
+    
+    private void init(){
+
+        super.facingRight = true;
+    
+        state = ObjectState.Idle;
+        
+        super.cBox = new CollisionBox(Constants.PLAYER_COLLISION_WIDTH,Constants.PLAYER_COLLISION_HEIGHT);
+        super.width = Constants.PLAYER_WIDTH;
+        super.height = Constants.PLAYER_HEIGHT;
         
     }
     
@@ -79,8 +100,11 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
     public void loadSprites(){
     	
     	sprite = new SpriteSheet(Assets.nakov_sheet);
+    	
     	sprite.setFrameLayersCount(numFrames,Constants.PLAYER_WIDTH,Constants.PLAYER_HEIGHT);
+    	
     	super.animation = new Animation();
+    	
     	super.animation.setDelay(1);
     	
     }
@@ -93,27 +117,88 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
     @Override
     public void tick() {
     	
-    	super.animation.setFrames(this.sprite.getFrameSet(state.ordinal()));
+    	this.playerStats.tick();
+    	getNextPosition();
+    	super.checkTileMapCollision();
+    	super.position.setPositionX(super.position.getTemporaryX());
+    	super.position.setPositionY(super.position.getTemporaryY());
+    	//super.position.determineDirection(this.movementState);
+    	
+    	if(super.position.getDirectionY() > 0){
+    		if(this.state != ObjectState.Falling){
+    			
+    			this.state = ObjectState.Falling;
+    			//Changing to falling animation
+    			
+    		}
+    	}else if(this.position.getDirectionY() < 0){
+    		
+    		if(this.state != ObjectState.Jumping){
+    			
+    			this.state = ObjectState.Jumping;
+    			this.animation.setFrames(this.sprite.getFrameSet(0));
+    			this.animation.setDelay(40);
+    			
+    		}
+    		
+    	}else if(super.movementState.isGoingLeft() || super.movementState.isGoingRight()){
+    		
+    		if(this.state != ObjectState.Walking){
+    			
+    			this.state = ObjectState.Walking;
+    			this.animation.setFrames(this.sprite.getFrameSet(ObjectState.Walking.ordinal()));
+    			this.animation.setDelay(40);  
+    		}
+    		
+    	}else{
+    		if(this.state != ObjectState.Idle){
+    			this.state = ObjectState.Idle;
+    		}
+    		this.animation.setFrames(this.sprite.getFrameSet(ObjectState.Idle.ordinal()));
+    		this.animation.setDelay(40);
+    	
+    	}
+    	
     	super.animation.update();
-        //Isn't this supposed to be below the lower if() ???
-
-        //if (isMovingRight) {
-         //   this.x += this.velocityX;
-       // } else if (isMovingLeft) {
-         //   this.x -= this.velocityX;
-        //}
+    	
+    	setDirection();
+    	
     }
 
+    
+    private void setDirection(){
+    	
+    	if(super.movementState.isGoingLeft()){super.facingRight = false;}
+    	if(super.movementState.isGoingRight()){super.facingRight = true;}
+    	
+    }
     
     
     @Override
     public void render(Graphics g) {
-
-    	getNextPosition();
   
-    	g.drawImage(super.animation.getImage()
-    			, (int)super.position.getPositionX()
-    			, (int)super.position.getPositionY(), null);
+    	super.setMapPosition();
+    	
+    	if(super.facingRight){
+    		
+    			g.drawImage(this.animation.getImage()
+        				, (int)(super.position.getPositionX() + super.mapX - super.width /2)
+        				, (int)(super.position.getPositionY() + super.mapY - super.height / 2)
+        				, null);
+    		
+    	}else {
+    		g.drawImage(this.animation.getImage()
+    				, (int)(this.position.getPositionX() + super.mapX - super.width / 2 + super.width)
+    				, (int)(this.position.getPositionY() + super.mapY - super.height / 2)
+    				, -super.width
+    				, super.height
+    				, null);
+    	}
+    	//g.drawRect((int)(this.position.getPositionX() + super.mapX - super.width / 2 + super.width)
+    			//,(int)(this.position.getPositionY() + super.mapY - super.height / 2)
+    			//, width
+    			//, height);
+    	
     }
     
     public void takeDamage(double damage) {
@@ -145,6 +230,10 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable{
 
     public void setPlayerStats(Stats playerStats) {
         this.playerStats = playerStats;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public double getX() {return super.position.getPositionX();}

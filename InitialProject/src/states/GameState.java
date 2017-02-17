@@ -3,6 +3,7 @@ package states;
 import game.entities.EnemyMeleeUnit;
 import game.entities.EnemyShootingUnit;
 import game.entities.Player;
+import game.entities.Stats;
 import gfx.Assets;
 import map.ObjectLayer;
 import map.TileMap;
@@ -12,12 +13,15 @@ import utils.Level;
 import java.awt.*;
 import java.io.*;
 
+import constants.Constants;
+
 public class GameState extends State {
     private static final int GRAVITY = 2;
     private final static int ID = 2;
     
-    private TileMap map;
+    private static TileMap map;
     private InGameMenu menu;
+    private InGameHUD hud;
     private ObjectLayer objects;
     
     private boolean isRunning;
@@ -40,13 +44,16 @@ public class GameState extends State {
         LevelLoader loader = new LevelLoader(this.level);
 
         map = new TileMap(loader.getLevelData().getTileLayer().getData()
-        		,loader.getLevelData().getTileLayer().getWidth()
-        		,loader.getLevelData().getTileLayer().getHeight());
+        		,loader.getLevelData().getTileLayer().getHeight()
+        		,loader.getLevelData().getTileLayer().getWidth());
         
         map.loadTiles("/textures/Sheet.png");
         map.setPosition(0, 0);
-        
+
         objects = new ObjectLayer(loader.getLevelData().getObjectsLayer());
+        this.objects.setSecondaryTileLayer(loader.getLevelData().getLootLayer());
+        this.objects.setOffset(loader.getLevelData().getTileLayer().getOffsetX()
+        		,loader.getLevelData().getTileLayer().getOffsetY());
         
         menu = new InGameMenu();
 
@@ -81,12 +88,14 @@ public class GameState extends State {
         System.out.println("Load character.");
         System.out.print("Player name: ");
         playerName = reader.readLine();
-        String playerFilePath = "/players/" + playerName + ".ser";
+        String playerFilePath = System.getProperty("user.dir") + "/resources/players/" + playerName + ".ser";
         File playerFile = new File (playerFilePath);
         if (playerFile.exists()) {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(playerFile));
             try {
-                player = (Player) ois.readObject();
+                Stats loadedStats = (Stats) ois.readObject();
+                player = new Player(loadedStats.getPlayerName(), map, loadedStats);
+                hud = new InGameHUD(player);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -108,6 +117,7 @@ public class GameState extends State {
             createNewPlayer(reader);
         } else {
             player = new Player(playerName,map);
+            hud = new InGameHUD(player);
         }
     }
 
@@ -122,9 +132,14 @@ public class GameState extends State {
             }
             isRunning = true;
     	}
-    	map.update();
-    	objects.tick();
+   
         player.tick();
+    	map.setPosition(Constants.WIDTH / 2 - this.player.getX()
+    			, Constants.HEIGHT / 2 - this.player.getY());
+    	
+    	objects.tick();
+   
+        hud.tick();
         //firstEnemyShootingUnit.tick();
         //firstMeleeEnemy.tick();
         if(this.isMenuOpen){
@@ -137,6 +152,7 @@ public class GameState extends State {
     	map.draw(g);
     	objects.render(g);
         player.render(g);
+        hud.render(g);
         //firstEnemyShootingUnit.render(g);
         //firstMeleeEnemy.render(g);
         if(this.isMenuOpen){
@@ -150,6 +166,9 @@ public class GameState extends State {
 
     public static Player getPlayer() {
         return player;
+    }
+    public static TileMap getMap(){
+    	return map;
     }
     public boolean isInMenuState(){
     	return this.isMenuOpen;

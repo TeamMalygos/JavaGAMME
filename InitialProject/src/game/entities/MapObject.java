@@ -62,8 +62,8 @@ public abstract class MapObject {
 		
 		int leftCorner = (int)(x - this.cBox.getCollisionWidth() / 2) / this.tileSize;
 		int rightCorner = (int)(x + this.cBox.getCollisionWidth() / 2 - 1) / this.tileSize;
-		int bottomCorner = (int)(y - this.cBox.getCollisionHeight() / 2) / this.tileSize;
-		int topCorner = (int)(y + this.cBox.getCollisionHeight() / 2 - 1) / this.tileSize;
+		int topCorner = (int)(y - this.cBox.getCollisionHeight() / 2) / this.tileSize;
+		int bottomCorner = (int)(y + this.cBox.getCollisionHeight() / 2 - 1) / this.tileSize;
 		
 		this.cBox.setCollisionBoundaries(this.tileMap.isBlocked(topCorner, leftCorner)
 				, this.tileMap.isBlocked(topCorner, rightCorner)
@@ -100,7 +100,7 @@ public abstract class MapObject {
 		calculateYMovement();
 
 		//Secondary is x direction
-		checkCollisionCorners(this.position.getDestinationY(),this.position.getPositionX());
+		checkCollisionCorners(this.position.getDestinationX(),this.position.getPositionY());
 		calculateXMovement();
 		
 		//Check if the blocks below the object are solid and if he should fall
@@ -125,11 +125,10 @@ public abstract class MapObject {
 				//Direction y is set to 0
 				this.position.setDirectionY(0);
 				//Position is set to x/y below the tile you bumped into
-				this.position.setTemporaryY((this.currentRow * this.tileSize 
-						+ this.cBox.getCollisionHeight())/2);
+				this.position.setTemporaryY(this.currentRow * this.tileSize 
+						+ this.cBox.getCollisionHeight()/2);
 			}else {
-				this.position.setTemporaryY(this.position.getTemporaryY() 
-						+ this.position.getDirectionY());
+				this.position.setTemporaryY(this.position.getTemporaryY() + this.position.getDirectionY());
 			}
 		}
 		
@@ -140,8 +139,9 @@ public abstract class MapObject {
 				
 				//Setting y direction to 0 and position to (right above the blocked tile)
 				this.position.setDirectionY(0);
-				this.position.setTemporaryY(((this.currentRow + 1) * this.tileSize 
-						- this.cBox.getCollisionHeight()) /2 );
+				this.movementState.setFalling(false);
+				this.position.setTemporaryY((this.currentRow + 1) * this.tileSize 
+						- this.cBox.getCollisionHeight() /2 );
 			}else {
 				this.position.setTemporaryY(this.position.getTemporaryY() 
 						+ this.position.getDirectionY());
@@ -158,8 +158,8 @@ public abstract class MapObject {
 			if(this.cBox.isTopLeftBlocked() || this.cBox.isBottomLeftBlocked()){
 				
 				this.position.setDirectionX(0);
-				this.position.setTemporaryX((this.currentColumn * this.tileSize 
-						+ this.cBox.getCollisionWidth()) / 2);
+				this.position.setTemporaryX(this.currentColumn * this.tileSize 
+						+ this.cBox.getCollisionWidth() / 2);
 				
 			}else {
 				this.position.setTemporaryX(this.position.getTemporaryX() 
@@ -171,10 +171,10 @@ public abstract class MapObject {
 		if(this.position.getDirectionX() > 0){
 			
 			if(this.cBox.isTopRightBlocked() || this.cBox.isBottomRightBlocked()){
-				
+			
 				this.position.setDirectionX(0);
-				this.position.setTemporaryX(((this.currentColumn+1) * this.tileSize 
-						- this.cBox.getCollisionWidth()) / 2);
+				this.position.setTemporaryX((this.currentColumn+1) * this.tileSize 
+						- this.cBox.getCollisionWidth() / 2);
 				
 			}else {
 				this.position.setTemporaryX(this.position.getTemporaryX() 

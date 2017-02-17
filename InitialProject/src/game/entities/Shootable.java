@@ -9,7 +9,7 @@ public interface Shootable {
 
     void render(Graphics graphics);
 
-    boolean intersects(Rectangle player);
+    boolean intersects(MapObject player);
 
     boolean isInRange();
 }

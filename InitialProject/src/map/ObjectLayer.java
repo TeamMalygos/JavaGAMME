@@ -11,25 +11,60 @@ import game.entities.Player;
 import game.entities.UnitDrawable;
 import map.parser.ObjectsLayer;
 import map.parser.ObjectsLayerObject;
+import map.parser.TileLayer;
 import states.GameState;
 import states.StateManager;
 
 public class ObjectLayer implements UnitDrawable {
 
 	private ObjectsLayer layer; 
+	private TileLayer lootLayer;
 	private List<ObjectsLayerObject> objects;
 	private List<Diamond> diamonds;
+	private LootMap lootMap;
+	
+	private int deltaOffsetX;
+	private int deltaOffseY;
+	
+	private boolean isInitialized;
 	
 	public ObjectLayer(ObjectsLayer layer){
 		this.layer = layer;
-		init();
+		this.isInitialized = false;
 		
 	}
 
-	private void init(){
+	public void setSecondaryTileLayer(TileLayer t){
+		this.lootLayer = t;
+		init();
+	}
+	
+	public void setOffset(int x,int y){
 		
-		objects = layer.getObjects();
+		this.deltaOffsetX = Math.abs(this.layer.getOffsetX() - x);
+		this.deltaOffseY = Math.abs(this.layer.getOffsetY() - y);
+		
+	}
+	
+	private void init(){
 		diamonds = new ArrayList<Diamond>();
+		
+		try{
+		objects = layer.getObjects();
+		}catch(NullPointerException ex){
+			ex.printStackTrace();
+			return;
+		}
+		
+		try{
+			this.lootMap = new LootMap(GameState.getMap());
+			this.lootMap.setData(this.lootLayer.getData(), this.lootLayer.getWidth(), this.lootLayer.getHeight());
+		}catch(NullPointerException ex){
+			ex.printStackTrace();
+			return;
+		}
+		
+		isInitialized = true;
 		initDiamonds();
 		
 		
@@ -39,7 +74,10 @@ public class ObjectLayer implements UnitDrawable {
 		for(ObjectsLayerObject obj : objects){
 			if(obj.getName().equals("diamond")){
 				
-				Diamond diamond = new Diamond(obj.getGid(),obj.getX(),obj.getY());
+				Diamond diamond = new Diamond(obj.getGid()
+						,obj.getX()
+						,obj.getY());
+				
 				diamonds.add(diamond);
 				
 			}
@@ -47,9 +85,7 @@ public class ObjectLayer implements UnitDrawable {
 	}
 	
 	public void tickCollectibles(){
-		
-		GameState state = (GameState)StateManager.getCurrentState();
-		Player p = state.getPlayer();
+		Player p = GameState.getPlayer();
 		
 		diamonds.forEach(d -> {d.tick(); d.isCollected(p.getBoundingBox());});
 		diamonds = diamonds.stream().filter(x -> !x.checkCollected()).collect(Collectors.toList());
@@ -58,8 +94,9 @@ public class ObjectLayer implements UnitDrawable {
 	
 	@Override
 	public void tick(){
-		
-		tickCollectibles();
+		if(this.isInitialized){
+			tickCollectibles();
+		}
 		
 	}
 	

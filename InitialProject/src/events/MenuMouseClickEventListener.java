@@ -13,7 +13,12 @@ public class MenuMouseClickEventListener implements MouseListener{
 	private boolean isMenu;
 	
 	private boolean isMenuState(){
-		return StateManager.getCurrentState().getID() == 1;
+		try{
+			return StateManager.getCurrentState().getID() == 1;
+		}catch(NullPointerException ex){
+			
+		}
+		return false;
 	}
 	
 	private boolean isInGameMenuOpen(){

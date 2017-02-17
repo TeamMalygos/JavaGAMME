@@ -18,8 +18,10 @@ public class PVector {
 	 * <p>Position vector constructor - initializes the position to 0/0</p> 
 	 */
 	public PVector(){
-		x = 0;
-		y = 0;
+		this.x = 0;
+		this.y = 0;
+		this.tempX = 0;
+		this.tempY = 0;
 	}
 	
 	/**
@@ -31,55 +33,93 @@ public class PVector {
 	public PVector(double x,double y){
 		this.x = x;
 		this.y = y;
-		this.destX = x;
-		this.destY = y;
+		this.destX = 0;
+		this.destY = 0;
 		this.directionX = 0;
 		this.directionY = 0;
 	}
+	/*
+	public void determineDirection(MovementState s){
+		
+		if(s.isJumping()){this.directionY = -1;}
+		else if(s.isFalling()){this.directionY = 1;}
+		else if(s.isGoingLeft()){this.directionX = -1;}
+		else if(s.isGoingRight()){this.directionX = 1;}else {
+			this.directionX = 0;
+			this.directionY = 0;
+		}
+		
+	}*/
 	
 	public void getNewPosition(MovementState movementState
 			,MovementAttributes objectMovementAttr){
+
 	double newDestX = 0d;
 	if(movementState.isGoingLeft()){
-		newDestX = this.destX - 
+
+		newDestX = this.directionX - 
 				objectMovementAttr.getUnitAcceleration();
 		
-		if(newDestX > -objectMovementAttr.getUnitMaximumSpeed()){
+		if(newDestX < -objectMovementAttr.getUnitMaximumSpeed()){
 			newDestX = -objectMovementAttr.getUnitMaximumSpeed();
 		}
 		
-		this.destX = newDestX;
+		this.directionX = newDestX;
 		
 	}else if(movementState.isGoingRight()){
-		
-		newDestX = this.destX 
+
+		newDestX = this.directionX 
 				+ objectMovementAttr.getUnitAcceleration();
 		
 		if(newDestX > objectMovementAttr.getUnitMaximumSpeed()){
 			newDestX = objectMovementAttr.getUnitMaximumSpeed();
 		}
-		this.destX = newDestX;
+		this.directionX = newDestX;
 		//Else if we are not moving left or right
 	}else {
-		if(this.destX > 0){
+		if(this.directionX > 0){
 		
-			newDestX = this.destX
-					- objectMovementAttr.getUnitAcceleration();
+			newDestX = this.directionX
+					- objectMovementAttr.getUnitStopSpeed();
 			if(newDestX < 0){
 				newDestX = 0;
 			}
 			
-		}else if(this.destX < 0){
+		}else if(this.directionX < 0){
 			
-			newDestX = this.destX 
-					+ objectMovementAttr.getUnitAcceleration();
+			newDestX = this.directionX 
+					+ objectMovementAttr.getUnitStopSpeed();
+			System.out.println("DirectionX: " + this.directionX);
 			if(newDestX > 0){
+
 				newDestX = 0;
 			}
 			
 		}
-		this.destX = newDestX;
+		this.directionX = newDestX;
 	}
+	//Greshka
+	if(movementState.isJumping() && !movementState.isFalling()){
+		this.directionY += objectMovementAttr.getUnitStartJump();
+		movementState.setFalling(true);
+	}
+	
+	if(movementState.isFalling()){
+		
+		this.directionY += objectMovementAttr.getUnitStopJump();
+		
+		if(this.directionY > 0){
+			movementState.setJump(false);
+		}
+		if(this.directionY > 0 && !movementState.isJumping()){
+			this.directionY += objectMovementAttr.getUnitStopJump();
+		}
+		if(this.directionY > objectMovementAttr.getUnitTerminalVelocity()){
+			this.directionY = objectMovementAttr.getUnitTerminalVelocity();
+		}
+		
+	}
+	
 	
 	//TODO: Make it so that player can't attack while moving
 }
