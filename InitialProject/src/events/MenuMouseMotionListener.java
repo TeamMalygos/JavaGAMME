@@ -17,13 +17,11 @@ public class MenuMouseMotionListener implements MouseMotionListener{
 	
 	@Override
 	public void mouseDragged(MouseEvent mouseArgs) {
-		// TODO Auto-generated method stub
 		
 	}
  
 	@Override
 	public void mouseMoved(MouseEvent mouseArgs) {
-		// TODO Auto-generated method stub
 		if(!this.isMenuState()){
 			return;
 		}

@@ -50,7 +50,6 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	
 	@Override
 	public void tick(){
-		//I have no fucking idea what this does but it looks fabulous
 		if(super.hover){
 			super.currentFrame = this.hover;
 		}else if(super.isPressed){
@@ -71,7 +70,6 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 
 	@Override
 	public void onMenuButtonClick() {
-		// TODO Auto-generated method stub
 		super.isPressed = true;
 		super.hover = false;
 	}
@@ -87,7 +85,6 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 
 	@Override
 	public void onMenuButtonHover() {
-		// TODO Auto-generated method stub
 		super.isPressed = false;
 		super.hover = true;
 	}

@@ -62,7 +62,6 @@ public class GameEngine implements Runnable {
             StateManager.getCurrentState().render(g);
         }
 
-        //g.drawImage(this.sh.crop(0, i), 100, 100, null);
 
 
         //END drawing

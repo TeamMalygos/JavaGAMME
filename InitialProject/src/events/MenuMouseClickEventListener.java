@@ -37,26 +37,22 @@ public class MenuMouseClickEventListener implements MouseListener{
 	
 	@Override
 	public void mouseClicked(MouseEvent mouseArgs) {
-		// TODO Auto-generated method stub
-		
+
 	}
 	
 
 	@Override
 	public void mouseEntered(MouseEvent mouseArgs) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent mouseArgs) {
-		// TODO Auto-generated method stub
 		if(!this.isMenuState()){
 			return;
 		}
@@ -67,7 +63,6 @@ public class MenuMouseClickEventListener implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent mouseArgs) {
-		// TODO Auto-generated method stub
 		
 		this.isInGameMenu = this.isInGameMenuOpen();
 		this.isMenu = this.isMenuState();
