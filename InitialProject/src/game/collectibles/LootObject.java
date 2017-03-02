@@ -39,7 +39,7 @@ public abstract class LootObject implements Collectible {
 		
 	}
 	
-	protected void setPosition(double x,double y){
+	public void setPosition(double x,double y){
 		this.position = new PVector(x,y);
 		this.t = AffineTransform.getTranslateInstance(x, y);
 		
@@ -48,7 +48,7 @@ public abstract class LootObject implements Collectible {
 		
 	}
 
-	protected void setName(String name){
+	public void setName(String name){
 		this.name = name;
 	}
 	
