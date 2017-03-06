@@ -5,8 +5,10 @@ import gfx.Assets;
 import gfx.SpriteSheet;
 import map.TileMap;
 import providable.StateProvidable;
+import states.GameState;
 import utils.Animation;
 import utils.CollisionBox;
+import utils.LootBag;
 import utils.MovementAttributes;
 import utils.MovementState;
 import utils.ObjectState;
@@ -26,6 +28,8 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     
     private boolean isDead;
     
+    private LootBag bag;
+    
     //Animation frames - Containers and helpful prereqs
     private SpriteSheet sprite;
     private final int[] numFrames = {
@@ -40,6 +44,7 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     	
         this.name = name;
         this.playerStats = new Stats(name);
+        this.bag = this.playerStats.getBag();
         
         init();
         initPhysics();
@@ -57,6 +62,8 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
 
         this.name = name;
         this.playerStats = loadedStats;
+        
+        this.bag = this.playerStats.getBag();
         
         init();
         initPhysics();
@@ -175,8 +182,8 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     
     
     @Override
-    public void render(Graphics g) {
-  
+    public void render(Graphics g){
+    	
     	super.setMapPosition();
     	
     	if(super.facingRight){
@@ -235,6 +242,10 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     public String getName() {
         return name;
     }
+    
+    public LootBag getBag(){
+    	return this.bag;
+    }
 
     public double getX() {return super.position.getPositionX();}
     public void setX(int x) {super.position.setPositionX(x);}
@@ -274,5 +285,4 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
 	public void setJumping(boolean jump) {super.movementState.setJump(jump);}
 	@Override
 	public void setFalling(boolean fall) {super.movementState.setFalling(fall);}
-	
 }

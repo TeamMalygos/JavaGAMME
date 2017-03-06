@@ -20,14 +20,10 @@ public class HealthBar extends HUDComponent{
 		super.loadSprite(Assets.healthBar, new int[] { 8 });
 		
 	}
-	
-	public void linkPlayer(Player p){
-		super.setToPlayer(p);
-		initialHealth = (int) p.getPlayerStats().getCurrentHealth();
-	}
 
 	@Override
 	public void render(Graphics g) {
+
 		g.drawImage(this.frames[this.state.ordinal()]
 				,this.xAxisPosition,this.yAxisPosition,null);
 	}

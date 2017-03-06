@@ -17,11 +17,11 @@ public abstract class HUDComponent extends MenuComponent {
 	}
 
 	@Override
-	protected abstract void render(Graphics g);
+	public abstract void render(Graphics g);
 	@Override
-	protected abstract void tick();
+	public abstract void tick();
 	
-	protected void setToPlayer(Player p){
+	public void linkToPlayer(Player p){
 		this.player = p;
 	}
 	

@@ -8,6 +8,7 @@ import gfx.Assets;
 import map.ObjectLayer;
 import map.TileMap;
 import map.parser.LevelLoader;
+import map.parser.ObjectsLayer;
 import utils.Level;
 
 import java.awt.*;
@@ -20,9 +21,9 @@ public class GameState extends State {
     private final static int ID = 2;
     
     private static TileMap map;
+    private static ObjectLayer objects;
     private InGameMenu menu;
     private InGameHUD hud;
-    private ObjectLayer objects;
     
     private boolean isRunning;
     private boolean isMenuOpen;
@@ -47,13 +48,15 @@ public class GameState extends State {
         		,loader.getLevelData().getTileLayer().getHeight()
         		,loader.getLevelData().getTileLayer().getWidth());
         
+        map.setOffset(loader.getLevelData().getTileLayer().getOffsetX(),
+        		loader.getLevelData().getTileLayer().getOffsetY());
         map.loadTiles("/textures/Sheet.png");
         map.setPosition(0, 0);
-
+        
         objects = new ObjectLayer(loader.getLevelData().getObjectsLayer());
-        this.objects.setSecondaryTileLayer(loader.getLevelData().getLootLayer());
-        this.objects.setOffset(loader.getLevelData().getTileLayer().getOffsetX()
-        		,loader.getLevelData().getTileLayer().getOffsetY());
+        objects.setSecondaryTileLayer(loader.getLevelData().getLootLayer());
+        objects.setOffset(loader.getLevelData().getLootLayer().getOffsetX()
+        		,loader.getLevelData().getLootLayer().getOffsetY());
         
         menu = new InGameMenu();
 
@@ -124,6 +127,7 @@ public class GameState extends State {
 
     @Override
     public void tick() {
+    	
     	if(!isRunning){
             try {
                 init();
@@ -134,8 +138,8 @@ public class GameState extends State {
     	}
    
         player.tick();
-    	map.setPosition(Constants.WIDTH / 2 - this.player.getX()
-    			, Constants.HEIGHT / 2 - this.player.getY());
+    	map.setPosition(Constants.WIDTH / 2 - player.getX()
+    			, Constants.HEIGHT / 2 - player.getY());
     	
     	objects.tick();
    
@@ -196,6 +200,10 @@ public class GameState extends State {
 
     public static void setFirstEnemyShootingUnit(EnemyShootingUnit firstEnemyShootingUnit) {
         GameState.firstEnemyShootingUnit = firstEnemyShootingUnit;
+    }
+    
+    public static ObjectLayer getObjectsLayer(){
+    	return objects;
     }
 
 	

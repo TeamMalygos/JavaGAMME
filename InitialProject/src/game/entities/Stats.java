@@ -1,14 +1,17 @@
 package game.entities;
 
 
-import constants.Constants;
-
 import java.io.Serializable;
+
+import utils.LootBag;
 
 import static constants.Constants.*;
 
+@SuppressWarnings("serial")
 public class Stats implements Serializable {
 
+	private LootBag bag;
+	
     private String playerName;
 
     private double health;
@@ -30,6 +33,7 @@ public class Stats implements Serializable {
 
     public Stats(String playerName) {
         this.playerName = playerName;
+        this.bag = new LootBag();
         this.init();
     }
 
@@ -137,5 +141,11 @@ public class Stats implements Serializable {
 
     public void setArmor(double armor) {
         this.armor = armor;
+    }
+    public void setBag(LootBag b){
+    	this.bag = b;
+    }
+    public LootBag getBag(){
+    	return this.bag;
     }
 }

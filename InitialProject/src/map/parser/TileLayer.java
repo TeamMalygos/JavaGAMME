@@ -8,8 +8,8 @@ public class TileLayer implements Layered{
 	private int height;
 	private String name;
 	
-	private int offsetX;
-	private int offsetY;
+	private int offsetx;
+	private int offsety;
 	
 	private int opacity;
 	private String type;
@@ -37,16 +37,16 @@ public class TileLayer implements Layered{
 		this.name = name;
 	}
 	public int getOffsetX() {
-		return offsetX;
+		return offsetx;
 	}
 	public void setOffsetX(int offsetX) {
-		this.offsetX = offsetX;
+		this.offsetx = offsetX;
 	}
 	public int getOffsetY() {
-		return offsetY;
+		return offsety;
 	}
 	public void setOffsetY(int offsetY) {
-		this.offsetY = offsetY;
+		this.offsety = offsetY;
 	}
 	public int getOpacity() {
 		return opacity;

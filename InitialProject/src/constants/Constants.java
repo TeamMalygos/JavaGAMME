@@ -42,6 +42,8 @@ public class Constants {
     //Menu components default size
     public static final int MENU_BUTTON_WIDTH = 209;
     public static final int MENU_BUTTON_HEIGHT = 61;
+	public static final int LEVEL_CARD_HEIGHT = 200;
+	public static final int LEVEL_CARD_WIDTH = 100;
     
     //Projectiles
     public static final int PROJECTILE_KEY_WIDTH = 9;
@@ -53,11 +55,19 @@ public class Constants {
     public static final int DIAMOND_WIDTH = 33;
     public static final int PLAYER_WIDTH = 32;
     public static final int PLAYER_HEIGHT = 63;
+    public static final int BEER_WIDTH = 10;
+    public static final int BEER_HEIGHT = 32;
     
     //HUD dimensions
     public static final int HEALTH_BAR_WIDTH = 54;
     public static final int HEALTH_BAR_HEIGHT = 55;
+    
+    //HUD Position
     public static final int HEALTH_BAR_X = Constants.WIDTH-60;
     public static final int HEALTH_BAR_Y = 10;
+    public static final int DIAMONDS_COUNTER_X = 4;
+    public static final int DIAMONDS_COUNTER_Y = 4;    
+	public static final int DIAMONDS_COUNTER_HEIGHT = 34;
+	public static final int DIAMONDS_COUTNER_WIDTH = 117;
     
 }

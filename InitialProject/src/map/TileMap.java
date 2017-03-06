@@ -45,6 +45,9 @@ public class TileMap {
 	private int numTilesAcross;
 	private int numTileRows;
 	
+	private int offsetX;
+	private int offsetY;
+	
 	//Camera movement
 	private double cameraSpeed;
 	
@@ -129,16 +132,27 @@ public class TileMap {
 	}
 	public int getColOffset(){return this.colOffset;}
 	public int getRowOffset(){return this.rowOffset;}
-	
+	public double getCameraSpeed(){return this.cameraSpeed;}	
+	public double getXMin(){return this.xmin;}
+	public double getYMax(){return this.ymax;}
+	public int getOffsetX(){return this.offsetX;}
+	public int getOffsetY(){return this.offsetY;}
 	
 	public boolean isBlocked(int row,int col){
-		int rc = map[row][col];
-		if(rc == 0){
-			return false;
+		
+		try{
+			int rc = map[row][col];
+			if(rc == 0){
+				return false;
+			}
+			int r = rc / tiles[0].length;
+			int c = rc % tiles[0].length;
+			return tiles[r][c].getType();
+		}catch(ArrayIndexOutOfBoundsException ex){
+			
 		}
-		int r = rc / tiles[0].length;
-		int c = rc % tiles[0].length;
-		return tiles[r][c].getType();
+		
+		return true;
 	}
 	
 	public void setPosition(double x,double y){
@@ -195,4 +209,10 @@ public class TileMap {
 			}
 		}
 	}
+
+	public void setOffset(int offsetX, int offsetY) {
+		this.offsetX = offsetX;
+		this.offsetY = offsetY;
+	}
+	
 }

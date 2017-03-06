@@ -28,13 +28,20 @@ public class MapStructure {
 		return width;
 	}
 	public TileLayer getTileLayer() {
-		return (TileLayer)layers[0];
+		try{
+			return (TileLayer)layers[0];
+		}catch(ArrayIndexOutOfBoundsException ex){
+			ex.printStackTrace();
+		}catch(ClassCastException ex){
+			ex.printStackTrace();
+		}
+		return null;
 	}
 	public ObjectsLayer getObjectsLayer() {
 		try{
 			return (ObjectsLayer)layers[1];
 		}catch(ArrayIndexOutOfBoundsException ex){
-			
+			ex.printStackTrace();
 		}
 		return null;
 	}

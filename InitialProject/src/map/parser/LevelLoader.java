@@ -10,7 +10,7 @@ public class LevelLoader {
 	
 	public LevelLoader(Level level){
 		this.level = level;
-		path = "/map"+level.ordinal() + ".json";
+		path = "/map."+(level.ordinal()+1) + ".json";
 		prepareLevel();
 		
 	}

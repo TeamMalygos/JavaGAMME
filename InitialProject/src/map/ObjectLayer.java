@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import constants.Constants;
 import game.collectibles.Collectible;
 import game.collectibles.Diamond;
 import game.entities.Player;
@@ -23,9 +24,6 @@ public class ObjectLayer implements UnitDrawable {
 	private List<Diamond> diamonds;
 	private LootMap lootMap;
 	
-	private int deltaOffsetX;
-	private int deltaOffseY;
-	
 	private boolean isInitialized;
 	
 	public ObjectLayer(ObjectsLayer layer){
@@ -40,9 +38,11 @@ public class ObjectLayer implements UnitDrawable {
 	}
 	
 	public void setOffset(int x,int y){
+		if(!this.isInitialized){
+			return;
+		}
 		
-		this.deltaOffsetX = Math.abs(this.layer.getOffsetX() - x);
-		this.deltaOffseY = Math.abs(this.layer.getOffsetY() - y);
+		this.lootMap.setOffset(x, y);
 		
 	}
 	
@@ -65,11 +65,11 @@ public class ObjectLayer implements UnitDrawable {
 		}
 		
 		isInitialized = true;
-		initDiamonds();
+		//initDiamonds();
 		
 		
 	}
-	
+	/*
 	private void initDiamonds(){
 		for(ObjectsLayerObject obj : objects){
 			if(obj.getName().equals("diamond")){
@@ -83,34 +83,50 @@ public class ObjectLayer implements UnitDrawable {
 			}
 		}
 	}
-	
+	*/
 	public void tickCollectibles(){
-		Player p = GameState.getPlayer();
+		//Player p = GameState.getPlayer();
 		
-		diamonds.forEach(d -> {d.tick(); d.isCollected(p.getBoundingBox());});
-		diamonds = diamonds.stream().filter(x -> !x.checkCollected()).collect(Collectors.toList());
-
+		//diamonds.forEach(d -> {d.tick(); d.isCollected(p.getBoundingBox());});
+		//diamonds = diamonds.stream().filter(x -> !x.checkCollected()).collect(Collectors.toList());
+		
 	}
 	
 	@Override
 	public void tick(){
-		if(this.isInitialized){
-			tickCollectibles();
+		
+		if(!this.isInitialized){
+			return;
 		}
 		
+    	this.lootMap
+    	.setPosition(Constants.WIDTH/2 - GameState.getPlayer().getX()
+    			,Constants.HEIGHT /2 - GameState.getPlayer().getY());
+		this.lootMap.tick();
+    	
 	}
 	
 	@Override
 	public void render(Graphics g){
 		
-		//Collectibles
-		for(Diamond d : diamonds){
-			d.render(g);
+		if(this.objects == null){
+			return;
 		}
+		
+		this.lootMap.render(g);
+		
+		//Collectibles
+		//for(Diamond d : diamonds){
+			//d.render(g);
+		//}
 		
 		
 		//Entities
 		
+	}
+	
+	public LootMap getLootMap(){
+		return this.lootMap;
 	}
 	
 	

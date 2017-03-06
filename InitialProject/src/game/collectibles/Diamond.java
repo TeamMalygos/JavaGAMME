@@ -10,7 +10,7 @@ import game.entities.Player;
 import gfx.Assets;
 import gfx.SpriteSheet;
 
-public class Diamond extends LootObject {
+public class Diamond extends LootObject{
 
 	private SpriteSheet sheet;
 	private int[] frameCount = { 8 };
@@ -25,6 +25,10 @@ public class Diamond extends LootObject {
 		super.animation.setFrame(0);
 		super.animation.setDelay(65);
 		
+	}
+	
+	public Diamond(int id){	
+		this(id,0,0);
 	}
 	
 	@Override
@@ -54,7 +58,7 @@ public class Diamond extends LootObject {
 	public void loadSprite() {
 		
 		sheet = new SpriteSheet(Assets.diamond);
-		sheet.setFrameLayersCount(frameCount,Constants.DIAMOND_WIDTH,Constants.DIAMOND_HEIGHT);
+		sheet.setFrameLayersCount(frameCount,super.width,super.height);
 		
 	}
 

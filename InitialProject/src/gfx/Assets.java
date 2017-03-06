@@ -17,6 +17,7 @@ public class Assets {
     
     //Entites.Collectible
     public static BufferedImage diamond;
+    public static BufferedImage beer;
     
     //Entities.Projectile
     public static BufferedImage projectile;
@@ -28,6 +29,7 @@ public class Assets {
     
     //HUD resources
     public static BufferedImage healthBar;
+    public static BufferedImage diamondsCounter;
 
     public static void init() {
     	//Map
@@ -41,6 +43,7 @@ public class Assets {
         
         //Entities.Collectible
         diamond = ImageLoader.loadImage("/textures/diamond.png");
+        beer = ImageLoader.loadImage("/textures/beer.png");
         
         //Entities.Projectile
         projectile = ImageLoader.loadImage("/textures/blast.png");
@@ -52,5 +55,6 @@ public class Assets {
         
         //HUD
         healthBar = ImageLoader.loadImage("/textures/healthbarSprite.png");
+        diamondsCounter = ImageLoader.loadImage("/textures/counter.png");
     }
 }

@@ -1,5 +1,6 @@
 package game.collectibles;
 
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
@@ -27,11 +28,11 @@ public abstract class LootObject implements Collectible {
 	
 	protected AffineTransform t;
 	
-	public LootObject(int id,int width,int height){
+	public LootObject(int id,int w,int h){
 		
 		this.id = id;
-		this.width = width;
-		this.height = height;
+		this.width = w;
+		this.height = h;
 		
 		this.animation = new Animation();
 		
@@ -39,7 +40,7 @@ public abstract class LootObject implements Collectible {
 		
 	}
 	
-	protected void setPosition(double x,double y){
+	public void setPosition(double x,double y){
 		this.position = new PVector(x,y);
 		this.t = AffineTransform.getTranslateInstance(x, y);
 		
@@ -48,13 +49,15 @@ public abstract class LootObject implements Collectible {
 		
 	}
 
-	protected void setName(String name){
+	public void setName(String name){
 		this.name = name;
 	}
 	
 	@Override
 	public void isCollected(Rectangle playerBounds){
+		
 		playerBounds = new Rectangle((int)playerBounds.getX(),(int)playerBounds.getY(),0,(int)playerBounds.getHeight());
+		
 		if (this.boundingBox.contains(playerBounds.getX(), playerBounds.getY()) ||
             this.boundingBox.contains(playerBounds.getMaxX(), playerBounds.getY()) ||
             this.boundingBox.contains(playerBounds.getX(), playerBounds.getMaxY()) ||
@@ -66,6 +69,54 @@ public abstract class LootObject implements Collectible {
     	this.collected = false;
 	}
 	
+	public abstract void tick();
+	
+	public abstract void render(Graphics g);
+	
+	public PVector getPosition() {
+		return position;
+	}
+
+	public void setPosition(PVector position) {
+		this.position = position;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public Rectangle getBoundingBox() {
+		return boundingBox;
+	}
+
+	public void setBoundingBox(Rectangle boundingBox) {
+		this.boundingBox = boundingBox;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	public boolean checkCollected(){
 		return this.collected;
 	}
