@@ -3,7 +3,7 @@ package states;
 import game.entities.EnemyMeleeUnit;
 import game.entities.EnemyShootingUnit;
 import game.entities.Player;
-import game.entities.Stats;
+import game.entities.playerProperties.Stats;
 import gfx.Assets;
 import map.ObjectLayer;
 import map.TileMap;

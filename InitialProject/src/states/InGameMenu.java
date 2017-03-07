@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 
 import components.StringButton;
 import game.entities.Player;
-import game.entities.Stats;
+import game.entities.playerProperties.Stats;
 import game.entities.UnitDrawable;
 
 public class InGameMenu implements UnitDrawable{

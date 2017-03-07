@@ -1,6 +1,7 @@
 package game.entities;
 
 
+import game.entities.playerProperties.Stats;
 import gfx.Assets;
 import gfx.SpriteSheet;
 import map.TileMap;
@@ -209,6 +210,14 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
 
     public void gainExperience(int experienceAmount) {
         this.playerStats.gainExperience(experienceAmount);
+    }
+
+    public void learnSpell(String spellType) {
+        this.playerStats.learnSpell(spellType);
+    }
+
+    public void levelUpSpell(String spellType) {
+        this.playerStats.levelUpSpell(spellType);
     }
 
     public void gainHealth(int healthAmount) {
