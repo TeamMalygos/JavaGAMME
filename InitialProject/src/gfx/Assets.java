@@ -26,6 +26,8 @@ public class Assets {
     //Menu resources
     public static BufferedImage playButton;
     public static BufferedImage quitButton;
+    public static BufferedImage loadButton;
+    public static BufferedImage newButton;
     
     //HUD resources
     public static BufferedImage healthBar;
@@ -52,6 +54,8 @@ public class Assets {
         //Menu
         playButton = ImageLoader.loadImage("/textures/play.png");
         quitButton = ImageLoader.loadImage("/textures/quit.png");
+        newButton = ImageLoader.loadImage("/textures/new.png");
+        loadButton = ImageLoader.loadImage("/textures/load.png");
         
         //HUD
         healthBar = ImageLoader.loadImage("/textures/healthbarSprite.png");

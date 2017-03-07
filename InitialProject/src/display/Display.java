@@ -15,15 +15,20 @@ public class Display {
     private String name;
     private JFrame frame;
     private Canvas canvas;
+    private GlassPane pane;
 
     public Display(String name) {
         this.name = name;
-
+        this.pane = new GlassPane();
         init(name);
     }
 
     public Canvas getCanvas() {
         return canvas;
+    }
+    
+    public JFrame getFrame(){
+    	return this.frame;
     }
 
     private void init(String name) {
@@ -33,6 +38,9 @@ public class Display {
         this.frame.setVisible(true);
         this.frame.setFocusable(true);
 
+        this.frame.setGlassPane(pane);
+        this.frame.getGlassPane().setVisible(true);
+        
         this.frame.setResizable(false);
         this.frame.setLocationRelativeTo(null);
 

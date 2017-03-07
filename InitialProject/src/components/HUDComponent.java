@@ -25,7 +25,7 @@ public abstract class HUDComponent extends MenuComponent {
 		this.player = p;
 	}
 	
-	protected void setSize(int w,int h){
+	public void setSize(int w,int h){
 		super.setSize(w, h);
 	}
 	

@@ -1,10 +1,14 @@
 package states;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
+import constants.Constants;
+import display.Display;
+import events.MouseMotionSensitive;
 import gfx.Assets;
 
-public class MenuState extends State{
+public class MenuState extends State implements MouseMotionSensitive{
  
 	private Menu startMenu;
 
@@ -27,11 +31,28 @@ public class MenuState extends State{
     public void tick() {
     	
     	startMenu.tick();
+ 
     }
 
     @Override
     public void render(Graphics g) {
-    	g.drawImage(Assets.background, 0, 0, null);
+    	g.drawImage(Assets.background, 0, 0,Constants.WIDTH,Constants.HEIGHT, null);
     	startMenu.render(g);
     }
+
+	@Override
+	public void onMouseHover(MouseEvent args) {
+		this.startMenu.onMenuItemHover(args);
+		
+	}
+
+	@Override
+	public void onMouseRelease(MouseEvent args) {
+		this.startMenu.onMenuItemRelease(args);
+	}
+
+	@Override
+	public void onMouseClick(MouseEvent args) {
+		this.startMenu.onMenuItemClick(args);
+	}
 }

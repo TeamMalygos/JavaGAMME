@@ -14,23 +14,9 @@ public class MenuMouseClickEventListener implements MouseListener{
 	
 	private boolean isMenuState(){
 		try{
-			return StateManager.getCurrentState().getID() == 1;
+			return StateManager.getCurrentState() instanceof MouseMotionSensitive;
 		}catch(NullPointerException ex){
 			
-		}
-		return false;
-	}
-	
-	private boolean isInGameMenuOpen(){
-		try{
-			if(StateManager.getCurrentState().getID() == 2){
-				GameState state = (GameState)StateManager.getCurrentState();
-				return state.isInMenuState();
-			}
-		}catch(NullPointerException ex){
-			ex.printStackTrace();
-		}catch(ClassCastException ex){
-			ex.printStackTrace();
 		}
 		return false;
 	}
@@ -61,31 +47,25 @@ public class MenuMouseClickEventListener implements MouseListener{
 			return;
 		}
 		
-		MenuState menu = (MenuState) StateManager.getCurrentState();
-		menu.getMenu().onMenuItemClick(mouseArgs);
+		try{
+			MouseMotionSensitive sensor = (MouseMotionSensitive)StateManager.getCurrentState();
+			sensor.onMouseClick(mouseArgs);
+		}catch(ClassCastException ex){
+			ex.printStackTrace();
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent mouseArgs) {
 		// TODO Auto-generated method stub
 		
-		this.isInGameMenu = this.isInGameMenuOpen();
-		this.isMenu = this.isMenuState();
+		if(!this.isMenuState()){
+			return;
+		}
 		
 		try{
-		
-			if(isMenu){
-				MenuState menu = (MenuState) StateManager.getCurrentState();
-				menu.getMenu().onMenuItemRelease(mouseArgs);
-			}
-		
-			if(isInGameMenu){
-				GameState inGameMenu = (GameState) StateManager.getCurrentState();
-				inGameMenu.menu().onMenuItemRelease(mouseArgs);
-			}
-			
-		}catch(NullPointerException ex){
-			ex.printStackTrace();
+			MouseMotionSensitive sensor = (MouseMotionSensitive)StateManager.getCurrentState();
+			sensor.onMouseRelease(mouseArgs);
 		}catch(ClassCastException ex){
 			ex.printStackTrace();
 		}

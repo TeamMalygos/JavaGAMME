@@ -31,12 +31,13 @@ public class LevelCard extends MenuComponent {
 		String levelNumber = "1";
 		
 		try{
-			levelNumber = jsonFile.getName().split(".")[1];
+			String[] mapArgs = this.jsonFile.getName().split("\\.");
+			levelNumber = mapArgs[1];
 		}catch(ArrayIndexOutOfBoundsException ex){
 			ex.printStackTrace();
 		}
 		
-		this.setLevelThumb(ImageLoader.loadImage("/levels/map_thumb_" + levelNumber + ".png"));
+		//this.setLevelThumb(ImageLoader.loadImage("/levels/map_thumb_" + levelNumber + ".png"));
 		this.setLevel(Level.valueOf("Level" + levelNumber));
 		
 	}

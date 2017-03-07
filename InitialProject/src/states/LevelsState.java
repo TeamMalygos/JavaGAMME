@@ -10,7 +10,7 @@ public class LevelsState extends State{
 	private static final int ID = 3;
 	private LevelCard[] levels;
 	
-	protected LevelsState(int ID) {
+	protected LevelsState() {
 		super(ID);
 		
 		init();
@@ -23,6 +23,7 @@ public class LevelsState extends State{
 		File mapsDir = new File(levelsPath);
 		
 		File[] levels = mapsDir.listFiles();
+		this.levels = new LevelCard[levels.length];
 		
 		int counter = 0;
 		for(File level : levels){

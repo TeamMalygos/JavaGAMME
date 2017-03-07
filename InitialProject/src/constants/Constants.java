@@ -1,12 +1,15 @@
 package constants;
 
+import java.awt.Color;
 
 public class Constants {
 
 	//Display
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
-	
+	public static final int BACKGROUND_Y = 0;
+	public static final int BACKGROUND_X = 0;
+    
     // Player initialization constants - all of these are sample values.
     public static final double DAMAGE_REDUCE_RATE = 0.1;
     public static final double INITIAL_HEALTH = 500;
@@ -40,11 +43,17 @@ public class Constants {
     public static final double PLAYER_MAXIMUM_SPEED = 4;
     
     //Menu components default size
-    public static final int MENU_BUTTON_WIDTH = 209;
-    public static final int MENU_BUTTON_HEIGHT = 61;
+    public static final int MENU_BUTTON_WIDTH = 192;
+    public static final int MENU_BUTTON_HEIGHT = 56;
 	public static final int LEVEL_CARD_HEIGHT = 200;
 	public static final int LEVEL_CARD_WIDTH = 100;
     
+	//Menu components - names
+	public static final String BUTTON_START = "Start";
+	public static final String BUTTON_QUIT = "Exit";
+	public static final String BUTTON_RESUME = "Resume";
+	public static final String BUTTON_LOAD = "Load";
+	
     //Projectiles
     public static final int PROJECTILE_KEY_WIDTH = 9;
     public static final int PROJECTILE_KEY_HEIGHT = 9;
@@ -70,4 +79,23 @@ public class Constants {
 	public static final int DIAMONDS_COUNTER_HEIGHT = 34;
 	public static final int DIAMONDS_COUTNER_WIDTH = 117;
     
+	//DIRS
+	public static final String DIRECTORY_PLAYER_SERIALIZATION = "/resources/players";
+	
+	//PlayersList
+	public static final int PLAYERS_LIST_WIDTH = 500;
+	public static final int PLAYERS_LIST_HEIGHT = 344;
+	public static final int PLAYERS_LIST_Y = HEIGHT/2 - PLAYERS_LIST_HEIGHT / 2;
+	public static final int PLAYERS_LIST_X = WIDTH/2 - PLAYERS_LIST_WIDTH / 2;
+	public static final Color RADIAN_COLOR_1 = new Color(220f / 255, 253f / 255, 235f / 255, 0.3f);
+	public static final Color RADIAN_COLOR_2 = new Color(31f / 255, 243f / 255, 135f / 255, 0.2f);
+	public static final Color MAIN_COLOR = new Color(157f / 255, 216f / 255, 196f / 255, 0.7f);
+	
+	public static final float[] FRACTIONS = new float[] {0.2f,0.3f,0.5f};
+	public static final Color[] COLORS = new Color[]{RADIAN_COLOR_1,RADIAN_COLOR_2,MAIN_COLOR};
+	public static final float RADIAL_RADIUS = 30;
+	
+	public static final float BORDER_RADIUS = 10;
+
+	
 }

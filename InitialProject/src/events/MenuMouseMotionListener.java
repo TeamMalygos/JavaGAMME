@@ -3,7 +3,6 @@ package events;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-import states.MenuState;
 import states.StateManager;
 
 public class MenuMouseMotionListener implements MouseMotionListener{
@@ -12,8 +11,11 @@ public class MenuMouseMotionListener implements MouseMotionListener{
 		if(StateManager.getCurrentState() == null){
 			return false;
 		}
-		return StateManager.getCurrentState().getID() == 1;
+		
+		return StateManager.getCurrentState() instanceof MouseMotionSensitive;
+		
 	}
+	
 	
 	@Override
 	public void mouseDragged(MouseEvent mouseArgs) {
@@ -28,8 +30,14 @@ public class MenuMouseMotionListener implements MouseMotionListener{
 			return;
 		}
 		
-		MenuState menu = (MenuState) StateManager.getCurrentState();
-		menu.getMenu().onMenuItemHover(mouseArgs);
+		try{
+			MouseMotionSensitive sensor = (MouseMotionSensitive)StateManager.getCurrentState();
+			sensor.onMouseHover(mouseArgs);
+		}catch(ClassCastException ex){
+			ex.printStackTrace();
+		}
+		
+		
 	}
 
 }
