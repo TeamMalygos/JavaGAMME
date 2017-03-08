@@ -53,7 +53,7 @@ public class InputHandler implements KeyListener {
         if(keyCode == KeyEvent.VK_UP){state.player.setUp(true);}
         if(keyCode == KeyEvent.VK_DOWN){state.player.setDown(true);}
         if(keyCode == KeyEvent.VK_SPACE){state.player.setJumping(true);}
-        
+
         if (keyCode == KeyEvent.VK_Z) {state.player.castSpell(HEAL_SPELL_NAME);}
         if (keyCode == KeyEvent.VK_X) {state.player.castSpell(FIREWALL_SPELL_NAME);}
         if (keyCode == KeyEvent.VK_C) {state.player.castSpell(HARDCORE_ALGORITHM_SPELL_NAME);}

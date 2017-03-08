@@ -43,12 +43,12 @@ public class LevelCard extends MenuComponent {
 	}
 
 	@Override
-	protected void render(Graphics g) {
+	public void render(Graphics g) {
 		
 	}
 
 	@Override
-	protected void tick() {
+	public void tick() {
 		
 	}
 

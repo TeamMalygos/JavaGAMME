@@ -38,6 +38,12 @@ public class MenuState extends State implements MouseMotionSensitive{
     public void render(Graphics g) {
     	g.drawImage(Assets.background, 0, 0,Constants.WIDTH,Constants.HEIGHT, null);
     	startMenu.render(g);
+    	
+    	g.setColor(Color.white);
+    	g.setFont(new Font(Constants.FONT,Font.BOLD,Constants.FONT_SIZE));
+    	g.drawString(Constants.CREATORS, 
+    			Constants.CREATORS_X,
+    			Constants.CREATORS_Y);
     }
 
 	@Override

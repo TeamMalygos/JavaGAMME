@@ -13,6 +13,7 @@ import java.io.ObjectInputStream;
 
 import constants.Constants;
 import events.MouseMotionSensitive;
+import game.entities.playerProperties.Stats;
 
 public class CharacterList extends MenuComponent implements MouseMotionSensitive{
 
@@ -59,14 +60,18 @@ public class CharacterList extends MenuComponent implements MouseMotionSensitive
 	private void deserializePlayers(){
 		
 		ObjectInputStream ois = null;
+		int offset = Constants.PLAYERS_LIST_HEIGHT;
 		
 		for(int i = 0 ; i < this.items.length ; i++){
-			
+			offset *= i;
 			try {
 				ois = new ObjectInputStream(new FileInputStream(this.players[i]));
-			
 				
-			} catch (IOException e) {
+				Stats s = (Stats)ois.readObject();
+				PlayerListItem li = new PlayerListItem(offset,s);
+				this.items[i] = li;
+				
+			} catch (IOException | ClassNotFoundException e) {
 				this.items[i] = null;
 				e.printStackTrace();
 			}
@@ -83,6 +88,11 @@ public class CharacterList extends MenuComponent implements MouseMotionSensitive
 		g2d.setPaint(paint);
 		g2d.setStroke(new BasicStroke(10));
 		g2d.fill(this.body);
+		g2d.setStroke(new BasicStroke(0));
+		
+		for(PlayerListItem li : this.items){
+			li.render(g);
+		}
 		
 	}
 
@@ -94,6 +104,7 @@ public class CharacterList extends MenuComponent implements MouseMotionSensitive
 
 	@Override
 	public void onMouseHover(MouseEvent args) {
+		
 		
 		
 	}

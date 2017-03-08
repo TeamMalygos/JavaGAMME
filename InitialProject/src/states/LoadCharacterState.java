@@ -1,5 +1,7 @@
 package states;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
@@ -91,24 +93,36 @@ public class LoadCharacterState extends State implements MouseMotionSensitive{
 
 	@Override
 	public void onMouseRelease(MouseEvent args) {
-		if(this.quit.isInside(args.getX(), args.getY())){
-			this.quit.onMenuButtonHover();
+		if(this.quit.isInside(args.getX(),args.getY())){
+			this.quit.onMenuButtonRelease();
 		}else {
 			this.quit.setHover(false);
+			this.quit.setPressed(false);
 		}
 		
 		if(this.load.isInside(args.getX(),args.getY())){
-			this.load.onMenuButtonHover();
-		}else{
+			//Further logic
+			
+		}else {
 			this.load.setHover(false);
+			this.load.setPressed(false);
 		}
 		
 	}
 
 	@Override
 	public void onMouseClick(MouseEvent args) {
-		// TODO Auto-generated method stub
+		if(this.quit.isInside(args.getX(), args.getY())){
+			this.quit.onMenuButtonClick();
+		}else {
+			this.quit.setPressed(false);
+		}
 		
+		if(this.load.isInside(args.getX(),args.getY())){
+			this.load.onMenuButtonClick();
+		}else{
+			this.load.setPressed(false);
+		}
 	}
 
 	

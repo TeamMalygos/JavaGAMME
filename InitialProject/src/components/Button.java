@@ -4,7 +4,6 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
@@ -20,7 +19,6 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	private BufferedImage pressed;
 	private BufferedImage normal;
 	private BufferedImage hover;
-	private Rectangle areaRect;
 	private State stateInit;
 	
 	private BufferedImage normalReflection;
@@ -33,6 +31,7 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	
 	public Button(int x,int y,String name){
 		super(x,y,name);
+		
 	}
 	
 	public float getReflectionOpacity() {
@@ -70,7 +69,6 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	public void setFrames(BufferedImage frames){		
 		super.setSize(Constants.MENU_BUTTON_WIDTH, Constants.MENU_BUTTON_HEIGHT);
 		super.frames = frames;
-		areaRect = new Rectangle(super.xAxisPosition,super.yAxisPosition,super.width,super.height);
 		loadFrameHolders();
 		createReflection();
 	}
@@ -97,7 +95,6 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 		stateInit = state;
 	}
 	
-	public Rectangle getArea(){return areaRect;}
 	public void setHover(boolean hover){super.hover = hover;}
 	public void setPressed(boolean pressed){super.isPressed = pressed;}
 	public int getStateId(){
@@ -107,17 +104,6 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 		}
 		
 		return this.stateInit.getID();
-	}
-	
-	public boolean isInside(int mouseX,int mouseY){
-		
-		Rectangle rect = this.getArea();
-		if(mouseX >= rect.getMinX() && mouseY >= rect.getMinY()
-				&& mouseX <= rect.getMaxX() && mouseY <= rect.getMaxY()){
-			return true;
-		}
-		
-		return false;
 	}
 	
 	@Override

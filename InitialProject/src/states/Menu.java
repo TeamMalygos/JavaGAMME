@@ -12,9 +12,11 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import components.Button;
+import constants.Constants;
 import display.Display;
 import gfx.Assets;
 import utils.Level;
+import utils.UserAccount;
 
 public class Menu{
 	
@@ -101,22 +103,30 @@ public class Menu{
 	
 	private void loadButtons(){
 		
-		start = new Button(300,250,"Start");
+		int offset = Constants.MENU_BUTTON_MARGIN_BOTTOM;
+		int yposition = Constants.MENU_BUTTON_Y;
+		int xposition = Constants.MENU_BUTTON_X;
+		
+		start = new Button(xposition,yposition,"Start");
 		start.setFrames(Assets.playButton);
 		start.setReflectionProperties(0.3f, 0.4f, 10);
-		start.linkToState(new GameState(Level.Level1));
 		
-		create = new Button(300,316,"New");
+	  	if(UserAccount.playerExists()){
+	  		start.linkToState(new GameState(Level.Level1));
+    	}
+	  	start.linkToState(new LoadCharacterState());
+
+		create = new Button(xposition,yposition + offset,"New");
 		create.setFrames(Assets.newButton);
 		create.setReflectionProperties(0.3f, 0.4f, 10);
 		create.linkToState(new CreateCharacterState());		
 		
-		load = new Button(300,382,"Load");
+		load = new Button(xposition,yposition + (offset * 2),"Load");
 		load.setFrames(Assets.loadButton);
 		load.setReflectionProperties(0.3f, 0.4f, 10);
 		load.linkToState(new LoadCharacterState());
 		
-		exit = new Button(300,448,"Exit");
+		exit = new Button(xposition,yposition + (offset * 3),"Exit");
 		exit.setReflectionProperties(0.3f, 0.4f, 10);
 		exit.setFrames(Assets.quitButton);
 		

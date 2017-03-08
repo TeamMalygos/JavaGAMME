@@ -14,6 +14,7 @@ public class Assets {
     public static BufferedImage nakov_sheet;
     public static BufferedImage enemy;
     public static BufferedImage enemyMeleeUnit;
+    public static BufferedImage enemyBug;
     
     //Entites.Collectible
     public static BufferedImage diamond;
@@ -28,6 +29,13 @@ public class Assets {
     public static BufferedImage quitButton;
     public static BufferedImage loadButton;
     public static BufferedImage newButton;
+    public static BufferedImage createButton;
+    
+    public static BufferedImage pointerLeft;
+    public static BufferedImage pointerRight;
+    
+    public static BufferedImage textField;
+    public static BufferedImage selector;
     
     //HUD resources
     public static BufferedImage healthBar;
@@ -42,6 +50,7 @@ public class Assets {
         nakov_sheet = ImageLoader.loadImage("/textures/nakov_sheet.png");
         enemy = ImageLoader.loadImage("/textures/firstEnemy.png");
         enemyMeleeUnit = ImageLoader.loadImage("/textures/meleeEnemy.png");
+        enemyBug = ImageLoader.loadImage("/textures/enemy_bug.png");
         
         //Entities.Collectible
         diamond = ImageLoader.loadImage("/textures/diamond.png");
@@ -56,6 +65,13 @@ public class Assets {
         quitButton = ImageLoader.loadImage("/textures/quit.png");
         newButton = ImageLoader.loadImage("/textures/new.png");
         loadButton = ImageLoader.loadImage("/textures/load.png");
+        createButton = ImageLoader.loadImage("/textures/create.png");
+        
+        pointerLeft = ImageLoader.loadImage("/textures/pointer-left.png");
+        pointerRight = ImageLoader.loadImage("/textures/pointer-right.png");
+        		
+        textField = ImageLoader.loadImage("/textures/textfield.png");
+        selector = ImageLoader.loadImage("/textures/selector.png");
         
         //HUD
         healthBar = ImageLoader.loadImage("/textures/healthbarSprite.png");

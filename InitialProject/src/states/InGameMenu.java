@@ -3,13 +3,9 @@ package states;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 
 import components.StringButton;
-import game.entities.Player;
-import game.entities.Stats;
+import game.entities.playerProperties.Stats;
 import game.entities.UnitDrawable;
 import utils.ObjectSerializer;
 

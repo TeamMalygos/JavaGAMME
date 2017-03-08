@@ -20,6 +20,7 @@ public class Constants {
 	public static final int NAME_MAX_LENGTH = 22;
 	
     // Player initialization constants - all of these are sample values.
+    public static final double INITIAL_DAMAGE = 20;
     public static final double DAMAGE_REDUCE_RATE = 0.1;
     public static final double INITIAL_HEALTH = 500;
     public static final double INITIAL_MANA = 100;
@@ -35,7 +36,29 @@ public class Constants {
     public static final double TOTAL_LEVEL_EXPERIENCE_INCREMENT_RATE = 2;
     public static final double LEVEL_UP_HEALTH_INCREASE = 50;
     public static final double LEVEL_UP_MANA_INCREASE = 10;
-    
+
+    // Spells
+    public static final int INITIAL_SPELL_LEVEL = 1;
+    public static final String INSUFFICIENT_MANA = "Insufficient mana";
+    public static final String INSUFFICIENT_POINTS = "Insufficient points";
+    public static final String HEAL_SPELL_NAME = "Heal";
+    public static final int HEAL_SPELL_INITIAL_MANA_REQUIRED = 40;
+    public static final int HEAL_SPELL_INITIAL_HEAL_AMOUNT = 100;
+    public static final int HEAL_SPELL_LEVEL_UP_AMOUNT_INCREASE = 50;
+    public static final String FIREWALL_SPELL_NAME = "Firewall";
+    public static final int FIREWALL_SPELL_INITIAL_MANA_REQUIRED = 50;
+    public static final double FIREWALL_SPELL_INITIAL_ARMOR_INCREASE = 100;
+    public static final double FIREWALL_SPELL_LEVEL_UP_AMOUNT_INCREASE = 20;
+    public static final int FIREWALL_SPELL_INITIAL_ACTIVE_TIME = 300;
+    public static final int FIREWALL_SPELL_LEVEL_UP_ACTIVE_TIME_INCREASE = 50;
+    public static final String HARDCORE_ALGORITHM_SPELL_NAME = "HardcoreAlgorithm";
+    public static final int HARDCORE_ALGORITHM_SPELL_INITIAL_MANA_REQUIRED = 60;
+    public static final double HARDCORE_ALGORITHM_SPELL_INITIAL_DAMAGE_INCREASE = 20;
+    public static final int HARDCORE_ALGORITHM_SPELL_INITIAL_ACTIVE_TIME = 300;
+    public static final double HARDCORE_ALGORITHM_SPELL_LEVEL_UP_AMOUNT_INCREASE = 20;
+    public static final int HARDCORE_ALGORITHM_SPELL_LEVEL_UP_ACTIVE_TIME_INCREASE = 50;
+
+
     //Player
     public static final int PLAYER_START_X = 25;
     public static final int PLAYER_START_Y = 200;
@@ -126,26 +149,5 @@ public class Constants {
 	public static final String GENERAL_EXCEPTION = "Something went wrong !";
 
 
-	// Spells
-    public static final int INITIAL_SPELL_LEVEL = 1;
-    public static final String INSUFFICIENT_MANA = "Insufficient mana";
-    public static final String INSUFFICIENT_POINTS = "Insufficient points";
-    public static final String HEAL_SPELL_NAME = "Heal";
-    public static final int HEAL_SPELL_INITIAL_MANA_REQUIRED = 40;
-    public static final int HEAL_SPELL_INITIAL_HEAL_AMOUNT = 100;
-    public static final int HEAL_SPELL_LEVEL_UP_AMOUNT_INCREASE = 50;
-    public static final String FIREWALL_SPELL_NAME = "Firewall";
-    public static final int FIREWALL_SPELL_INITIAL_MANA_REQUIRED = 50;
-    public static final double FIREWALL_SPELL_INITIAL_ARMOR_INCREASE = 100;
-    public static final double FIREWALL_SPELL_LEVEL_UP_AMOUNT_INCREASE = 20;
-    public static final int FIREWALL_SPELL_INITIAL_ACTIVE_TIME = 300;
-    public static final int FIREWALL_SPELL_LEVEL_UP_ACTIVE_TIME_INCREASE = 50;
-    public static final String HARDCORE_ALGORITHM_SPELL_NAME = "HardcoreAlgorithm";
-    public static final int HARDCORE_ALGORITHM_SPELL_INITIAL_MANA_REQUIRED = 60;
-    public static final double HARDCORE_ALGORITHM_SPELL_INITIAL_DAMAGE_INCREASE = 20;
-    public static final int HARDCORE_ALGORITHM_SPELL_INITIAL_ACTIVE_TIME = 300;
-    public static final double HARDCORE_ALGORITHM_SPELL_LEVEL_UP_AMOUNT_INCREASE = 20;
-    public static final int HARDCORE_ALGORITHM_SPELL_LEVEL_UP_ACTIVE_TIME_INCREASE = 50;
-	
 	
 }
