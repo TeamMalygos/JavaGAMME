@@ -11,6 +11,7 @@ public class Constants {
 	public static final int BACKGROUND_X = 0;
     
     // Player initialization constants - all of these are sample values.
+    public static final double INITIAL_DAMAGE = 20;
     public static final double DAMAGE_REDUCE_RATE = 0.1;
     public static final double INITIAL_HEALTH = 500;
     public static final double INITIAL_MANA = 100;
@@ -39,7 +40,13 @@ public class Constants {
     public static final double FIREWALL_SPELL_LEVEL_UP_AMOUNT_INCREASE = 20;
     public static final int FIREWALL_SPELL_INITIAL_ACTIVE_TIME = 300;
     public static final int FIREWALL_SPELL_LEVEL_UP_ACTIVE_TIME_INCREASE = 50;
-    
+    public static final int HARDCORE_ALGORITHM_SPELL_INITIAL_MANA_REQUIRED = 60;
+    public static final double HARDCORE_ALGORITHM_SPELL_INITIAL_DAMAGE_INCREASE = 20;
+    public static final int HARDCORE_ALGORITHM_SPELL_INITIAL_ACTIVE_TIME = 300;
+    public static final double HARDCORE_ALGORITHM_SPELL_LEVEL_UP_AMOUNT_INCREASE = 20;
+    public static final int HARDCORE_ALGORITHM_SPELL_LEVEL_UP_ACTIVE_TIME_INCREASE = 50;
+
+
     //Player
     public static final int PLAYER_START_X = 25;
     public static final int PLAYER_START_Y = 200;

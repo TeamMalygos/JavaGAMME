@@ -13,6 +13,8 @@ public class SpellFactory {
                 return new Heal(playerStats);
             case "Firewall":
                 return new Firewall(playerStats);
+            case "HardcoreAlgorithm":
+                return new HardcoreAlgorithm(playerStats);
             default:
                 return null;
         }

@@ -25,11 +25,10 @@ public class Firewall extends BuffingSpell {
                 super.setActive(true);
             }
             super.setTimeCounter(super.getActiveTime());
-            System.out.println("Firewall trial period activated!");
+            System.out.println("Firewall installed. Trial period activated!");
         } else {
             System.out.println(INSUFFICIENT_MANA);
         }
-
     }
 
     @Override
@@ -48,7 +47,7 @@ public class Firewall extends BuffingSpell {
         super.levelUp();
         this.armorIncrease += FIREWALL_SPELL_LEVEL_UP_AMOUNT_INCREASE;
         if (isActive()) {
-            super.getPlayerStats().setArmor(getPlayerStats().getArmor() + FIREWALL_SPELL_LEVEL_UP_ACTIVE_TIME_INCREASE);
+            super.getPlayerStats().setArmor(getPlayerStats().getArmor() + FIREWALL_SPELL_LEVEL_UP_AMOUNT_INCREASE);
         }
         super.setActiveTime(super.getActiveTime() + FIREWALL_SPELL_LEVEL_UP_ACTIVE_TIME_INCREASE);
     }
@@ -57,7 +56,7 @@ public class Firewall extends BuffingSpell {
     protected void debuff() {
         super.getPlayerStats().setArmor(getPlayerStats().getArmor() - this.getArmorIncrease());
         super.setActive(false);
-        System.out.println("Firewall trial period over! Buy license to continue using Firewall!");
+        System.out.println("Firewall trial period over! Buy license key to continue using Firewall!");
     }
 
     private double getArmorIncrease() {

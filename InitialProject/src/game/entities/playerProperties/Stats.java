@@ -18,6 +18,8 @@ public class Stats implements Serializable {
 	
     private String playerName;
 
+    private double damage;
+
     private double health;
     private double currentHealth;
     private double healthRegeneraionRate;
@@ -46,6 +48,7 @@ public class Stats implements Serializable {
     }
 
     private void init() {
+        this.damage = INITIAL_DAMAGE;
         this.health = this.currentHealth = INITIAL_HEALTH;
         this.healthRegeneraionRate = INITIAL_HEALTH_REGENERATION_RATE;
 
@@ -106,13 +109,21 @@ public class Stats implements Serializable {
     }
 
     public void gainHealth(int healthAmount) {
-        this.currentHealth += healthAmount;
+        if (this.currentHealth + healthAmount > this.health) {
+            this.currentHealth = this.health;
+        } else {
+            this.currentHealth += healthAmount;
+        }
         System.out.println("Gained " + healthAmount + " health.");
         System.out.println("Current experience: " + currentHealth);
     }
 
     public void gainMana(int manaAmount) {
-        this.currentMana += manaAmount;
+        if (this.currentMana + manaAmount > this.mana) {
+            this.currentMana = this.mana;
+        } else {
+            this.currentMana += manaAmount;
+        }
         System.out.println("Gained " + manaAmount + " mana.");
         System.out.println("Current mana: " + currentMana);
     }
@@ -183,5 +194,13 @@ public class Stats implements Serializable {
     }
     public LootBag getBag(){
     	return this.bag;
+    }
+
+    public double getDamage() {
+        return damage;
+    }
+
+    public void setDamage(double damage) {
+        this.damage = damage;
     }
 }
