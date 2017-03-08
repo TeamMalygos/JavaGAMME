@@ -26,6 +26,7 @@ public class HardcoreAlgorithm extends BuffingSpell {
             }
             super.setTimeCounter(super.getActiveTime());
             System.out.println("Just learned a badass algorithm! Time to write some seriously damaging code!");
+            System.out.println(this.damageIncrease + " damage increased!");
         } else {
             System.out.println(INSUFFICIENT_MANA);
         }

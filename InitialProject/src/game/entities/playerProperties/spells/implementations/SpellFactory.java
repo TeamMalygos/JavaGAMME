@@ -4,14 +4,17 @@ package game.entities.playerProperties.spells.implementations;
 import game.entities.playerProperties.Stats;
 import game.entities.playerProperties.spells.abstractions.Spell;
 
+import static constants.Constants.FIREWALL_SPELL_NAME;
+import static constants.Constants.HEAL_SPELL_NAME;
+
 public class SpellFactory {
 
     public Spell getSpell(String spellType, Stats playerStats) {
 
         switch (spellType) {
-            case "Heal":
+            case HEAL_SPELL_NAME:
                 return new Heal(playerStats);
-            case "Firewall":
+            case FIREWALL_SPELL_NAME:
                 return new Firewall(playerStats);
             case "HardcoreAlgorithm":
                 return new HardcoreAlgorithm(playerStats);

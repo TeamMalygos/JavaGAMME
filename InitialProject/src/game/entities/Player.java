@@ -2,6 +2,7 @@ package game.entities;
 
 
 import game.entities.playerProperties.Stats;
+import game.entities.playerProperties.spells.abstractions.Spell;
 import gfx.Assets;
 import gfx.SpriteSheet;
 import map.TileMap;
@@ -212,6 +213,14 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
 
         this.playerStats.takeDamage(damage);
 
+    }
+
+    public void castSpell(String spellType) {
+        if (!this.getPlayerStats().getSpells().containsKey(spellType)) {
+            System.out.println("You haven't learned " + spellType);
+            return;
+        }
+        this.getPlayerStats().getSpells().get(spellType).cast();
     }
 
     public void learnSpell(String spellType) {

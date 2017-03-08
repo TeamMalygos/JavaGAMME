@@ -26,6 +26,7 @@ public class Firewall extends BuffingSpell {
             }
             super.setTimeCounter(super.getActiveTime());
             System.out.println("Firewall installed. Trial period activated!");
+            System.out.println(this.armorIncrease + " armor increased.");
         } else {
             System.out.println(INSUFFICIENT_MANA);
         }
