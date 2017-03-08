@@ -26,6 +26,19 @@ public class Constants {
     public static final double TOTAL_LEVEL_EXPERIENCE_INCREMENT_RATE = 2;
     public static final double LEVEL_UP_HEALTH_INCREASE = 50;
     public static final double LEVEL_UP_MANA_INCREASE = 10;
+
+    // Spells
+    public static final int INITIAL_SPELL_LEVEL = 1;
+    public static final String INSUFFICIENT_MANA = "Insufficient mana";
+    public static final String INSUFFICIENT_POINTS = "Insufficient points";
+    public static final int HEAL_SPELL_INITIAL_MANA_REQUIRED = 40;
+    public static final int HEAL_SPELL_INITIAL_HEAL_AMOUNT = 100;
+    public static final int HEAL_SPELL_LEVEL_UP_AMOUNT_INCREASE = 50;
+    public static final int FIREWALL_SPELL_INITIAL_MANA_REQUIRED = 50;
+    public static final double FIREWALL_SPELL_INITIAL_ARMOR_INCREASE = 100;
+    public static final double FIREWALL_SPELL_LEVEL_UP_AMOUNT_INCREASE = 20;
+    public static final int FIREWALL_SPELL_INITIAL_ACTIVE_TIME = 300;
+    public static final int FIREWALL_SPELL_LEVEL_UP_ACTIVE_TIME_INCREASE = 50;
     
     //Player
     public static final int PLAYER_START_X = 25;

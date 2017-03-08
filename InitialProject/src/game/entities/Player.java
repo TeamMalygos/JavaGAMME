@@ -1,11 +1,11 @@
 package game.entities;
 
 
+import game.entities.playerProperties.Stats;
 import gfx.Assets;
 import gfx.SpriteSheet;
 import map.TileMap;
 import providable.StateProvidable;
-import states.GameState;
 import utils.Animation;
 import utils.CollisionBox;
 import utils.LootBag;
@@ -212,6 +212,14 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
 
         this.playerStats.takeDamage(damage);
 
+    }
+
+    public void learnSpell(String spellType) {
+        this.playerStats.learnSpell(spellType);
+    }
+
+    public void levelUpSpell(String spellType) {
+        this.playerStats.levelUpSpell(spellType);
     }
 
     public void gainExperience(int experienceAmount) {
