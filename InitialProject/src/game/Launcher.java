@@ -1,7 +1,5 @@
 package game;
 
-import javafx.scene.control.Menu;
-
 public class Launcher  {
     public static void main(String[] args) {
     	

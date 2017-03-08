@@ -7,7 +7,10 @@ import game.entities.playerProperties.spells.abstractions.Spell;
 import static constants.Constants.FIREWALL_SPELL_NAME;
 import static constants.Constants.HEAL_SPELL_NAME;
 
-public class SpellFactory {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class SpellFactory implements Serializable {
 
     public Spell getSpell(String spellType, Stats playerStats) {
 

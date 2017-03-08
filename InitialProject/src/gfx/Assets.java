@@ -37,6 +37,10 @@ public class Assets {
     public static BufferedImage textField;
     public static BufferedImage selector;
     
+    //InGameMenu resources
+	public static BufferedImage resumeButton;
+	public static BufferedImage saveButton;
+    
     //HUD resources
     public static BufferedImage healthBar;
     public static BufferedImage diamondsCounter;
@@ -72,6 +76,10 @@ public class Assets {
         		
         textField = ImageLoader.loadImage("/textures/textfield.png");
         selector = ImageLoader.loadImage("/textures/selector.png");
+        
+        //InGameMenu
+        saveButton = ImageLoader.loadImage("/textures/save.png");
+        resumeButton = ImageLoader.loadImage("/textures/resume.png");
         
         //HUD
         healthBar = ImageLoader.loadImage("/textures/healthbarSprite.png");

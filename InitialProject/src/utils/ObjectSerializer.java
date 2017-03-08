@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import components.PlayerListItem;
 import constants.Constants;
 import game.entities.playerProperties.Stats;
 
@@ -73,9 +74,13 @@ public class ObjectSerializer {
 		
 	}
 	
-	public void loadGameState(){
+	public void loadGameState(PlayerListItem playerListItem){
 		
+		if(playerListItem == null){
+			throw new NullPointerException();
+		}
 		
+		UserAccount.setStat(playerListItem.getStats());
 		
 	}
 	

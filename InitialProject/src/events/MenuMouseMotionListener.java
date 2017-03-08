@@ -3,6 +3,7 @@ package events;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
+import states.GameState;
 import states.StateManager;
 
 public class MenuMouseMotionListener implements MouseMotionListener{
@@ -27,10 +28,19 @@ public class MenuMouseMotionListener implements MouseMotionListener{
 	public void mouseMoved(MouseEvent mouseArgs) {
 		// TODO Auto-generated method stub
 		if(!this.isMenuState()){
+			if(StateManager.getCurrentState() instanceof GameState){
+				GameState g = (GameState)StateManager.getCurrentState();
+				
+				if(!g.isInMenuState()){
+					return;
+				}
+				
+				g.getInGameMenu().onMouseHover(mouseArgs);
+			}
 			return;
 		}
-		
-		try{
+	
+		try{		
 			MouseMotionSensitive sensor = (MouseMotionSensitive)StateManager.getCurrentState();
 			sensor.onMouseHover(mouseArgs);
 		}catch(ClassCastException ex){

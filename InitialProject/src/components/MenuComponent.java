@@ -69,6 +69,8 @@ public abstract class MenuComponent{
 	public void setSize(int w,int h){
 		width = w;
 		height =h;
+		
+		this.setAreaRect(new Rectangle(this.xAxisPosition,this.yAxisPosition,w,h));
 	}
 
 	public boolean isPressed() {

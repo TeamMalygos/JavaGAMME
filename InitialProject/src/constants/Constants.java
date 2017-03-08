@@ -9,7 +9,8 @@ public class Constants {
     public static final int HEIGHT = 600;
 	public static final int BACKGROUND_Y = 0;
 	public static final int BACKGROUND_X = 0;
-    
+	public static final Color COLOR_OPAQUE_BLACK = new Color(0,0,0,0.6f);
+	
 	public static final String CREATORS = "Created by TeamMalygos";
 	public static final int CREATORS_Y = HEIGHT - 10;
 	public static final int CREATORS_X = 10;
@@ -18,6 +19,7 @@ public class Constants {
 	public static final int FONT_SIZE = 16;
 	
 	public static final int NAME_MAX_LENGTH = 22;
+	public static final int NAME_MIN_LENGTH = 4;
 	
     // Player initialization constants - all of these are sample values.
     public static final double INITIAL_DAMAGE = 20;
@@ -73,12 +75,20 @@ public class Constants {
     public static final double PLAYER_JUMP = -16;
     public static final double PLAYER_DEACCELERATION = 1.4;
     public static final double PLAYER_MAXIMUM_SPEED = 4;
+
+    //InGameMenu components
     
+    //Dimensions
+    public static final int INGAME_MENU_BUTTON_WIDTH = 96;
+    public static final int INGAME_MENU_BUTTON_HEIGHT = 28;
+
     //Menu components default size
     public static final int MENU_BUTTON_WIDTH = 192;
     public static final int MENU_BUTTON_HEIGHT = 56;
 	public static final int LEVEL_CARD_HEIGHT = 200;
 	public static final int LEVEL_CARD_WIDTH = 100;
+	public static final int POINTER_WIDTH = 40;
+	public static final int POINTER_HEIGHT = 41;
     
 	public static final int MENU_BUTTON_MARGIN_BOTTOM = 66;
 	public static final int MENU_BUTTON_X = 300;
@@ -90,8 +100,12 @@ public class Constants {
 	public static final String BUTTON_RESUME = "Resume";
 	public static final String BUTTON_LOAD = "Load";
 	public static final String BUTTON_NEW = "New";
+	public static final String BUTTON_SAVE = "Save";
 	
 	public static final String TEXT_FIELD_NAME = "TextField";
+	public static final String POINTER_LEFT = "Left Pointer";
+	public static final String POINTER_RIGHT = "Right Pointer";
+
 	
     //Projectiles
     public static final int PROJECTILE_KEY_WIDTH = 9;
@@ -144,10 +158,10 @@ public class Constants {
 	//Error messages
 	public static final String NEGATIVE_OFFSET_ERROR = "WARNING! Negative offsets are not allowed";
 	public static final String PLAYER_NAME_EXISTS_ERROR = "Name is already in use !";
+	public static final String PLAYER_NAME_TOO_SHORT_ERROR = "Name must be longer !";
 	public static final int PLAYER_NAME_ERROR_X = WIDTH / 3 + PLAYER_NAME_EXISTS_ERROR.length() / 2 - 2;
 	public static final int PLAYER_NAME_ERROR_Y = WIDTH / 4 - PLAYER_NAME_EXISTS_ERROR.length();
 	public static final String GENERAL_EXCEPTION = "Something went wrong !";
-
 
 	
 }

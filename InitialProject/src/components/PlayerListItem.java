@@ -1,25 +1,33 @@
 package components;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 import constants.Constants;
 import game.entities.playerProperties.Stats;
 
+/**
+ * 
+ * @author G_ANGELOV
+ *
+ * <p>Inspired by FX and Android Studio ways PlayerListItem is 
+ * custom made list item for our improvised ListView and
+ * it includes just basic Rectangles with some state 
+ * properties. </p>
+ */
+
 public class PlayerListItem extends MenuComponent{
 
-	private Rectangle body;
 	private int offset;
 	private boolean isOnFocus;
 	private Stats stat;
 	
 	public PlayerListItem(int offset,Stats s){
+		
 		super(Constants.PLAYERS_LIST_X,Constants.PLAYERS_LIST_Y + offset, s.getPlayerName());
 		super.setSize(Constants.PLAYERS_LIST_LISTITEM_WIDTH, Constants.PLAYERS_LIST_LISTITEM_HEIGHT);
-		
 		this.setStat(s);
-		this.body = new Rectangle(super.getxAxisPosition(),super.getyAxisPosition(),super.getWidth(),super.getHeight());
 	}
 
 	public void setOffset(int offset){
@@ -53,16 +61,26 @@ public class PlayerListItem extends MenuComponent{
 		this.stat = s;
 	}
 	
+	public Stats getStats(){
+		return this.stat;
+	}
+	
 	@Override
 	public void render(Graphics g) {
 		
-		String name = "Name: " + stat.getPlayerName();
+		g.setColor(Color.WHITE);
+		if(this.isOnFocus){
+			g.setColor(Color.BLACK);
+		}
+		g.setFont(new Font(Constants.FONT,Font.PLAIN,Constants.FONT_SIZE));
+		
+		String name = stat.getPlayerName();
+		String level = "Level: " + stat.getLevel();
+		
 		int padding = Constants.STANDARD_PADDING;
 		
-		g.setColor(Color.WHITE);
-		g.drawString(name, super.getxAxisPosition() + padding, super.getyAxisPosition() + padding);
-		
-		g.setColor(Color.cyan);
+		g.drawString(name, super.getxAxisPosition() + padding, super.getyAxisPosition() + (padding * 2));
+		g.drawString(level, super.getxAxisPosition() + padding, super.getyAxisPosition() + (padding * 3));
 		
 		g.drawRect(super.getxAxisPosition(), super.getyAxisPosition(), super.getWidth(), super.getHeight());
 		

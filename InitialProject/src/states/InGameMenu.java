@@ -1,83 +1,128 @@
 package states;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
+import components.Button;
 import components.StringButton;
-import game.entities.playerProperties.Stats;
+import constants.Constants;
+import events.MouseMotionSensitive;
 import game.entities.UnitDrawable;
+import gfx.Assets;
 import utils.ObjectSerializer;
 
-public class InGameMenu implements UnitDrawable{
+/**
+ * 
+ * @author G_ANGELOV
+ *
+ * <p>InGameMenu is the basic implementation of 
+ * in-game menu we have. It contains couple buttons
+ * and in it gives you the opportunity to control
+ * the game while playing </p>
+ *
+ */
+public class InGameMenu implements UnitDrawable,MouseMotionSensitive{
 
-	private StringButton resume;
-	private StringButton pause;
-	private StringButton options;
-	private StringButton exit;
+	private static final int ID = 7;
+	private Button resume;
+	private Button save;
 	
 	public InGameMenu(){
 		init();
 	}
-
-	private void init(){
-
-		resume = new StringButton(350,200,"Resume game");
-		resume.setSize(100, 50);
-		
-		pause = new StringButton(350,250,"Pause game");
-		pause.setSize(100, 50);
-
-		options = new StringButton(350,300,"Options");
-		options.setSize(100, 50);
-
-		exit = new StringButton(350,350,"Exit level");
-		exit.setSize(100, 50);
-		exit.linkToState(new MenuState());
-	}
-	
-	
-public void onMenuItemRelease(MouseEvent args){
-		
-		if(isInside(exit,args.getX(),args.getY())){
-			ObjectSerializer.getInstance().saveCurrentGameState();
-			exit.onStringMenuItemRelease();
-		}
-		
-	}
-
-
-	private boolean isInside(StringButton button, int mouseX,int mouseY){
-		
-		Rectangle rect = new Rectangle(button.getPositionX(),button.getPositionY(),100,50);
-		if(mouseX >= rect.getMinX() && mouseY >= rect.getMinY()
-				&& mouseX <= rect.getMaxX() && mouseY <= rect.getMaxY()){
-			return true;
-		}
-		
-		return false;
-	}
-	
 	
 	@Override
 	public void tick() {
 		
-		resume.tick();
-		pause.tick();
-		options.tick();
-		exit.tick();
+		this.resume.tick();
+		this.save.tick();
+
 	}
 
 	@Override
 	public void render(Graphics g) {
 		
-		resume.render(g);
-		pause.render(g);
-		options.render(g);
-		exit.render(g);
+		g.setColor(Constants.COLOR_OPAQUE_BLACK);
+		
+		g.fillRect(Constants.BACKGROUND_X, Constants.BACKGROUND_Y
+				, Constants.WIDTH, Constants.HEIGHT);
+		
+		this.resume.render(g);
+		this.save.render(g);
+	}
+
+	@Override
+	public void onMouseHover(MouseEvent args) {
+		if(this.resume.isInside(args.getX(), args.getY())){
+			this.resume.onMenuButtonHover();
+		}else{
+			this.resume.setHover(false);
+		}
+		
+		if(this.save.isInside(args.getX(), args.getY())){
+			this.save.onMenuButtonHover();
+		}else{
+			this.save.setHover(false);
+		}
+		
+	}
+
+	@Override
+	public void onMouseRelease(MouseEvent args) {
+		
+		if(this.resume.isInside(args.getX(), args.getY())){
+			try{
+				GameState g = (GameState)StateManager.getCurrentState();
+				g.toggleMenu();
+			}catch(ClassCastException ex){
+				ex.printStackTrace();
+			}
+		}else{
+			this.resume.setPressed(false);
+		}
+		
+		if(this.save.isInside(args.getX(), args.getY())){
+			ObjectSerializer.getInstance().saveCurrentGameState();
+			StateManager.setCurrentState(new MenuState());
+		}else{
+			this.save.setPressed(false);
+		}
+		
+	}
+
+	@Override
+	public void onMouseClick(MouseEvent args) {
+		
+		if(this.resume.isInside(args.getX(), args.getY())){
+			this.resume.onMenuButtonClick();
+		}else{
+			this.resume.setHover(false);
+			this.resume.setPressed(false);
+		}
+		
+		if(this.save.isInside(args.getX(), args.getY())){
+			this.save.onMenuButtonClick();
+		}else{
+			this.save.setHover(false);
+			this.save.setPressed(false);
+		}
 		
 	}
 	
-	
+
+	private void init(){
+
+		this.resume = new Button(Constants.MENU_BUTTON_X,Constants.MENU_BUTTON_Y,Constants.BUTTON_RESUME);
+		this.resume.setFrames(Assets.resumeButton);
+		
+		this.save = new Button(Constants.MENU_BUTTON_X
+				,Constants.MENU_BUTTON_Y + Constants.MENU_BUTTON_MARGIN_BOTTOM
+				,Constants.BUTTON_SAVE);
+		this.save.setFrames(Assets.saveButton);
+		
+		
+	}
 	
 }

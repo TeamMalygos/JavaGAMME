@@ -15,6 +15,7 @@ import java.awt.*;
 import java.io.*;
 
 import constants.Constants;
+import events.MouseMotionSensitive;
 
 public class GameState extends State {
     private static final int GRAVITY = 2;
@@ -169,6 +170,11 @@ public class GameState extends State {
     public static ObjectLayer getObjectsLayer(){
     	return objects;
     }
+
+	public InGameMenu getInGameMenu() {
+		// TODO Auto-generated method stub
+		return this.menu;
+	}
 
 	
 }

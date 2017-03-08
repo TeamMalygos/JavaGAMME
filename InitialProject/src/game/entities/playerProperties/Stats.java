@@ -202,6 +202,10 @@ public class Stats implements Serializable {
     public void setDamage(double damage) {
         this.damage = damage;
     }
+    
+    public int getLevel(){
+    	return this.level;
+    }
 
     public Map<String, Spell> getSpells() {
         return spells;

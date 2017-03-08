@@ -66,8 +66,7 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 		
 	}
 	
-	public void setFrames(BufferedImage frames){		
-		super.setSize(Constants.MENU_BUTTON_WIDTH, Constants.MENU_BUTTON_HEIGHT);
+	public void setFrames(BufferedImage frames){
 		super.frames = frames;
 		loadFrameHolders();
 		createReflection();

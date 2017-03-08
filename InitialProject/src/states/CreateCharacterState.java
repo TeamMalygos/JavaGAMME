@@ -19,9 +19,11 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 	
 	private TextField field;
 	private Button create;
+	private Button exit;
 	
 	private StringBuilder name;
 	private boolean nameExists;
+	private boolean isNameShort;
 	
 	public CreateCharacterState() {
 		super(ID);
@@ -34,6 +36,11 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 		this.create.setFrames(Assets.createButton);
 		this.create.linkToState(new LevelsState());
 	
+		this.exit = new Button(Constants.MENU_BUTTON_X
+				,Constants.MENU_BUTTON_Y + (Constants.MENU_BUTTON_MARGIN_BOTTOM * 3)
+				,Constants.BUTTON_QUIT);
+		this.exit.setFrames(Assets.quitButton);
+		
 		this.field = new TextField(Constants.TEXT_FIELD_NAME);
 		
 	}
@@ -41,6 +48,7 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 	@Override
 	public void tick() {
 		this.create.tick();
+		this.exit.tick();
 	}
 
 	@Override
@@ -58,12 +66,19 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 			g.drawString(Constants.PLAYER_NAME_EXISTS_ERROR
 					, Constants.PLAYER_NAME_ERROR_X
 					, Constants.PLAYER_NAME_ERROR_Y);
+		}else if(this.isNameShort){
+			g.setFont(new Font(Constants.FONT,Font.BOLD,Constants.FONT_SIZE + Constants.STANDARD_MARGIN));
+			g.drawString(Constants.PLAYER_NAME_TOO_SHORT_ERROR
+					, Constants.PLAYER_NAME_ERROR_X
+					, Constants.PLAYER_NAME_ERROR_Y);
 		}
+		
 		
 		g.setFont(new Font(Constants.FONT,Font.PLAIN,Constants.FONT_SIZE));
 
 		this.create.render(g);
 		this.field.render(g);
+		this.exit.render(g);
 		
 		g.drawImage(Assets.selector
 				,Constants.MENU_BUTTON_X + (Constants.MENU_BUTTON_WIDTH/2) - (Assets.selector.getWidth() / 2)
@@ -87,10 +102,18 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 			this.create.setHover(false);
 		}
 		
+		if(this.exit.isInside(args.getX(), args.getY())){
+			this.exit.onMenuButtonHover();
+		}else{
+			this.exit.setHover(false);
+		}
+		
 	}
 
 	@Override
 	public void onMouseRelease(MouseEvent args) {
+		
+		this.isNameShort = this.name.length() < Constants.NAME_MIN_LENGTH;
 		
 		if(this.create.isInside(args.getX(), args.getY())){
 			
@@ -101,7 +124,7 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 				StateManager.setCurrentState(new MenuState());
 			}
 			
-			if(!this.nameExists){
+			if(!this.nameExists && !this.isNameShort){
 				ObjectSerializer.getInstance().serializeNewCharacter(this.name.toString());
 				this.create.onMenuButtonRelease();
 			}
@@ -116,15 +139,29 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 			this.field.setFocused(false);
 		}
 		
+		if(this.exit.isInside(args.getX(), args.getY())){
+			StateManager.setCurrentState(new MenuState());
+		}else{
+			this.exit.setPressed(false);
+		}
+		
 	}
 
 	@Override
 	public void onMouseClick(MouseEvent args) {
+		
 		if(this.create.isInside(args.getX(), args.getY())){
 			this.create.onMenuButtonClick();
 		}else{
 			this.create.setHover(false);
 			this.create.setPressed(false);
+		}
+		
+		if(this.exit.isInside(args.getX(), args.getY())){
+			this.exit.onMenuButtonClick();
+		}else {
+			this.exit.setHover(false);
+			this.exit.setPressed(false);
 		}
 		
 	}
@@ -161,6 +198,7 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 			}
 			
 			this.name.append(keyChar);
+			
 	}
 
 	private boolean doesNameExist(String name) throws Exception{

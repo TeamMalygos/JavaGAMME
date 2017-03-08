@@ -1,7 +1,5 @@
 package states;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
@@ -10,6 +8,7 @@ import components.CharacterList;
 import constants.Constants;
 import events.MouseMotionSensitive;
 import gfx.Assets;
+import utils.ObjectSerializer;
 
 
 /**
@@ -101,8 +100,16 @@ public class LoadCharacterState extends State implements MouseMotionSensitive{
 		}
 		
 		if(this.load.isInside(args.getX(),args.getY())){
-			//Further logic
 			
+			try{
+				
+				ObjectSerializer.getInstance()
+					.loadGameState(this.characters.getCharacterOnFocus());
+				this.load.onMenuButtonRelease();
+				
+			}catch(NullPointerException ex){
+				//System.out.println("Null pointer exception / Check your onMenuRelease() method");
+			}
 		}else {
 			this.load.setHover(false);
 			this.load.setPressed(false);
@@ -112,6 +119,8 @@ public class LoadCharacterState extends State implements MouseMotionSensitive{
 
 	@Override
 	public void onMouseClick(MouseEvent args) {
+		this.characters.onMouseClick(args);
+		
 		if(this.quit.isInside(args.getX(), args.getY())){
 			this.quit.onMenuButtonClick();
 		}else {

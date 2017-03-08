@@ -17,29 +17,23 @@ public class LevelCard extends MenuComponent {
 	private File jsonFile;
 	private Rectangle body;
 	
+	private boolean isOnFocus;
+	
 	public LevelCard(int x, int y, File jsonFile) {
 		super(x, y, jsonFile.getName());
 		this.setJsonFile(jsonFile);
 		
 		init();
 		this.setBody(new Rectangle(x,y,Constants.LEVEL_CARD_WIDTH,Constants.LEVEL_CARD_HEIGHT));
-		
+		this.setFocus(false);
 	}
 	
-	private void init(){
-		
-		String levelNumber = "1";
-		
-		try{
-			String[] mapArgs = this.jsonFile.getName().split("\\.");
-			levelNumber = mapArgs[1];
-		}catch(ArrayIndexOutOfBoundsException ex){
-			ex.printStackTrace();
-		}
-		
-		//this.setLevelThumb(ImageLoader.loadImage("/levels/map_thumb_" + levelNumber + ".png"));
-		this.setLevel(Level.valueOf("Level" + levelNumber));
-		
+	public void setFocus(boolean b) {
+		this.isOnFocus = b;
+	}
+	
+	public boolean isOnFocus(){
+		return this.isOnFocus;
 	}
 
 	@Override
@@ -89,5 +83,20 @@ public class LevelCard extends MenuComponent {
 		this.body = body;
 	}
 	
+	private void init(){
+		
+		String levelNumber = "1";
+		
+		try{
+			String[] mapArgs = this.jsonFile.getName().split("\\.");
+			levelNumber = mapArgs[1];
+		}catch(ArrayIndexOutOfBoundsException ex){
+			ex.printStackTrace();
+		}
+		
+		//this.setLevelThumb(ImageLoader.loadImage("/levels/map_thumb_" + levelNumber + ".png"));
+		this.setLevel(Level.valueOf("Level" + levelNumber));
+		
+	}	
 
 }

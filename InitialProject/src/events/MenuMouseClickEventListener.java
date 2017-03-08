@@ -44,6 +44,15 @@ public class MenuMouseClickEventListener implements MouseListener{
 	public void mousePressed(MouseEvent mouseArgs) {
 		// TODO Auto-generated method stub
 		if(!this.isMenuState()){
+			if(StateManager.getCurrentState() instanceof GameState){
+				GameState g = (GameState)StateManager.getCurrentState();
+				
+				if(!g.isInMenuState()){
+					return;
+				}
+				
+				g.getInGameMenu().onMouseClick(mouseArgs);
+			}
 			return;
 		}
 		
@@ -60,6 +69,15 @@ public class MenuMouseClickEventListener implements MouseListener{
 		// TODO Auto-generated method stub
 		
 		if(!this.isMenuState()){
+			if(StateManager.getCurrentState() instanceof GameState){
+				GameState g = (GameState)StateManager.getCurrentState();
+				
+				if(!g.isInMenuState()){
+					return;
+				}
+				
+				g.getInGameMenu().onMouseRelease(mouseArgs);
+			}
 			return;
 		}
 		

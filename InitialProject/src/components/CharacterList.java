@@ -15,6 +15,16 @@ import constants.Constants;
 import events.MouseMotionSensitive;
 import game.entities.playerProperties.Stats;
 
+
+/**
+ * 
+ * @author G_ANGELOV
+ *
+ * <p>Our improvsed ListView inspired by
+ * Android Studio ways and its design is
+ * almost as poor as my imagination </p>
+ *
+ */
 public class CharacterList extends MenuComponent implements MouseMotionSensitive{
 
 	private File[] players;
@@ -32,6 +42,7 @@ public class CharacterList extends MenuComponent implements MouseMotionSensitive
 				,(float)super.getWidth(),(float)super.getHeight()
 				,Constants.BORDER_RADIUS
 				,Constants.BORDER_RADIUS);
+		
 		
 		loadRadialGradients();
 		
@@ -52,7 +63,6 @@ public class CharacterList extends MenuComponent implements MouseMotionSensitive
 		
 		this.players = dir.listFiles();
 		this.items = new PlayerListItem[this.players.length];
-		
 		deserializePlayers();
 		
 	}
@@ -60,15 +70,14 @@ public class CharacterList extends MenuComponent implements MouseMotionSensitive
 	private void deserializePlayers(){
 		
 		ObjectInputStream ois = null;
-		int offset = Constants.PLAYERS_LIST_HEIGHT;
+		int offset = Constants.PLAYERS_LIST_LISTITEM_HEIGHT;
 		
 		for(int i = 0 ; i < this.items.length ; i++){
-			offset *= i;
 			try {
 				ois = new ObjectInputStream(new FileInputStream(this.players[i]));
 				
 				Stats s = (Stats)ois.readObject();
-				PlayerListItem li = new PlayerListItem(offset,s);
+				PlayerListItem li = new PlayerListItem((offset+1) * i,s);
 				this.items[i] = li;
 				
 			} catch (IOException | ClassNotFoundException e) {
@@ -117,8 +126,35 @@ public class CharacterList extends MenuComponent implements MouseMotionSensitive
 
 	@Override
 	public void onMouseClick(MouseEvent args) {
+
+		if(super.isInside(args.getX(), args.getY())){
+			
+			for(PlayerListItem li : this.items){
+
+				if(li.isInside(args.getX(),args.getY())){
+					System.out.println("Focus");
+					li.setFocus(true);
+				}else{
+					li.setFocus(false);
+				}
+				
+			}
+			
+		}
 		
 		
+	}
+
+	public PlayerListItem getCharacterOnFocus() {
+		
+		for(PlayerListItem li : this.items){
+			
+			if(li.isOnFocus()){
+				return li;
+			}
+			
+		}
+		return null;
 	}
 
 }
