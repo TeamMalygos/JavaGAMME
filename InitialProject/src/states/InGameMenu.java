@@ -11,6 +11,7 @@ import components.StringButton;
 import game.entities.Player;
 import game.entities.Stats;
 import game.entities.UnitDrawable;
+import utils.ObjectSerializer;
 
 public class InGameMenu implements UnitDrawable{
 
@@ -43,23 +44,12 @@ public class InGameMenu implements UnitDrawable{
 public void onMenuItemRelease(MouseEvent args){
 		
 		if(isInside(exit,args.getX(),args.getY())){
-			saveCurrentPlayer();
+			ObjectSerializer.getInstance().saveCurrentGameState();
 			exit.onStringMenuItemRelease();
 		}
 		
 	}
 
-	private void saveCurrentPlayer() {
-		Player currentPlayer = GameState.getPlayer();
-		Stats st = currentPlayer.getPlayerStats();
-		String playerFilePath = System.getProperty("user.dir") + "/resources/players/" + currentPlayer.getName() + ".ser";
-		try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(playerFilePath));
-            oos.writeObject(st);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	}
 
 	private boolean isInside(StringButton button, int mouseX,int mouseY){
 		

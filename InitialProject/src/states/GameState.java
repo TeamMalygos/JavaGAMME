@@ -10,6 +10,7 @@ import map.TileMap;
 import map.parser.LevelLoader;
 import map.parser.ObjectsLayer;
 import utils.Level;
+import utils.UserAccount;
 
 import java.awt.*;
 import java.io.*;
@@ -36,94 +37,58 @@ public class GameState extends State {
     public GameState(Level level) {
     	super(ID);
     	this.level = level;
-    	isRunning = false;
+    	this.isRunning = false;
+    	
     }
 
     private void init() throws IOException {
+
         Assets.init();
       
         LevelLoader loader = new LevelLoader(this.level);
 
-        map = new TileMap(loader.getLevelData().getTileLayer().getData()
+        this.map = new TileMap(loader.getLevelData().getTileLayer().getData()
         		,loader.getLevelData().getTileLayer().getHeight()
         		,loader.getLevelData().getTileLayer().getWidth());
         
-        map.setOffset(loader.getLevelData().getTileLayer().getOffsetX(),
+        this.map.setOffset(loader.getLevelData().getTileLayer().getOffsetX(),
         		loader.getLevelData().getTileLayer().getOffsetY());
-        map.loadTiles("/textures/Sheet.png");
-        map.setPosition(0, 0);
+        this.map.loadTiles("/textures/Sheet.png");
         
-        objects = new ObjectLayer(loader.getLevelData().getObjectsLayer());
-        objects.setSecondaryTileLayer(loader.getLevelData().getLootLayer());
-        objects.setOffset(loader.getLevelData().getLootLayer().getOffsetX()
+        this.map.setPosition(0, 0);
+        
+        this.objects = new ObjectLayer(loader.getLevelData().getObjectsLayer());
+        this.objects.setSecondaryTileLayer(loader.getLevelData().getLootLayer());
+        this.objects.setOffset(loader.getLevelData().getLootLayer().getOffsetX()
         		,loader.getLevelData().getLootLayer().getOffsetY());
         
-        menu = new InGameMenu();
+        this.menu = new InGameMenu();
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        loadOrStartNewGame(reader);
-
+        this.player = new Player(UserAccount.getStats().getPlayerName()   		
+        		,this.map,UserAccount.getStats());
+        
+        this.hud = new InGameHUD(this.player);
+        
         //firstEnemyShootingUnit = new EnemyShootingUnit("NekvaPachaSLesenSpriteSheet", 60, 60, 650, 450, 150, 50, 250);
         //firstMeleeEnemy = new EnemyMeleeUnit("Melee", 100, 134, 450, 400, 5, 35, 700);
         
     }
 
-    private void loadOrStartNewGame(BufferedReader reader) throws IOException {
-        System.out.println("Start new game or load player?");
-        System.out.print("new/load:");
-        String userChoice = reader.readLine();
-        switch (userChoice) {
-            case "new":
-                createNewPlayer(reader);
-                break;
-            case "load":
-                loadPlayer(reader);
-                break;
-            default:
-                System.out.println("Unrecognized command.");
-                loadOrStartNewGame(reader);
-                break;
-        }
-    }
 
-    private void loadPlayer(BufferedReader reader) throws IOException {
-        String playerName;
-        System.out.println("Load character.");
-        System.out.print("Player name: ");
-        playerName = reader.readLine();
-        String playerFilePath = System.getProperty("user.dir") + "/resources/players/" + playerName + ".ser";
-        File playerFile = new File (playerFilePath);
-        if (playerFile.exists()) {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(playerFile));
-            try {
-                Stats loadedStats = (Stats) ois.readObject();
-                player = new Player(loadedStats.getPlayerName(), map, loadedStats);
-                hud = new InGameHUD(player);
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Player with such name does not exist.");
-            loadPlayer(reader);
-        }
-    }
-
+    /*This will be used later in another state so do not delete it!!!!
+     * 
     private void createNewPlayer(BufferedReader reader) throws IOException {
-        String playerName;
-        System.out.println("Creating new character.");
-        System.out.print("Player name: ");
         playerName = reader.readLine();
-        String playerFilePath = "/players/" + playerName + ".ser";
-        File playerFile = new File (playerFilePath);
+
         if (playerFile.exists()) {
             System.out.println("Player with such name already exists. Please choose new one.");
             createNewPlayer(reader);
         } else {
             player = new Player(playerName,map);
-            hud = new InGameHUD(player);
+
         }
     }
-
+*/
 
     @Override
     public void tick() {

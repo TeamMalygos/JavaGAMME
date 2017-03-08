@@ -10,6 +10,15 @@ public class Constants {
 	public static final int BACKGROUND_Y = 0;
 	public static final int BACKGROUND_X = 0;
     
+	public static final String CREATORS = "Created by TeamMalygos";
+	public static final int CREATORS_Y = HEIGHT - 10;
+	public static final int CREATORS_X = 10;
+	
+	public static final String FONT = "Impact";
+	public static final int FONT_SIZE = 16;
+	
+	public static final int NAME_MAX_LENGTH = 22;
+	
     // Player initialization constants - all of these are sample values.
     public static final double DAMAGE_REDUCE_RATE = 0.1;
     public static final double INITIAL_HEALTH = 500;
@@ -48,11 +57,18 @@ public class Constants {
 	public static final int LEVEL_CARD_HEIGHT = 200;
 	public static final int LEVEL_CARD_WIDTH = 100;
     
+	public static final int MENU_BUTTON_MARGIN_BOTTOM = 66;
+	public static final int MENU_BUTTON_X = 300;
+	public static final int MENU_BUTTON_Y = 250;
+	
 	//Menu components - names
 	public static final String BUTTON_START = "Start";
 	public static final String BUTTON_QUIT = "Exit";
 	public static final String BUTTON_RESUME = "Resume";
 	public static final String BUTTON_LOAD = "Load";
+	public static final String BUTTON_NEW = "New";
+	
+	public static final String TEXT_FIELD_NAME = "TextField";
 	
     //Projectiles
     public static final int PROJECTILE_KEY_WIDTH = 9;
@@ -95,7 +111,41 @@ public class Constants {
 	public static final Color[] COLORS = new Color[]{RADIAN_COLOR_1,RADIAN_COLOR_2,MAIN_COLOR};
 	public static final float RADIAL_RADIUS = 30;
 	
+	public static final int PLAYERS_LIST_LISTITEM_WIDTH = PLAYERS_LIST_WIDTH;
+	public static final int PLAYERS_LIST_LISTITEM_HEIGHT = PLAYERS_LIST_HEIGHT / 5;
+	
 	public static final float BORDER_RADIUS = 10;
+	public static final int STANDARD_PADDING = 16;
+	public static final int STANDARD_MARGIN = 8;
+	
+	//Error messages
+	public static final String NEGATIVE_OFFSET_ERROR = "WARNING! Negative offsets are not allowed";
+	public static final String PLAYER_NAME_EXISTS_ERROR = "Name is already in use !";
+	public static final int PLAYER_NAME_ERROR_X = WIDTH / 3 + PLAYER_NAME_EXISTS_ERROR.length() / 2 - 2;
+	public static final int PLAYER_NAME_ERROR_Y = WIDTH / 4 - PLAYER_NAME_EXISTS_ERROR.length();
+	public static final String GENERAL_EXCEPTION = "Something went wrong !";
 
+
+	// Spells
+    public static final int INITIAL_SPELL_LEVEL = 1;
+    public static final String INSUFFICIENT_MANA = "Insufficient mana";
+    public static final String INSUFFICIENT_POINTS = "Insufficient points";
+    public static final String HEAL_SPELL_NAME = "Heal";
+    public static final int HEAL_SPELL_INITIAL_MANA_REQUIRED = 40;
+    public static final int HEAL_SPELL_INITIAL_HEAL_AMOUNT = 100;
+    public static final int HEAL_SPELL_LEVEL_UP_AMOUNT_INCREASE = 50;
+    public static final String FIREWALL_SPELL_NAME = "Firewall";
+    public static final int FIREWALL_SPELL_INITIAL_MANA_REQUIRED = 50;
+    public static final double FIREWALL_SPELL_INITIAL_ARMOR_INCREASE = 100;
+    public static final double FIREWALL_SPELL_LEVEL_UP_AMOUNT_INCREASE = 20;
+    public static final int FIREWALL_SPELL_INITIAL_ACTIVE_TIME = 300;
+    public static final int FIREWALL_SPELL_LEVEL_UP_ACTIVE_TIME_INCREASE = 50;
+    public static final String HARDCORE_ALGORITHM_SPELL_NAME = "HardcoreAlgorithm";
+    public static final int HARDCORE_ALGORITHM_SPELL_INITIAL_MANA_REQUIRED = 60;
+    public static final double HARDCORE_ALGORITHM_SPELL_INITIAL_DAMAGE_INCREASE = 20;
+    public static final int HARDCORE_ALGORITHM_SPELL_INITIAL_ACTIVE_TIME = 300;
+    public static final double HARDCORE_ALGORITHM_SPELL_LEVEL_UP_AMOUNT_INCREASE = 20;
+    public static final int HARDCORE_ALGORITHM_SPELL_LEVEL_UP_ACTIVE_TIME_INCREASE = 50;
+	
 	
 }

@@ -1,8 +1,12 @@
-package game.entities;
+package game.entities.playerProperties;
 
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
+import game.entities.playerProperties.spells.abstractions.Spell;
+import game.entities.playerProperties.spells.implementations.SpellFactory;
 import utils.LootBag;
 
 import static constants.Constants.*;
@@ -13,6 +17,8 @@ public class Stats implements Serializable {
 	private LootBag bag;
 	
     private String playerName;
+
+    private double damage;
 
     private double health;
     private double currentHealth;
@@ -31,6 +37,10 @@ public class Stats implements Serializable {
     private int currentExperience;
     private int totalLevelExperience;
 
+    private Map<String, Spell> spells;
+    private int spellLevelUpPoints;
+    private SpellFactory spellFactory;
+
     public Stats(String playerName) {
         this.playerName = playerName;
         this.bag = new LootBag();
@@ -38,6 +48,7 @@ public class Stats implements Serializable {
     }
 
     private void init() {
+        this.damage = INITIAL_DAMAGE;
         this.health = this.currentHealth = INITIAL_HEALTH;
         this.healthRegeneraionRate = INITIAL_HEALTH_REGENERATION_RATE;
 
@@ -51,6 +62,9 @@ public class Stats implements Serializable {
         this.level = INITIAL_PLAYER_LEVEL;
         this.currentExperience = INITIAL_PLAYER_EXPERIENCE;
         this.totalLevelExperience = INITIAL_LEVEL_TOTAL_EXPERIENCE;
+
+        this.spells = new HashMap<>();
+        this.spellFactory = new SpellFactory();
     }
 
     public void tick() {
@@ -66,6 +80,25 @@ public class Stats implements Serializable {
             regenerationTimer = 0;
         }
 
+        this.spells.values().forEach(Spell::tick);
+    }
+
+    public void learnSpell(String spellType) {
+
+        if (this.spellLevelUpPoints >= 1) {
+            this.spells.putIfAbsent(spellType, this.spellFactory.getSpell(spellType, this));
+            this.spellLevelUpPoints--;
+        } else {
+            System.out.println(INSUFFICIENT_POINTS);
+        }
+    }
+
+    public void levelUpSpell(String spellType) {
+        if (this.spellLevelUpPoints >= 1) {
+            this.spells.get(spellType).levelUp();
+        } else {
+            System.out.println(INSUFFICIENT_POINTS);
+        }
     }
 
     public void gainExperience(int experienceAmount) {
@@ -76,31 +109,45 @@ public class Stats implements Serializable {
     }
 
     public void gainHealth(int healthAmount) {
-        this.currentHealth += healthAmount;
+        if (this.currentHealth + healthAmount > this.health) {
+            this.currentHealth = this.health;
+        } else {
+            this.currentHealth += healthAmount;
+        }
         System.out.println("Gained " + healthAmount + " health.");
         System.out.println("Current experience: " + currentHealth);
     }
 
     public void gainMana(int manaAmount) {
-        this.currentMana += manaAmount;
+        if (this.currentMana + manaAmount > this.mana) {
+            this.currentMana = this.mana;
+        } else {
+            this.currentMana += manaAmount;
+        }
         System.out.println("Gained " + manaAmount + " mana.");
         System.out.println("Current mana: " + currentMana);
     }
 
     public void calculateLevel() {
         if (this.currentExperience >= this.totalLevelExperience) {
-            level++;
-            totalLevelExperience *= TOTAL_LEVEL_EXPERIENCE_INCREMENT_RATE;
-            health += LEVEL_UP_HEALTH_INCREASE;
-            mana += LEVEL_UP_MANA_INCREASE;
-
-            // We will later decide wether currents stats will fully regenerate on level up
-            currentHealth = health;
-            currentMana = mana;
-
-            System.out.println("Leveled up to level " + level);
-            System.out.println("Next level total exp needed: " + totalLevelExperience);
+            this.levelUp();
         }
+    }
+
+    private void levelUp() {
+        level++;
+        totalLevelExperience *= TOTAL_LEVEL_EXPERIENCE_INCREMENT_RATE;
+        health += LEVEL_UP_HEALTH_INCREASE;
+        mana += LEVEL_UP_MANA_INCREASE;
+
+        // We will later decide wether currents stats will fully regenerate on level up
+        currentHealth = health;
+        currentMana = mana;
+
+        this.spellLevelUpPoints++;
+
+        System.out.println("Leveled up to level " + level);
+        System.out.println("Next level total exp needed: " + totalLevelExperience);
     }
 
     public void regenerateHealth() {
@@ -147,5 +194,17 @@ public class Stats implements Serializable {
     }
     public LootBag getBag(){
     	return this.bag;
+    }
+
+    public double getDamage() {
+        return damage;
+    }
+
+    public void setDamage(double damage) {
+        this.damage = damage;
+    }
+
+    public Map<String, Spell> getSpells() {
+        return spells;
     }
 }
