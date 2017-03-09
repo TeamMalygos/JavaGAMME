@@ -1,19 +1,21 @@
 package components;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
 import constants.Constants;
+import enums.Level;
 import gfx.ImageLoader;
-import utils.Level;
 
 public class LevelCard extends MenuComponent {
 
 	private BufferedImage levelThumb;
 	private Level level;
-
+	private int reward;
+	
 	private File jsonFile;
 	private Rectangle body;
 	
@@ -22,7 +24,7 @@ public class LevelCard extends MenuComponent {
 	public LevelCard(int x, int y, File jsonFile) {
 		super(x, y, jsonFile.getName());
 		this.setJsonFile(jsonFile);
-		
+	
 		init();
 		this.setBody(new Rectangle(x,y,Constants.LEVEL_CARD_WIDTH,Constants.LEVEL_CARD_HEIGHT));
 		this.setFocus(false);
@@ -37,8 +39,12 @@ public class LevelCard extends MenuComponent {
 	}
 
 	@Override
-	public void render(Graphics g) {
-		
+	public void render(Graphics g){
+		g.drawRect(super.xAxisPosition, super.yAxisPosition, super.width, super.height);
+		g.setColor(Color.WHITE);
+		g.drawString("Reward: " + this.reward + " Diamonds!"
+				, (super.xAxisPosition + super.width ) /2
+				, (super.yAxisPosition + super.height) /2 );
 	}
 
 	@Override
@@ -83,6 +89,15 @@ public class LevelCard extends MenuComponent {
 		this.body = body;
 	}
 	
+	public int getReward(){
+		return this.reward;
+	}
+	
+	public void setReward(int r) {
+		// TODO Auto-generated method stub
+		this.reward = r;
+	}	
+	
 	private void init(){
 		
 		String levelNumber = "1";
@@ -95,8 +110,10 @@ public class LevelCard extends MenuComponent {
 		}
 		
 		//this.setLevelThumb(ImageLoader.loadImage("/levels/map_thumb_" + levelNumber + ".png"));
+		this.setReward(Constants.LEVEL_REWARD[Integer.valueOf(levelNumber)-1]);
 		this.setLevel(Level.valueOf("Level" + levelNumber));
 		
-	}	
+	}
+
 
 }

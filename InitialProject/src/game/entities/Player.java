@@ -12,16 +12,17 @@ import utils.CollisionBox;
 import utils.LootBag;
 import utils.MovementAttributes;
 import utils.MovementState;
-import utils.ObjectState;
 import utils.PVector;
 
 import java.awt.*;
 
 import constants.Constants;
+import enums.ObjectState;
 
 public class Player extends MapObject implements UnitDrawable,StateProvidable {
 
     private String name;
+    private Rectangle playerPickUpBox;
     
     private Stats playerStats;
 
@@ -72,6 +73,9 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
 
         loadSprites();
 
+        this.playerPickUpBox = new Rectangle((int)super.position.getPositionX()
+        		,(int)super.position.getPositionY(),0,(int)super.height);
+        
         super.movementState = new MovementState();
         //this.boundingBox = new Rectangle(x, y, width, height);
 
@@ -275,7 +279,10 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
         		super.cBox.getCollisionWidth(),
         		super.cBox.getCollisionHeight());
     }
-
+    public boolean canPickUp(Rectangle o){
+    	return this.playerPickUpBox.intersects(o);
+    }
+    
 	@Override
 	public boolean isMovingLeft() {return super.movementState.isGoingLeft();}
 	@Override

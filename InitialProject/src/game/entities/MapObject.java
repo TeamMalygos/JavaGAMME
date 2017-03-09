@@ -9,6 +9,7 @@ import utils.MovementState;
 import utils.PVector;
 import utils.Animation;
 import constants.Constants;
+import enums.TileType;
 
 /**
  * 
@@ -49,27 +50,8 @@ public abstract class MapObject {
 		return this.getObjectRectangle().intersects(o.getObjectRectangle());
 	}
 
-	private Rectangle getObjectRectangle(){
-		return new Rectangle(
-				(int)position.getPositionX() - cBox.getCollisionWidth(),
-				(int)position.getPositionY() - cBox.getCollisionHeight(),
-				cBox.getCollisionWidth(),
-				cBox.getCollisionHeight());
-		
-	}
-	
-	private void checkCollisionCorners(double x,double y){
-		
-		int leftCorner = (int)(x - this.cBox.getCollisionWidth() / 2) / this.tileSize;
-		int rightCorner = (int)(x + this.cBox.getCollisionWidth() / 2 - 1) / this.tileSize;
-		int topCorner = (int)(y - this.cBox.getCollisionHeight() / 2) / this.tileSize;
-		int bottomCorner = (int)(y + this.cBox.getCollisionHeight() / 2 - 1) / this.tileSize;
-		
-		this.cBox.setCollisionBoundaries(this.tileMap.isBlocked(topCorner, leftCorner)
-				, this.tileMap.isBlocked(topCorner, rightCorner)
-				, this.tileMap.isBlocked(bottomCorner, rightCorner)
-				, this.tileMap.isBlocked(bottomCorner, leftCorner));
-		
+	public void checkCollisionCorners(double x,double y){
+		this.cBox.checkCollisionCorners(x,y, this.tileMap);
 	}
 
 	/**
@@ -117,82 +99,24 @@ public abstract class MapObject {
 		
 	}
 	
-	private void calculateYMovement(){
-		//If you jump (-1 direction y) and topleft and topright corners are blocked you bump
-		if(this.position.getDirectionY() < 0){
-			
-			if(this.cBox.isTopLeftBlocked() || this.cBox.isTopRightBlocked()){
-				//Direction y is set to 0
-				this.position.setDirectionY(0);
-				//Position is set to x/y below the tile you bumped into
-				this.position.setTemporaryY(this.currentRow * this.tileSize 
-						+ this.cBox.getCollisionHeight()/2);
-			}else {
-				this.position.setTemporaryY(this.position.getTemporaryY() + this.position.getDirectionY());
-			}
-		}
+	public Rectangle getObjectRectangle(){
+		return new Rectangle(
+				(int)position.getPositionX() - cBox.getCollisionWidth(),
+				(int)position.getPositionY() - cBox.getCollisionHeight(),
+				cBox.getCollisionWidth(),
+				cBox.getCollisionHeight());
 		
-		//If direction y is 1 - bottom / falling
-		if(this.position.getDirectionY() > 0){
-			
-			if(this.cBox.isBottomLeftBlocked() || this.cBox.isBottomRightBlocked()){
-				
-				//Setting y direction to 0 and position to (right above the blocked tile)
-				this.position.setDirectionY(0);
-				this.movementState.setFalling(false);
-				this.position.setTemporaryY((this.currentRow + 1) * this.tileSize 
-						- this.cBox.getCollisionHeight() /2 );
-			}else {
-				this.position.setTemporaryY(this.position.getTemporaryY() 
-						+ this.position.getDirectionY());
-			}
-			
-		}
 	}
 	
-	//Analogy with calculateYMovement
-	private void calculateXMovement(){
-		
-		if(this.position.getDirectionX() < 0){
-			
-			if(this.cBox.isTopLeftBlocked() || this.cBox.isBottomLeftBlocked()){
-				
-				this.position.setDirectionX(0);
-				this.position.setTemporaryX(this.currentColumn * this.tileSize 
-						+ this.cBox.getCollisionWidth() / 2);
-				
-			}else {
-				this.position.setTemporaryX(this.position.getTemporaryX() 
-						+ this.position.getDirectionX());
-			}
-			
-		}
-		
-		if(this.position.getDirectionX() > 0){
-			
-			if(this.cBox.isTopRightBlocked() || this.cBox.isBottomRightBlocked()){
-			
-				this.position.setDirectionX(0);
-				this.position.setTemporaryX((this.currentColumn+1) * this.tileSize 
-						- this.cBox.getCollisionWidth() / 2);
-				
-			}else {
-				this.position.setTemporaryX(this.position.getTemporaryX() 
-						+ this.position.getDirectionX());
-			}
-			
-		}
-		
-	}
 	
 	//Map position
-	protected void setMapPosition(){
+	public void setMapPosition(){
 		this.mapX = this.tileMap.getX();
 		this.mapY = this.tileMap.getY();
 	}
 	
 	//Check if the object is on screen
-	protected boolean notOnScreen(){
+	public boolean notOnScreen(){
 		
 		return this.position.getPositionX() + this.mapX + this.width < 0 ||
 				this.position.getPositionX() + this.mapX - this.width > Constants.WIDTH ||
@@ -200,5 +124,73 @@ public abstract class MapObject {
 				this.position.getPositionY() + this.mapY - this.height > Constants.HEIGHT;	
 		
 	}
+
+	//Analogy with calculateYMovement
+		private void calculateXMovement(){
+			
+			if(this.position.getDirectionX() < 0){
+				
+				if(this.cBox.isTopLeftBlocked() || this.cBox.isBottomLeftBlocked()){
+					
+					this.position.setDirectionX(0);
+					this.position.setTemporaryX(this.currentColumn * this.tileSize 
+							+ this.cBox.getCollisionWidth() / 2);
+					
+				}else {
+					this.position.setTemporaryX(this.position.getTemporaryX() 
+							+ this.position.getDirectionX());
+				}
+				
+			}
+			
+			if(this.position.getDirectionX() > 0){
+				
+				if(this.cBox.isTopRightBlocked() || this.cBox.isBottomRightBlocked()){
+				
+					this.position.setDirectionX(0);
+					this.position.setTemporaryX((this.currentColumn+1) * this.tileSize 
+							- this.cBox.getCollisionWidth() / 2);
+					
+				}else {
+					this.position.setTemporaryX(this.position.getTemporaryX() 
+							+ this.position.getDirectionX());
+				}
+				
+			}
+			
+		}
 	
+		private void calculateYMovement(){
+			//If you jump (-1 direction y) and topleft and topright corners are blocked you bump
+			if(this.position.getDirectionY() < 0){
+				
+				if(this.cBox.isTopLeftBlocked() || this.cBox.isTopRightBlocked()){
+					//Direction y is set to 0
+					this.position.setDirectionY(0);
+					//Position is set to x/y below the tile you bumped into
+					this.position.setTemporaryY(this.currentRow * this.tileSize 
+							+ this.cBox.getCollisionHeight()/2);
+				}else {
+					this.position.setTemporaryY(this.position.getTemporaryY() + this.position.getDirectionY());
+				}
+			}
+			
+			//If direction y is 1 - bottom / falling
+			if(this.position.getDirectionY() > 0){
+				
+				if(this.cBox.isBottomLeftBlocked() || this.cBox.isBottomRightBlocked()){
+					
+					//Setting y direction to 0 and position to (right above the blocked tile)
+					this.position.setDirectionY(0);
+					this.movementState.setFalling(false);
+					this.position.setTemporaryY((this.currentRow + 1) * this.tileSize 
+							- this.cBox.getCollisionHeight() /2 );
+				}else {
+					this.position.setTemporaryY(this.position.getTemporaryY() 
+							+ this.position.getDirectionY());
+				}
+				
+			}
+		}
+
 }
