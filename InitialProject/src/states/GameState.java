@@ -1,5 +1,7 @@
 package states;
 
+import components.*;
+import components.Button;
 import game.entities.EnemyMeleeUnit;
 import game.entities.EnemyShootingUnit;
 import game.entities.Player;
@@ -12,11 +14,17 @@ import utils.ObjectSerializer;
 import utils.UserAccount;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.*;
 
 import constants.Constants;
 import enums.Level;
 import events.MouseMotionSensitive;
+
+import static constants.Constants.HEAL_SPELL_NAME;
 
 public class GameState extends State {
     private static final int GRAVITY = 2;
@@ -35,6 +43,8 @@ public class GameState extends State {
     public static Player player;
     public static EnemyShootingUnit firstEnemyShootingUnit;
     public static EnemyMeleeUnit firstMeleeEnemy;
+
+    private components.Button healSpell;
 
     public GameState(Level level) {
     	super(ID);
@@ -82,6 +92,7 @@ public class GameState extends State {
         		,this.map,UserAccount.getStats());
         
         this.hud = new InGameHUD(this.player);
+
         
         setFinished(false);
         
@@ -138,6 +149,7 @@ public class GameState extends State {
         if(this.isMenuOpen){
         	menu.tick();
         }
+
     }
 
     @Override
@@ -156,6 +168,7 @@ public class GameState extends State {
         	menu.render(g);;
         }
     }
+
 
     public static int getGRAVITY() {
         return GRAVITY;

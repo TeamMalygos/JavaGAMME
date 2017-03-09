@@ -20,6 +20,7 @@ public abstract class Spell {
 
     public void levelUp() {
         this.spellLevel++;
+        System.out.println(this.getClass().getSimpleName() + " leveled up!");
     }
 
     public double getManaRequired() {
