@@ -64,6 +64,7 @@ public class Stats implements Serializable {
 
         this.spells = new HashMap<>();
         this.spellFactory = new SpellFactory();
+        this.spellLevelUpPoints = 5;
     }
 
     public void tick() {
@@ -83,10 +84,14 @@ public class Stats implements Serializable {
     }
 
     public void learnSpell(String spellType) {
-
+        if (this.spells.containsKey(spellType)) {
+            this.levelUpSpell(spellType);
+            return;
+        }
         if (this.spellLevelUpPoints >= 1) {
             this.spells.putIfAbsent(spellType, this.spellFactory.getSpell(spellType, this));
             this.spellLevelUpPoints--;
+            System.out.println(spellType + " spell learned!");
         } else {
             System.out.println(INSUFFICIENT_POINTS);
         }
@@ -95,6 +100,7 @@ public class Stats implements Serializable {
     public void levelUpSpell(String spellType) {
         if (this.spellLevelUpPoints >= 1) {
             this.spells.get(spellType).levelUp();
+            this.spellLevelUpPoints--;
         } else {
             System.out.println(INSUFFICIENT_POINTS);
         }
@@ -114,7 +120,7 @@ public class Stats implements Serializable {
             this.currentHealth += healthAmount;
         }
         System.out.println("Gained " + healthAmount + " health.");
-        System.out.println("Current experience: " + currentHealth);
+        System.out.println("Current health: " + currentHealth);
     }
 
     public void gainMana(int manaAmount) {

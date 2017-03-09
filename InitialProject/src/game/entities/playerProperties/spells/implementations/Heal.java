@@ -21,7 +21,7 @@ public class Heal extends Spell {
         if (super.getPlayerStats().getCurrentMana() >= super.getManaRequired()) {
             super.getPlayerStats().gainHealth(this.getHealAmount());
             super.getPlayerStats().setCurrentMana(super.getPlayerStats().getCurrentMana() - super.getManaRequired());
-            System.out.println("Heal spell cast! " + this.getHealAmount() + " health gained!");
+            System.out.println("Heal spell cast!");
         } else {
             System.out.println(INSUFFICIENT_MANA);
         }

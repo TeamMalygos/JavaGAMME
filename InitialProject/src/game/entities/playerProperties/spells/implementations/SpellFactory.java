@@ -5,6 +5,7 @@ import game.entities.playerProperties.Stats;
 import game.entities.playerProperties.spells.abstractions.Spell;
 
 import static constants.Constants.FIREWALL_SPELL_NAME;
+import static constants.Constants.HARDCORE_ALGORITHM_SPELL_NAME;
 import static constants.Constants.HEAL_SPELL_NAME;
 
 import java.io.Serializable;
@@ -19,7 +20,7 @@ public class SpellFactory implements Serializable {
                 return new Heal(playerStats);
             case FIREWALL_SPELL_NAME:
                 return new Firewall(playerStats);
-            case "HardcoreAlgorithm":
+            case HARDCORE_ALGORITHM_SPELL_NAME:
                 return new HardcoreAlgorithm(playerStats);
             default:
                 return null;
