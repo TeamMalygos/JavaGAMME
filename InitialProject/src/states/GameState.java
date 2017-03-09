@@ -8,13 +8,14 @@ import gfx.Assets;
 import map.ObjectLayer;
 import map.TileMap;
 import map.parser.LevelLoader;
-import utils.Level;
+import utils.ObjectSerializer;
 import utils.UserAccount;
 
 import java.awt.*;
 import java.io.*;
 
 import constants.Constants;
+import enums.Level;
 import events.MouseMotionSensitive;
 
 public class GameState extends State {
@@ -25,6 +26,7 @@ public class GameState extends State {
     private static ObjectLayer objects;
     private InGameMenu menu;
     private InGameHUD hud;
+    private static boolean finished;
     
     private boolean isRunning;
     private boolean isMenuOpen;
@@ -56,11 +58,23 @@ public class GameState extends State {
         this.map.loadTiles("/textures/Sheet.png");
         
         this.map.setPosition(0, 0);
+
+        try{
+        	objects = new ObjectLayer(loader.getLevelData().getObjectsLayer());
+        }catch(NullPointerException ex){
+        	ex.printStackTrace();
+        	System.out.println("Current level has no Object layer");
+        }
         
-        this.objects = new ObjectLayer(loader.getLevelData().getObjectsLayer());
-        this.objects.setSecondaryTileLayer(loader.getLevelData().getLootLayer());
-        this.objects.setOffset(loader.getLevelData().getLootLayer().getOffsetX()
-        		,loader.getLevelData().getLootLayer().getOffsetY());
+        try{
+        	objects.setSecondaryTileLayer(loader.getLevelData().getLootLayer());
+        	objects.setOffset(loader.getLevelData().getLootLayer().getOffsetX()
+        			,loader.getLevelData().getLootLayer().getOffsetY());
+        }catch(ArrayIndexOutOfBoundsException ex){
+        	System.out.println("Current level has no Loot Layer");
+    	}catch(NullPointerException ex){
+        	System.out.println("Current level has no Loot Layer");
+        }
         
         this.menu = new InGameMenu();
 
@@ -69,8 +83,7 @@ public class GameState extends State {
         
         this.hud = new InGameHUD(this.player);
         
-        //firstEnemyShootingUnit = new EnemyShootingUnit("NekvaPachaSLesenSpriteSheet", 60, 60, 650, 450, 150, 50, 250);
-        //firstMeleeEnemy = new EnemyMeleeUnit("Melee", 100, 134, 450, 400, 5, 35, 700);
+        setFinished(false);
         
     }
 
@@ -102,12 +115,23 @@ public class GameState extends State {
             isRunning = true;
     	}
    
+    	if(finished){
+			
+    		player.getBag()
+    			.rewardWith(Constants.LEVEL_REWARD[this.level.ordinal()]);
+    		ObjectSerializer.getInstance().saveCurrentGameState();
+    		StateManager.setCurrentState(new MenuState());
+    		
+    	}
+    	
         player.tick();
     	map.setPosition(Constants.WIDTH / 2 - player.getX()
     			, Constants.HEIGHT / 2 - player.getY());
     	
-    	objects.tick();
-   
+    	if(objects != null){
+    		objects.tick();
+    	}
+    	
         hud.tick();
         //firstEnemyShootingUnit.tick();
         //firstMeleeEnemy.tick();
@@ -119,7 +143,11 @@ public class GameState extends State {
     @Override
     public void render(Graphics g) {
     	map.draw(g);
-    	objects.render(g);
+    	
+    	if(objects != null){
+    		objects.render(g);
+    	}
+    	
         player.render(g);
         hud.render(g);
         //firstEnemyShootingUnit.render(g);
@@ -174,6 +202,10 @@ public class GameState extends State {
 	public InGameMenu getInGameMenu() {
 		// TODO Auto-generated method stub
 		return this.menu;
+	}
+
+	public static void setFinished(boolean b) {
+		finished = b;
 	}
 
 	

@@ -6,20 +6,36 @@ public class Constants {
 
 	//Display
     public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
+    public static final int HEIGHT = 640;
 	public static final int BACKGROUND_Y = 0;
 	public static final int BACKGROUND_X = 0;
 	public static final Color COLOR_OPAQUE_BLACK = new Color(0,0,0,0.6f);
+	public static final int WIZARD_WIDTH = 58;
+	public static final int WIZARD_HEIGHT = 64;
+	
+	public static final int DIPLOMA_WIDTH = 43;
+	public static final int DIPLOMA_HEIGHT = 59;
+	
+	public static final int LOGO_WIDTH = 800;
+	public static final int LOGO_HEIGHT = 242;
 	
 	public static final String CREATORS = "Created by TeamMalygos";
 	public static final int CREATORS_Y = HEIGHT - 10;
 	public static final int CREATORS_X = 10;
+	
+	public static final int[] LEVEL_REWARD = new int[] {
+			30,50,70,90,110,150,200
+	};
 	
 	public static final String FONT = "Impact";
 	public static final int FONT_SIZE = 16;
 	
 	public static final int NAME_MAX_LENGTH = 22;
 	public static final int NAME_MIN_LENGTH = 4;
+	
+	public static final String[] TILESET_BLOCK_TYPES_OF_ROW = new String[]{
+			"Blocked","Blocked","Climbable","Background","Death","Background"
+	};
 	
     // Player initialization constants - all of these are sample values.
     public static final double INITIAL_DAMAGE = 20;
@@ -85,14 +101,14 @@ public class Constants {
     //Menu components default size
     public static final int MENU_BUTTON_WIDTH = 192;
     public static final int MENU_BUTTON_HEIGHT = 56;
-	public static final int LEVEL_CARD_HEIGHT = 200;
-	public static final int LEVEL_CARD_WIDTH = 100;
+	public static final int LEVEL_CARD_HEIGHT = 300;
+	public static final int LEVEL_CARD_WIDTH = 200;
 	public static final int POINTER_WIDTH = 40;
 	public static final int POINTER_HEIGHT = 41;
     
 	public static final int MENU_BUTTON_MARGIN_BOTTOM = 66;
 	public static final int MENU_BUTTON_X = 300;
-	public static final int MENU_BUTTON_Y = 250;
+	public static final int MENU_BUTTON_Y = 300;
 	
 	//Menu components - names
 	public static final String BUTTON_START = "Start";

@@ -26,5 +26,10 @@ public class LootBag implements Serializable{
 	public int getDiamondsCount(){
 		return this.diamonds;
 	}
+
+	public void rewardWith(int reward) {
+		this.diamonds += reward;
+		
+	}
 	
 }

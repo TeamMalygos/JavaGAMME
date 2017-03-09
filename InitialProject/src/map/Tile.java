@@ -2,10 +2,12 @@ package map;
 import java.awt.*;
 import java.awt.image.*;
 
+import enums.TileType;
+
 public class Tile {
 
 	private BufferedImage image;
-	private boolean blocked;
+	private TileType type;
 	
 	public static final int FREE = 0;
 	public static final int BLOCKED = 1;
@@ -18,12 +20,14 @@ public class Tile {
 	 * @param boolean canItCollide
 	 * 
 	 */
-	public Tile(BufferedImage image, boolean blocked){
-		this.image = image;
-		this.blocked = blocked;
+	public Tile(BufferedImage image, TileType type){
+		this.setImage(image);
+		this.setType(type);
 	}
 	
 	public BufferedImage getImage(){ return image; }
-	public boolean getType() { return blocked;}
+	public TileType getType() { return this.type;}
+	public void setImage(BufferedImage image){this.image = image;}
+	public void setType(TileType t){this.type = t;}
 	
 }

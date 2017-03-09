@@ -9,6 +9,8 @@ public class Assets {
 	//Scaffold Resources
     public static BufferedImage background;
     public static BufferedImage tileSheet;
+    public static BufferedImage finishWizard;
+    public static BufferedImage logo;
     
     //Entities
     public static BufferedImage nakov_sheet;
@@ -30,6 +32,8 @@ public class Assets {
     public static BufferedImage loadButton;
     public static BufferedImage newButton;
     public static BufferedImage createButton;
+    public static BufferedImage retryButton;
+    public static BufferedImage backButton;
     
     public static BufferedImage pointerLeft;
     public static BufferedImage pointerRight;
@@ -44,11 +48,13 @@ public class Assets {
     //HUD resources
     public static BufferedImage healthBar;
     public static BufferedImage diamondsCounter;
+	public static BufferedImage diploma;
 
     public static void init() {
     	//Map
         background = ImageLoader.loadImage("/textures/Back.png");
         tileSheet = ImageLoader.loadImage("/textures/sheet.png");
+        logo = ImageLoader.loadImage("/textures/logo.png");
         
         //Entities
         nakov_sheet = ImageLoader.loadImage("/textures/nakov_sheet.png");
@@ -70,6 +76,8 @@ public class Assets {
         newButton = ImageLoader.loadImage("/textures/new.png");
         loadButton = ImageLoader.loadImage("/textures/load.png");
         createButton = ImageLoader.loadImage("/textures/create.png");
+        retryButton = ImageLoader.loadImage("/textures/retry.png");
+        backButton = ImageLoader.loadImage("/textures/return.png");
         
         pointerLeft = ImageLoader.loadImage("/textures/pointer-left.png");
         pointerRight = ImageLoader.loadImage("/textures/pointer-right.png");
@@ -84,5 +92,7 @@ public class Assets {
         //HUD
         healthBar = ImageLoader.loadImage("/textures/healthbarSprite.png");
         diamondsCounter = ImageLoader.loadImage("/textures/counter.png");
+        
+        diploma = ImageLoader.loadImage("/textures/diploma.png");
     }
 }

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import constants.Constants;
+import enums.Level;
 import game.entities.playerProperties.spells.abstractions.Spell;
 import game.entities.playerProperties.spells.implementations.SpellFactory;
 import utils.LootBag;
@@ -16,7 +18,8 @@ public class Stats implements Serializable {
 	private LootBag bag;
 	
     private String playerName;
-
+    private int progress;
+    
     private double damage;
 
     private double health;
@@ -44,26 +47,6 @@ public class Stats implements Serializable {
         this.playerName = playerName;
         this.bag = new LootBag();
         this.init();
-    }
-
-    private void init() {
-        this.damage = INITIAL_DAMAGE;
-        this.health = this.currentHealth = INITIAL_HEALTH;
-        this.healthRegeneraionRate = INITIAL_HEALTH_REGENERATION_RATE;
-
-        this.mana = this.currentMana = INITIAL_MANA;
-        this.manaRegenerationRate = INITIAL_MANA_REGENERATION_RATE;
-
-        this.regenerationTimer = 0;
-
-        this.armor = INITIAL_ARMOR;
-
-        this.level = INITIAL_PLAYER_LEVEL;
-        this.currentExperience = INITIAL_PLAYER_EXPERIENCE;
-        this.totalLevelExperience = INITIAL_LEVEL_TOTAL_EXPERIENCE;
-
-        this.spells = new HashMap<>();
-        this.spellFactory = new SpellFactory();
     }
 
     public void tick() {
@@ -210,4 +193,41 @@ public class Stats implements Serializable {
     public Map<String, Spell> getSpells() {
         return spells;
     }
+    
+    public void levelPassed(Level l){
+    	
+    	if(l.ordinal()+1 > this.progress){
+    		this.progress += 1;
+    	}
+    	
+    	this.bag.rewardWith(Constants.LEVEL_REWARD[l.ordinal()]);
+    	
+    }
+    
+	public int getProgress() {
+		return this.progress;
+	}
+    
+    private void init() {
+        this.damage = INITIAL_DAMAGE;
+        this.health = this.currentHealth = INITIAL_HEALTH;
+        this.healthRegeneraionRate = INITIAL_HEALTH_REGENERATION_RATE;
+
+        this.mana = this.currentMana = INITIAL_MANA;
+        this.manaRegenerationRate = INITIAL_MANA_REGENERATION_RATE;
+
+        this.regenerationTimer = 0;
+
+        this.armor = INITIAL_ARMOR;
+
+        this.level = INITIAL_PLAYER_LEVEL;
+        this.currentExperience = INITIAL_PLAYER_EXPERIENCE;
+        this.totalLevelExperience = INITIAL_LEVEL_TOTAL_EXPERIENCE;
+
+        this.spells = new HashMap<>();
+        this.spellFactory = new SpellFactory();
+        this.progress = 0;
+        
+    }
+    
 }

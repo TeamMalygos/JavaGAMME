@@ -29,6 +29,14 @@ public class SpriteSheet {
     	prepare();
     }
     
+    
+    public BufferedImage getFrame(int state,int index){
+    	return this.frameSet.get(state)[index];}
+    public BufferedImage[] getFrameSet(int state){
+    	return this.frameSet.get(state);}
+    public int getWidth(){return this.frameWidth;}
+    public int getHeight(){return this.frameHeight;}
+    
     private void prepare(){
     	
     	try{
@@ -54,13 +62,6 @@ public class SpriteSheet {
     	}
     	
     }
-    
-    public BufferedImage getFrame(int state,int index){
-    	return this.frameSet.get(state)[index];}
-    public BufferedImage[] getFrameSet(int state){
-    	return this.frameSet.get(state);}
-    public int getWidth(){return this.frameWidth;}
-    public int getHeight(){return this.frameHeight;}
     
     
 }

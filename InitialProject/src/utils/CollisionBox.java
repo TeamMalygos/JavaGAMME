@@ -1,5 +1,10 @@
 package utils;
 
+import java.awt.Rectangle;
+
+import enums.TileType;
+import map.TileMap;
+
 public class CollisionBox {
 
 	private int colisionWidth;
@@ -27,22 +32,26 @@ public class CollisionBox {
 		
 	}
 	
-	/**
-	 * 
-	 * <p>setCollisionBoundaries sets the four angles of collision<p>
-	 * @param topLeft
-	 * @param topRight
-	 * @param bottomRight
-	 * @param bottomLeft
-	 * 
-	 */
-	public void setCollisionBoundaries(boolean topLeft,boolean topRight
-			,boolean bottomRight,boolean bottomLeft){
+	public void checkCollisionCorners(double x,double y,TileMap tileMap){
 		
-		this.collidesBottomLeft = bottomLeft;
-		this.collidesBottomRight = bottomRight;
-		this.collidesTopLeft = topLeft;
-		this.collidesTopRight = topRight;
+		int tileSize = tileMap.getTileWidth();
+		
+		int leftCorner = (int)(x - this.getCollisionWidth() / 2) / tileSize;
+		int rightCorner = (int)(x + this.getCollisionWidth() / 2 - 1) / tileSize;
+		int topCorner = (int)(y - this.getCollisionHeight() / 2) / tileSize;
+		int bottomCorner = (int)(y + this.getCollisionHeight() / 2 - 1) / tileSize;
+		
+		TileType topLeft = tileMap.getType(topCorner, leftCorner);
+		TileType topRight = tileMap.getType(topCorner, rightCorner);
+		TileType bottomLeft = tileMap.getType(bottomCorner, leftCorner);
+		TileType bottomRight = tileMap.getType(bottomCorner, rightCorner);
+		
+		this.setCollisionBoundaries(
+				topLeft,
+				topRight,
+				bottomLeft,
+				bottomRight);
+		
 	}
 	
 	//Getters
@@ -52,6 +61,24 @@ public class CollisionBox {
 	public boolean isTopRightBlocked(){return this.collidesTopRight;}
 	public boolean isBottomLeftBlocked(){return this.collidesBottomLeft;}
 	public boolean isBottomRightBlocked(){return this.collidesBottomRight;}
+
+	/**
+	 * 
+	 * <p>setCollisionBoundaries sets the four angles of collision<p>
+	 * @param topLeft
+	 * @param topRight
+	 * @param bottomLeft
+	 * @param bottomRight
+	 * 
+	 */
+	private void setCollisionBoundaries(TileType topLeft,TileType topRight
+			,TileType bottomLeft,TileType bottomRight){
+		
+		this.collidesBottomLeft = (bottomLeft != TileType.Background);
+		this.collidesBottomRight = (bottomRight != TileType.Background);
+		this.collidesTopLeft = (topLeft != TileType.Background);
+		this.collidesTopRight = (topRight != TileType.Background);
+	}
 
 	
 }

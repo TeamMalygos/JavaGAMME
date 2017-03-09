@@ -14,8 +14,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import components.Button;
 import constants.Constants;
 import display.Display;
+import enums.Level;
 import gfx.Assets;
-import utils.Level;
 import utils.UserAccount;
 
 public class Menu{

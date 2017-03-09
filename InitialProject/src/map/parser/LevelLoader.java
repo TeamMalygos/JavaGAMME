@@ -1,6 +1,6 @@
 package map.parser;
 
-import utils.Level;
+import enums.Level;
 
 public class LevelLoader {
 

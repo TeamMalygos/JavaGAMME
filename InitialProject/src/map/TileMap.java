@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import constants.Constants;
+import enums.TileType;
 import gfx.Assets;
 
 import java.awt.*;
@@ -52,7 +53,7 @@ public class TileMap {
 	private double cameraSpeed;
 	
 	public TileMap(List<Integer> map,int numRows,int numCols){
-
+		
 			this.cameraSpeed = 1;
 			
 			this.tileSize = 32;
@@ -79,7 +80,6 @@ public class TileMap {
 			for(int row = 0 ; row < numRows; row ++){
 				
 				for(int col = 0 ; col < numCols; col++){
-					
 					this.map[row][col] = map.get(counter);
 					counter++;
 				}
@@ -105,11 +105,13 @@ public class TileMap {
 			for(int row = 0 ; row < numTileRows; row++){
 				for(int col = 0 ; col < numTilesAcross; col++){
 				
+				TileType type = TileType.valueOf(Constants.TILESET_BLOCK_TYPES_OF_ROW[row]);
+				
 				subImage = tileSet.getSubimage(
 						col * tileSize, 
 						height, tileSize, tileHeight);
 				
-				tiles[row][col] = new Tile(subImage,true);
+				tiles[row][col] = new Tile(subImage,type);
 				
 				}
 				height += tileHeight;
@@ -138,12 +140,12 @@ public class TileMap {
 	public int getOffsetX(){return this.offsetX;}
 	public int getOffsetY(){return this.offsetY;}
 	
-	public boolean isBlocked(int row,int col){
+	public TileType getType(int row,int col){
 		
 		try{
 			int rc = map[row][col];
 			if(rc == 0){
-				return false;
+				return TileType.Background;
 			}
 			int r = rc / tiles[0].length;
 			int c = rc % tiles[0].length;
@@ -152,7 +154,7 @@ public class TileMap {
 			
 		}
 		
-		return true;
+		return TileType.Background;
 	}
 	
 	public void setPosition(double x,double y){
@@ -180,15 +182,18 @@ public class TileMap {
 	
 	public void draw(Graphics g){
 		
-		g.drawImage(Assets.background,rowOffset,colOffset,null);
+		g.drawImage(Assets.background,Constants.BACKGROUND_X
+				,Constants.BACKGROUND_Y
+				,Constants.WIDTH
+				,Constants.HEIGHT,null);
 		
-		for(int row = this.rowOffset ; row < this.rowOffset + this.rowsToDraw; row++){
+		for(int row = this.rowOffset ; row < this.rowOffset + this.rowsToDraw + 1; row++){
 	
 			if(row >= this.mapRows){
 				break;
 			}
 			
-			for(int col = this.colOffset ; col < this.colOffset + this.columnsToDraw; col++){
+			for(int col = this.colOffset ; col < this.colOffset + this.columnsToDraw + 1; col++){
 				int rc =  map [row][col]-1;
 				
 				if(rc == -1){

@@ -7,9 +7,10 @@ import java.io.File;
 import components.Button;
 import components.LevelCard;
 import constants.Constants;
+import enums.Level;
 import events.MouseMotionSensitive;
 import gfx.Assets;
-import utils.Level;
+import utils.UserAccount;
 
 public class LevelsState extends State implements MouseMotionSensitive{
 	
@@ -20,9 +21,11 @@ public class LevelsState extends State implements MouseMotionSensitive{
 	private Button pointerRight;
 	private Button load;
 	
+	private int indexOnFocus;
+	
 	protected LevelsState() {
 		super(ID);
-		
+		indexOnFocus = 0;
 		init();
 		
 	}
@@ -34,11 +37,12 @@ public class LevelsState extends State implements MouseMotionSensitive{
 		
 		File[] levels = mapsDir.listFiles();
 		this.levels = new LevelCard[levels.length];
-		
-		int counter = 0;
-		for(File level : levels){
-			this.levels[counter] = new LevelCard(0,0,level);
-			counter++;
+
+		for(int i = 0 ; i < levels.length ; i++){
+			this.levels[i] = new LevelCard(Constants.WIDTH / 2
+					, Constants.HEIGHT / 2
+					,levels[i]);
+			
 		}
 		
 		loadButtons();
@@ -67,6 +71,8 @@ public class LevelsState extends State implements MouseMotionSensitive{
 		this.pointerLeft.render(g);
 		this.pointerRight.render(g);
 		this.load.render(g);
+		
+		this.levels[this.indexOnFocus].render(g);
 		
 	}
 	
@@ -122,13 +128,13 @@ public class LevelsState extends State implements MouseMotionSensitive{
 	public void onMouseRelease(MouseEvent args) {
 		
 		if(this.pointerLeft.isInside(args.getX(), args.getY())){
-			//LOGIC HERE
+			focusLeft();
 		}else{
 			this.pointerLeft.setPressed(false);
 		}
 		
 		if(this.pointerRight.isInside(args.getX(), args.getY())){
-			//Logic HERE
+			focusRight();
 		}else{
 			this.pointerRight.setPressed(false);
 		}
@@ -141,6 +147,7 @@ public class LevelsState extends State implements MouseMotionSensitive{
 		}
 		
 	}
+
 
 	@Override
 	public void onMouseClick(MouseEvent args) {
@@ -168,18 +175,29 @@ public class LevelsState extends State implements MouseMotionSensitive{
 	}
 	
 	private Level getLevelOnFocus() {
-	
-		Level levelOnFocus = Level.Level1;
-		
-		for(LevelCard c : this.levels){
-			
-			if(c.isOnFocus()){
-				return c.getLevel();
-			}
-			
+		Level l = Level.Level1;
+		try{
+			l = Level.valueOf("Level" + (this.indexOnFocus+1));
+		}catch(Exception ex){
+			ex.printStackTrace();
 		}
 		
-		return levelOnFocus;
+		return l;
 	}
+	
+	private void focusLeft() {
+		if(this.indexOnFocus > 0){
+			this.indexOnFocus -= 1;
+		}
+		
+	}
+	
+	private void focusRight() {
+		if(this.indexOnFocus < UserAccount.getStats().getProgress()){
+			this.indexOnFocus +=1;
+		}
+		
+	}
+
 
 }

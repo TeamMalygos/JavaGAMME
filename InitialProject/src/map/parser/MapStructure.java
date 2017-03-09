@@ -49,9 +49,9 @@ public class MapStructure {
 		try{
 			return (TileLayer)layers[2];
 		}catch(ArrayIndexOutOfBoundsException ex){
-			ex.printStackTrace();
+
 		}catch(ClassCastException ex){
-			ex.printStackTrace();
+			
 		}
 		return null;
 	}
