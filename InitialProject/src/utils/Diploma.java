@@ -1,6 +1,7 @@
 package utils;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 import constants.Constants;
@@ -10,12 +11,12 @@ import gfx.Assets;
 import gfx.SpriteSheet;
 import map.TileMap;
 import states.GameState;
-import states.MenuState;
-import states.StateManager;
 
 public class Diploma extends MapObject implements UnitDrawable{
 
 	private SpriteSheet sheet;
+	private Rectangle area;
+	
 	private final int[] framesCount = new int[]{
 			8
 	};
@@ -24,7 +25,7 @@ public class Diploma extends MapObject implements UnitDrawable{
 		
 		super(map);
 		
-		super.position = new PVector(x,y);
+		super.position = new PVector(x,y - Constants.DIPLOMA_HEIGHT);
 	
 		this.sheet = new SpriteSheet(Assets.diploma);
 		this.sheet.setFrameLayersCount(framesCount
@@ -36,15 +37,20 @@ public class Diploma extends MapObject implements UnitDrawable{
 		this.animation = new Animation();
 		this.animation.setFrames(this.sheet.getFrameSet(0));
 		this.animation.setDelay(150);
+
 		
 	}
 	
 	@Override
 	public void tick() {
 		this.animation.update();
-		if(GameState.getPlayer().canPickUp(super.getObjectRectangle())){
+		
+		this.area = new Rectangle(super.tileMap.getX() + (int)super.position.getPositionX()
+				, super.tileMap.getY() + (int)super.position.getPositionY()
+				, super.cBox.getCollisionWidth(), super.cBox.getCollisionHeight());
+			
+		if(GameState.getPlayer().canPickUp(this.area)){
 			GameState.setFinished(true);
-			StateManager.setCurrentState(new MenuState());
 		}
 	}
 	
@@ -53,10 +59,9 @@ public class Diploma extends MapObject implements UnitDrawable{
 	public void render(Graphics g) {
 		
 		g.drawImage(this.animation.getImage()
-				,super.tileMap.getX() + (int)this.position.getPositionX()
-				,super.tileMap.getY() + (int)this.position.getPositionY(),null);
-		
+				,super.tileMap.getX() + (int)super.position.getPositionX()
+				,super.tileMap.getY() + (int)super.position.getPositionY(),null);
 	}
-	
+
 	
 }

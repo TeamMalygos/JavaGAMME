@@ -44,22 +44,37 @@ public class Assets {
     //InGameMenu resources
 	public static BufferedImage resumeButton;
 	public static BufferedImage saveButton;
-    
+	public static BufferedImage gameover;
+	public static BufferedImage levelCompleted;
+	
+	//ParallaxBackground
+	public static BufferedImage backgroundSky;
+	public static BufferedImage backgroundMountains;
+	public static BufferedImage backgroundTrees;
+	public static BufferedImage backgroundGrass;
+	
     //HUD resources
     public static BufferedImage healthBar;
     public static BufferedImage diamondsCounter;
 	public static BufferedImage diploma;
+	public static BufferedImage creators;
 
     public static void init() {
     	//Map
         background = ImageLoader.loadImage("/textures/Back.png");
         tileSheet = ImageLoader.loadImage("/textures/sheet.png");
         logo = ImageLoader.loadImage("/textures/logo.png");
+        levelCompleted = ImageLoader.loadImage("/textures/levelCompleted.png");
+        gameover = ImageLoader.loadImage("/textures/gameover.png");
+        creators = ImageLoader.loadImage("/textures/creators_intro.png");
+        
+        backgroundSky = ImageLoader.loadImage("/textures/background_sky.png");
+        backgroundMountains = ImageLoader.loadImage("/textures/background_mountains.png");
+        backgroundTrees = ImageLoader.loadImage("/textures/background_trees.png");
+        backgroundGrass = ImageLoader.loadImage("/textures/background_grass.png");
         
         //Entities
         nakov_sheet = ImageLoader.loadImage("/textures/nakov_sheet.png");
-        enemy = ImageLoader.loadImage("/textures/firstEnemy.png");
-        enemyMeleeUnit = ImageLoader.loadImage("/textures/meleeEnemy.png");
         enemyBug = ImageLoader.loadImage("/textures/enemy_bug.png");
         
         //Entities.Collectible

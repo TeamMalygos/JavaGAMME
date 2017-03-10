@@ -12,9 +12,9 @@ public class LootFactory {
 		
 		switch(number){
 		
-		case 33:
+		case 181:
 			return new Diamond(counter);
-		case 41:
+		case 189:
 			return new Beer(counter);
 		}
 		

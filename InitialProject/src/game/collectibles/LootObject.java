@@ -56,15 +56,10 @@ public abstract class LootObject implements Collectible {
 	@Override
 	public void isCollected(Rectangle playerBounds){
 		
-		playerBounds = new Rectangle((int)playerBounds.getX(),(int)playerBounds.getY(),0,(int)playerBounds.getHeight());
-		
-		if (this.boundingBox.contains(playerBounds.getX(), playerBounds.getY()) ||
-            this.boundingBox.contains(playerBounds.getMaxX(), playerBounds.getY()) ||
-            this.boundingBox.contains(playerBounds.getX(), playerBounds.getMaxY()) ||
-            this.boundingBox.contains(playerBounds.getMaxX(), playerBounds.getMaxY())) {
+		if(this.boundingBox.intersects(playerBounds)){
 			this.collected = true;
 			return;
-    	}
+		}
 		
     	this.collected = false;
 	}

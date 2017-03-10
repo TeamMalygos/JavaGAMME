@@ -88,26 +88,7 @@ public class LootMap implements UnitDrawable{
 
 	}
 	
-	private void fixBoundaries(){
-		if(this.x > xmax){ x = xmax;}
-		if(this.x < xmin){ x = xmin;}
-		if(this.y > ymax){ y = ymax;}
-		if(this.y < ymin){ y = ymin;}
-	}
-	
-	private void populateObjectsMatrix(){
-		
-		this.lootObjects = new LootObject[this.lootMap.length][this.lootMap[0].length];
-		LootFactory lootFactory = new LootFactory();
-		
-		for(int i = 0 ; i < this.lootMap.length;i++){
-			for(int j = 0 ; j < this.lootMap[0].length;j++){
-				this.lootObjects[i][j] = lootFactory.translateToLootObject(this.lootMap[i][j]);	
-			}
-		}
-		
-		
-	}
+
 
 	@Override
 	public void tick() {
@@ -122,7 +103,8 @@ public class LootMap implements UnitDrawable{
 				this.lootObjects[row][col].setPosition(this.x + col * Constants.DIAMOND_WIDTH + this.deltaOffsetX,
 						this.y + row * Constants.DIAMOND_HEIGHT - this.deltaOffsetY);
 				
-				this.lootObjects[row][col].isCollected(GameState.player.getBoundingBox());
+				this.lootObjects[row][col]
+						.isCollected(GameState.getPlayer().getPickUpRectangle());
 					
 				if(!this.lootObjects[row][col].checkCollected()){
 					this.lootObjects[row][col].tick();
@@ -148,10 +130,14 @@ public class LootMap implements UnitDrawable{
 				
 				if(!this.lootObjects[row][col].checkCollected()){
 					this.lootObjects[row][col].render(g);
+					
+					
 					g.drawRect((int)this.lootObjects[row][col].getPosition().getPositionX()
 							, (int)this.lootObjects[row][col].getPosition().getPositionY()
 							, this.lootObjects[row][col].getWidth()
 							, this.lootObjects[row][col].getHeight());
+							
+					
 				}
 				
 			}
@@ -168,7 +154,27 @@ public class LootMap implements UnitDrawable{
 		
 	}
 	
+	private void fixBoundaries(){
+		if(this.x > xmax){ x = xmax;}
+		if(this.x < xmin){ x = xmin;}
+		if(this.y > ymax){ y = ymax;}
+		if(this.y < ymin){ y = ymin;}
+	}
 	
+	private void populateObjectsMatrix(){
+		
+		this.lootObjects = new LootObject[this.lootMap.length][this.lootMap[0].length];
+		LootFactory lootFactory = new LootFactory();
+		
+		for(int i = 0 ; i < this.lootMap.length;i++){
+			for(int j = 0 ; j < this.lootMap[0].length;j++){
+				System.out.println(this.lootMap[i][j]);
+				this.lootObjects[i][j] = lootFactory.translateToLootObject(this.lootMap[i][j]);	
+			}
+		}
+		
+		
+	}
 	
 	
 }

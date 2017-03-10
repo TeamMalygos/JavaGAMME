@@ -1,7 +1,7 @@
 package game;
 
 import display.Display;
-import states.MenuState;
+import states.IntroState;
 import states.State;
 import states.StateManager;
 import constants.Constants;
@@ -31,7 +31,7 @@ public class GameEngine implements Runnable {
     private void init() {
 
         this.display = new Display(this.title);
-        state = new MenuState();
+        state = new IntroState();
 
         this.inputHandler = new InputHandler(this.display);
         StateManager.setCurrentState(state);

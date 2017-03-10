@@ -2,6 +2,7 @@ package constants;
 
 import java.awt.Color;
 
+
 public class Constants {
 
 	//Display
@@ -12,6 +13,18 @@ public class Constants {
 	public static final Color COLOR_OPAQUE_BLACK = new Color(0,0,0,0.6f);
 	public static final int WIZARD_WIDTH = 58;
 	public static final int WIZARD_HEIGHT = 64;
+	
+	public static final int[] PARALLAX_DELAY = new int[] {
+			1,3,6,15
+	};
+
+	
+	//Intro
+	public static final int INTRO_CREATORS_WIDTH = 567;
+	public static final int INTRO_CREATORS_HEIGHT = 157;
+	public static final int INTRO_SLEEP_TIME = 300;
+	public static final long CREATORS_INTRO_DELAY_BETWEEN_TRANSITIONS = 200;
+	public static final int CREATORS_INTRO_DELAY = 150;
 	
 	public static final int DIPLOMA_WIDTH = 43;
 	public static final int DIPLOMA_HEIGHT = 59;
@@ -121,7 +134,8 @@ public class Constants {
 	public static final String TEXT_FIELD_NAME = "TextField";
 	public static final String POINTER_LEFT = "Left Pointer";
 	public static final String POINTER_RIGHT = "Right Pointer";
-
+	public static final String BUTTON_RETRY = "RETRY";
+	
 	
     //Projectiles
     public static final int PROJECTILE_KEY_WIDTH = 9;
@@ -178,6 +192,5 @@ public class Constants {
 	public static final int PLAYER_NAME_ERROR_X = WIDTH / 3 + PLAYER_NAME_EXISTS_ERROR.length() / 2 - 2;
 	public static final int PLAYER_NAME_ERROR_Y = WIDTH / 4 - PLAYER_NAME_EXISTS_ERROR.length();
 	public static final String GENERAL_EXCEPTION = "Something went wrong !";
-
 	
 }

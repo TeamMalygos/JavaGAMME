@@ -29,7 +29,16 @@ public class ObjectLayer implements UnitDrawable {
 	}
 
 	public void setSecondaryTileLayer(TileLayer t){
-		this.lootLayer = t;
+    	this.lootLayer = t;
+    	
+    	try{
+			this.lootMap = new LootMap(GameState.getMap());
+			this.lootMap.setData(this.lootLayer.getData(), this.lootLayer.getWidth(), this.lootLayer.getHeight());
+		}catch(NullPointerException ex){
+			return;
+		}
+		
+    	
 	}
 	
 	public void setOffset(int x,int y){
@@ -88,13 +97,6 @@ public class ObjectLayer implements UnitDrawable {
 				
 				this.diploma = new Diploma(o.getX(),o.getY(),GameState.getMap());
 			}
-		}
-		
-		try{
-			this.lootMap = new LootMap(GameState.getMap());
-			this.lootMap.setData(this.lootLayer.getData(), this.lootLayer.getWidth(), this.lootLayer.getHeight());
-		}catch(NullPointerException ex){
-			return;
 		}
 		
 		isInitialized = true;

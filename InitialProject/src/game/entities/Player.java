@@ -66,15 +66,13 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
         this.playerStats = loadedStats;
         
         this.bag = this.playerStats.getBag();
+        this.playerStats.setCurrentHealth(Constants.INITIAL_HEALTH);
         
         init();
         initPhysics();
         initPosition();
 
         loadSprites();
-
-        this.playerPickUpBox = new Rectangle((int)super.position.getPositionX()
-        		,(int)super.position.getPositionY(),0,(int)super.height);
         
         super.movementState = new MovementState();
         //this.boundingBox = new Rectangle(x, y, width, height);
@@ -128,6 +126,10 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     
     @Override
     public void tick() {
+    	
+    	if(this.playerStats.getCurrentHealth() <= 0){
+    		this.isDead = true;
+    	}
     	
     	this.playerStats.tick();
     	getNextPosition();
@@ -206,10 +208,12 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     				, super.height
     				, null);
     	}
-    	//g.drawRect((int)(this.position.getPositionX() + super.mapX - super.width / 2 + super.width)
-    			//,(int)(this.position.getPositionY() + super.mapY - super.height / 2)
-    			//, width
-    			//, height);
+    	/*
+    	g.drawRect((int)(this.position.getPositionX() + super.mapX - super.width / 2 + super.width)
+    			,(int)(this.position.getPositionY() + super.mapY - super.height / 2)
+    			, width
+    			, height);
+    	*/
     	
     }
     
@@ -279,7 +283,15 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
         		super.cBox.getCollisionWidth(),
         		super.cBox.getCollisionHeight());
     }
+    public boolean isDead(){
+    	return this.isDead;
+    }
     public boolean canPickUp(Rectangle o){
+    	this.playerPickUpBox = new Rectangle((super.tileMap.getX() + (int)super.position.getPositionX()) - super.cBox.getCollisionWidth() / 2
+        		,super.tileMap.getY() + (int)super.position.getPositionY() - super.cBox.getCollisionHeight() / 2
+        		,super.cBox.getCollisionWidth()
+        		,super.cBox.getCollisionHeight());
+    	
     	return this.playerPickUpBox.intersects(o);
     }
     
@@ -309,4 +321,11 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
 	public void setJumping(boolean jump) {super.movementState.setJump(jump);}
 	@Override
 	public void setFalling(boolean fall) {super.movementState.setFalling(fall);}
+
+	public Rectangle getPickUpRectangle() {
+		return new Rectangle((super.tileMap.getX() + (int)super.position.getPositionX()) - super.cBox.getCollisionWidth() / 2
+        		,super.tileMap.getY() + (int)super.position.getPositionY() - super.cBox.getCollisionHeight() / 2
+        		,super.cBox.getCollisionWidth()
+        		,super.cBox.getCollisionHeight());
+	}
 }

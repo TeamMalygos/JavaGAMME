@@ -5,7 +5,6 @@ import components.Button;
 import game.entities.EnemyMeleeUnit;
 import game.entities.EnemyShootingUnit;
 import game.entities.Player;
-import game.entities.playerProperties.Stats;
 import gfx.Assets;
 import map.ObjectLayer;
 import map.TileMap;
@@ -14,17 +13,10 @@ import utils.ObjectSerializer;
 import utils.UserAccount;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.*;
 
 import constants.Constants;
 import enums.Level;
-import events.MouseMotionSensitive;
-
-import static constants.Constants.HEAL_SPELL_NAME;
 
 public class GameState extends State {
     private static final int GRAVITY = 2;
@@ -53,50 +45,6 @@ public class GameState extends State {
     	
     }
 
-    private void init() throws IOException {
-
-        Assets.init();
-      
-        LevelLoader loader = new LevelLoader(this.level);
-
-        this.map = new TileMap(loader.getLevelData().getTileLayer().getData()
-        		,loader.getLevelData().getTileLayer().getHeight()
-        		,loader.getLevelData().getTileLayer().getWidth());
-        
-        this.map.setOffset(loader.getLevelData().getTileLayer().getOffsetX(),
-        		loader.getLevelData().getTileLayer().getOffsetY());
-        this.map.loadTiles("/textures/Sheet.png");
-        
-        this.map.setPosition(0, 0);
-
-        try{
-        	objects = new ObjectLayer(loader.getLevelData().getObjectsLayer());
-        }catch(NullPointerException ex){
-        	ex.printStackTrace();
-        	System.out.println("Current level has no Object layer");
-        }
-        
-        try{
-        	objects.setSecondaryTileLayer(loader.getLevelData().getLootLayer());
-        	objects.setOffset(loader.getLevelData().getLootLayer().getOffsetX()
-        			,loader.getLevelData().getLootLayer().getOffsetY());
-        }catch(ArrayIndexOutOfBoundsException ex){
-        	System.out.println("Current level has no Loot Layer");
-    	}catch(NullPointerException ex){
-        	System.out.println("Current level has no Loot Layer");
-        }
-        
-        this.menu = new InGameMenu();
-
-        this.player = new Player(UserAccount.getStats().getPlayerName()   		
-        		,this.map,UserAccount.getStats());
-        
-        this.hud = new InGameHUD(this.player);
-
-        
-        setFinished(false);
-        
-    }
 
 
     /*This will be used later in another state so do not delete it!!!!
@@ -125,13 +73,18 @@ public class GameState extends State {
             }
             isRunning = true;
     	}
+    	
+    	if(this.player.isDead()){
+    		StateManager.setCurrentState(new GameOverState(this.level));
+    	}
    
     	if(finished){
 			
     		player.getBag()
     			.rewardWith(Constants.LEVEL_REWARD[this.level.ordinal()]);
+    		player.getPlayerStats().levelPassed(this.level);
     		ObjectSerializer.getInstance().saveCurrentGameState();
-    		StateManager.setCurrentState(new MenuState());
+    		StateManager.setCurrentState(new LevelCompletedState());
     		
     	}
     	
@@ -154,6 +107,7 @@ public class GameState extends State {
 
     @Override
     public void render(Graphics g) {
+    	
     	map.draw(g);
     	
     	if(objects != null){
@@ -221,5 +175,49 @@ public class GameState extends State {
 		finished = b;
 	}
 
+	
+    private void init() throws IOException {
+
+        Assets.init();
+      
+        LevelLoader loader = new LevelLoader(this.level);
+
+        this.map = new TileMap(loader.getLevelData().getTileLayer().getData()
+        		,loader.getLevelData().getTileLayer().getHeight()
+        		,loader.getLevelData().getTileLayer().getWidth());
+        
+        this.map.setOffset(loader.getLevelData().getTileLayer().getOffsetX(),
+        		loader.getLevelData().getTileLayer().getOffsetY());
+        this.map.loadTiles("/textures/Sheet.png");
+        
+        this.map.setPosition(0, 0);
+
+        try{
+        	objects = new ObjectLayer(loader.getLevelData().getObjectsLayer());
+        }catch(NullPointerException ex){
+        	ex.printStackTrace();
+        	System.out.println("Current level has no Object layer");
+        }
+        
+        try{
+        	objects.setSecondaryTileLayer(loader.getLevelData().getLootLayer());
+        	objects.setOffset(loader.getLevelData().getLootLayer().getOffsetX()
+        			,loader.getLevelData().getLootLayer().getOffsetY());
+        }catch(ArrayIndexOutOfBoundsException ex){
+        	System.out.println("Current level has no Loot Layer");
+    	}catch(NullPointerException ex){
+        	System.out.println("Current level has no Loot Layer");
+        }
+        
+        this.menu = new InGameMenu();
+
+        this.player = new Player(UserAccount.getStats().getPlayerName()   		
+        		,this.map,UserAccount.getStats());
+        
+        this.hud = new InGameHUD(this.player);
+        
+        setFinished(false);
+        
+    }
 	
 }

@@ -3,6 +3,7 @@ package states;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
+import components.ParallaxBackground;
 import constants.Constants;
 import display.Display;
 import events.MouseMotionSensitive;
@@ -10,15 +11,16 @@ import gfx.Assets;
 
 public class MenuState extends State implements MouseMotionSensitive{
  
+	private ParallaxBackground background;
 	private Menu startMenu;
 
 	private final static int STATE_ID = 1;
 	
 	public MenuState() {
-		super(STATE_ID);
+		super(STATE_ID);		
 		
-		Assets.init();
-		
+		this.background = new ParallaxBackground();
+
     	startMenu = new Menu();
     	startMenu.init();
 	}
@@ -37,7 +39,10 @@ public class MenuState extends State implements MouseMotionSensitive{
     @Override
     public void render(Graphics g) {
     	
+    	/*
     	g.drawImage(Assets.background, 0, 0,Constants.WIDTH,Constants.HEIGHT, null);
+    	*/
+    	this.background.render(g);
     	g.drawImage(Assets.logo, Constants.BACKGROUND_X	- Constants.LOGO_WIDTH / 100
     			, Constants.HEIGHT / 4 - Constants.LOGO_HEIGHT / 2, null);
     	

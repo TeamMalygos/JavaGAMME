@@ -181,7 +181,7 @@ public class TileMap {
 	}
 	
 	public void draw(Graphics g){
-		
+
 		g.drawImage(Assets.background,Constants.BACKGROUND_X
 				,Constants.BACKGROUND_Y
 				,Constants.WIDTH
