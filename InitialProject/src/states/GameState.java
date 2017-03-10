@@ -212,7 +212,9 @@ public class GameState extends State {
         this.menu = new InGameMenu();
 
         this.player = new Player(UserAccount.getStats().getPlayerName()   		
-        		,this.map,UserAccount.getStats());
+        		,this.map,UserAccount.getStats()
+        		,Constants.LEVEL_START_POSITION_X[this.level.ordinal()]
+        		,Constants.LEVEL_START_POSITION_Y[this.level.ordinal()]);
         
         this.hud = new InGameHUD(this.player);
         

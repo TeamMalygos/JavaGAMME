@@ -1,6 +1,7 @@
 package components;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -40,11 +41,19 @@ public class LevelCard extends MenuComponent {
 
 	@Override
 	public void render(Graphics g){
-		g.drawRect(super.xAxisPosition, super.yAxisPosition, super.width, super.height);
+		
+		//Level Thumbnail
+		g.drawImage(this.levelThumb,super.xAxisPosition,super.yAxisPosition,null);
+		
+		//Reward string
 		g.setColor(Color.WHITE);
-		g.drawString("Reward: " + this.reward + " Diamonds!"
-				, (super.xAxisPosition + super.width ) /2
-				, (super.yAxisPosition + super.height) /2 );
+		g.setFont(new Font(Constants.FONT,Font.BOLD,Constants.FONT_SIZE));
+		g.drawString("Reward: " + this.reward + " Diamonds"
+				, super.xAxisPosition + super.getWidth() / 5 
+				- Constants.STANDARD_PADDING - Constants.STANDARD_MARGIN / 2 - 3
+				, super.yAxisPosition + super.getHeight() * 4 
+				+ Constants.STANDARD_PADDING + Constants.STANDARD_MARGIN / 2);
+		
 	}
 
 	@Override
@@ -109,7 +118,7 @@ public class LevelCard extends MenuComponent {
 			ex.printStackTrace();
 		}
 		
-		//this.setLevelThumb(ImageLoader.loadImage("/levels/map_thumb_" + levelNumber + ".png"));
+		this.setLevelThumb(ImageLoader.loadImage(Constants.LEVEL_THUMBNAILS_DIRECTORY + levelNumber + ".png"));
 		this.setReward(Constants.LEVEL_REWARD[Integer.valueOf(levelNumber)-1]);
 		this.setLevel(Level.valueOf("Level" + levelNumber));
 		

@@ -41,7 +41,7 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     //States
     private ObjectState state;
 
-    public Player(String name,TileMap map) {
+    public Player(String name,TileMap map,int x,int y) {
     	super(map);
     	
         this.name = name;
@@ -50,7 +50,7 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
         
         init();
         initPhysics();
-        initPosition();
+        initPosition(x,y);
 
         loadSprites();
 
@@ -59,7 +59,7 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
         
     }
 
-    public Player(String name,TileMap map, Stats loadedStats) {
+    public Player(String name,TileMap map, Stats loadedStats,int x,int y) {
         super(map);
 
         this.name = name;
@@ -70,7 +70,7 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
         
         init();
         initPhysics();
-        initPosition();
+        initPosition(x,y);
 
         loadSprites();
         
@@ -79,33 +79,6 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
 
     }
     
-    private void init(){
-
-        super.facingRight = true;
-    
-        state = ObjectState.Idle;
-        
-        super.cBox = new CollisionBox(Constants.PLAYER_COLLISION_WIDTH,Constants.PLAYER_COLLISION_HEIGHT);
-        super.width = Constants.PLAYER_WIDTH;
-        super.height = Constants.PLAYER_HEIGHT;
-        
-    }
-    
-    private void initPosition(){
-        super.position = new PVector();
-        super.position.setPositionX(Constants.PLAYER_START_X);
-        super.position.setPositionY(Constants.PLAYER_START_Y);
-        
-    }
-    
-    private void initPhysics(){
-        super.objectMovementAttr = new MovementAttributes();
-        
-        super.objectMovementAttr.setGravity(Constants.PLAYER_GRAVITY, Constants.PLAYER_TERMINAL_VELOCITY);
-        super.objectMovementAttr.setJumpRate(Constants.PLAYER_JUMP, Constants.PLAYER_STOP_JUMP);
-        super.objectMovementAttr.setMovementRate(Constants.PLAYER_ACCELERATION
-        		, Constants.PLAYER_MAXIMUM_SPEED, Constants.PLAYER_DEACCELERATION);
-    }
     
     public void loadSprites(){
     	
@@ -119,11 +92,7 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     	
     }
     
-    private void getNextPosition(){
-    	super.position.getNewPosition(super.movementState
-    			, super.objectMovementAttr);
-    }
-    
+ 
     @Override
     public void tick() {
     	
@@ -141,7 +110,7 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     	if(super.position.getDirectionY() > 0){
     		if(this.state != ObjectState.Falling){
     			
-    			this.state = ObjectState.Falling;
+    			this.state = ObjectState.Jumping;
     			//Changing to falling animation
     			
     		}
@@ -328,4 +297,39 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
         		,super.cBox.getCollisionWidth()
         		,super.cBox.getCollisionHeight());
 	}
+	
+    private void init(){
+
+        super.facingRight = true;
+    
+        state = ObjectState.Idle;
+        
+        super.cBox = new CollisionBox(Constants.PLAYER_COLLISION_WIDTH,Constants.PLAYER_COLLISION_HEIGHT);
+        super.width = Constants.PLAYER_WIDTH;
+        super.height = Constants.PLAYER_HEIGHT;
+        
+    }
+    
+    private void initPosition(int x,int y){
+        super.position = new PVector();
+        super.position.setPositionX(x);
+        super.position.setPositionY(y);
+        
+    }
+    
+    private void initPhysics(){
+        super.objectMovementAttr = new MovementAttributes();
+        
+        super.objectMovementAttr.setGravity(Constants.PLAYER_GRAVITY, Constants.PLAYER_TERMINAL_VELOCITY);
+        super.objectMovementAttr.setJumpRate(Constants.PLAYER_JUMP, Constants.PLAYER_STOP_JUMP);
+        super.objectMovementAttr.setMovementRate(Constants.PLAYER_ACCELERATION
+        		, Constants.PLAYER_MAXIMUM_SPEED, Constants.PLAYER_DEACCELERATION);
+    }
+    
+    private void getNextPosition(){
+    	super.position.getNewPosition(super.movementState
+    			, super.objectMovementAttr);
+    }
+    
+	
 }

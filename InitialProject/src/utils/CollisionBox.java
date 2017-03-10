@@ -79,6 +79,24 @@ public class CollisionBox {
 		this.collidesTopLeft = (topLeft != TileType.Background);
 		this.collidesTopRight = (topRight != TileType.Background);
 	}
+	
+	public boolean isClimbable(double x,double y,TileMap tileMap){
+		
+		int tileSize = tileMap.getTileWidth();
+		
+		int leftCorner = (int)(x - this.getCollisionWidth() / 2) / tileSize;
+		int rightCorner = (int)(x + this.getCollisionWidth() / 2 - 1) / tileSize;
+		int topCorner = (int)(y - this.getCollisionHeight() / 2) / tileSize;
+		int bottomCorner = (int)(y + this.getCollisionHeight() / 2 - 1) / tileSize;
+		
+		TileType topLeft = tileMap.getType(topCorner, leftCorner);
+		TileType topRight = tileMap.getType(topCorner, rightCorner);
+		TileType bottomLeft = tileMap.getType(bottomCorner, leftCorner);
+		TileType bottomRight = tileMap.getType(bottomCorner, rightCorner);
+		
+		return topLeft == TileType.Climbable && topRight == TileType.Climbable;
+		
+	}
 
 	
 }

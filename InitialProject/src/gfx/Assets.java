@@ -46,6 +46,7 @@ public class Assets {
 	public static BufferedImage saveButton;
 	public static BufferedImage gameover;
 	public static BufferedImage levelCompleted;
+	public static BufferedImage levelStatePanel;
 	
 	//ParallaxBackground
 	public static BufferedImage backgroundSky;
@@ -72,6 +73,8 @@ public class Assets {
         backgroundMountains = ImageLoader.loadImage("/textures/background_mountains.png");
         backgroundTrees = ImageLoader.loadImage("/textures/background_trees.png");
         backgroundGrass = ImageLoader.loadImage("/textures/background_grass.png");
+        
+        levelStatePanel = ImageLoader.loadImage("/textures/levelstate.png");
         
         //Entities
         nakov_sheet = ImageLoader.loadImage("/textures/nakov_sheet.png");

@@ -40,6 +40,14 @@ public class Constants {
 			30,50,70,90,110,150,200
 	};
 	
+	public static final int[] LEVEL_START_POSITION_X = new int[]{
+			25,100
+	};
+	
+	public static final int[] LEVEL_START_POSITION_Y = new int[]{
+			200,400
+	};
+	
 	public static final String FONT = "Impact";
 	public static final int FONT_SIZE = 16;
 	
@@ -91,19 +99,17 @@ public class Constants {
 
 
     //Player
-    public static final int PLAYER_START_X = 25;
-    public static final int PLAYER_START_Y = 200;
     public static final int PLAYER_COLLISION_WIDTH = 25;
     public static final int PLAYER_COLLISION_HEIGHT = 60;
     
     //Player physics
-    public static final double PLAYER_GRAVITY = 2;
-    public static final double PLAYER_TERMINAL_VELOCITY = 4.0;
+    public static final double PLAYER_GRAVITY = 0.5;
+    public static final double PLAYER_TERMINAL_VELOCITY = 3;
     public static final double PLAYER_ACCELERATION = 0.9;
-    public static final double PLAYER_STOP_JUMP = 0.5;
-    public static final double PLAYER_JUMP = -16;
+    public static final double PLAYER_STOP_JUMP = 0.4;
+    public static final double PLAYER_JUMP = -6;
     public static final double PLAYER_DEACCELERATION = 1.4;
-    public static final double PLAYER_MAXIMUM_SPEED = 4;
+    public static final double PLAYER_MAXIMUM_SPEED = 5;
 
     //InGameMenu components
     
@@ -111,6 +117,9 @@ public class Constants {
     public static final int INGAME_MENU_BUTTON_WIDTH = 96;
     public static final int INGAME_MENU_BUTTON_HEIGHT = 28;
 
+	public static final int LEVELS_STATE_PANEL_WIDTH = 800;
+	public static final int LEVELS_STATE_PANEL_HEIGHT = 640;
+    
     //Menu components default size
     public static final int MENU_BUTTON_WIDTH = 192;
     public static final int MENU_BUTTON_HEIGHT = 56;
@@ -164,6 +173,7 @@ public class Constants {
     
 	//DIRS
 	public static final String DIRECTORY_PLAYER_SERIALIZATION = "/resources/players";
+	public static final String LEVEL_THUMBNAILS_DIRECTORY = "/levels/level";
 	
 	//PlayersList
 	public static final int PLAYERS_LIST_WIDTH = 500;
@@ -192,5 +202,6 @@ public class Constants {
 	public static final int PLAYER_NAME_ERROR_X = WIDTH / 3 + PLAYER_NAME_EXISTS_ERROR.length() / 2 - 2;
 	public static final int PLAYER_NAME_ERROR_Y = WIDTH / 4 - PLAYER_NAME_EXISTS_ERROR.length();
 	public static final String GENERAL_EXCEPTION = "Something went wrong !";
+
 	
 }

@@ -2,6 +2,7 @@ package states;
 
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import components.Button;
@@ -20,8 +21,12 @@ public class LevelsState extends State implements MouseMotionSensitive{
 	private Button pointerLeft;
 	private Button pointerRight;
 	private Button load;
+	private Button back;
+	
+	private BufferedImage background;
 	
 	private int indexOnFocus;
+
 	
 	protected LevelsState() {
 		super(ID);
@@ -32,6 +37,8 @@ public class LevelsState extends State implements MouseMotionSensitive{
 
 	private void init(){
 		
+		this.background = Assets.levelStatePanel;
+		
 		String levelsPath = System.getProperty("user.dir") + "/maps";
 		File mapsDir = new File(levelsPath);
 		
@@ -39,8 +46,9 @@ public class LevelsState extends State implements MouseMotionSensitive{
 		this.levels = new LevelCard[levels.length];
 
 		for(int i = 0 ; i < levels.length ; i++){
-			this.levels[i] = new LevelCard(Constants.WIDTH / 2
-					, Constants.HEIGHT / 2
+			this.levels[i] = new LevelCard(Constants.WIDTH / 2 - Constants.LEVEL_CARD_WIDTH / 3 - Constants.STANDARD_PADDING
+					, Constants.HEIGHT / 3 - Constants.LEVEL_CARD_HEIGHT / 4 
+					+ Constants.STANDARD_PADDING - Constants.STANDARD_PADDING / 4
 					,levels[i]);
 			
 		}
@@ -56,7 +64,7 @@ public class LevelsState extends State implements MouseMotionSensitive{
 		this.pointerLeft.tick();
 		this.pointerRight.tick();
 		this.load.tick();
-		
+		this.back.tick();
 	}
 
 	@Override
@@ -64,13 +72,20 @@ public class LevelsState extends State implements MouseMotionSensitive{
 		
 		g.drawImage(Assets.background
 				, Constants.BACKGROUND_X
-				,Constants.BACKGROUND_Y 
-				,Constants.WIDTH
-				, Constants.HEIGHT, null);
+				, Constants.BACKGROUND_Y
+				, Constants.WIDTH
+				, Constants.HEIGHT
+				, null);
+		
+		g.drawImage(this.background
+				,Constants.WIDTH / 2 - Constants.LEVELS_STATE_PANEL_WIDTH / 2
+				,Constants.HEIGHT / 2 - Constants.LEVELS_STATE_PANEL_HEIGHT /2
+				,null);
 		
 		this.pointerLeft.render(g);
 		this.pointerRight.render(g);
 		this.load.render(g);
+		this.back.render(g);
 		
 		this.levels[this.indexOnFocus].render(g);
 		
@@ -78,26 +93,35 @@ public class LevelsState extends State implements MouseMotionSensitive{
 	
 	private void loadButtons(){
 		
-		this.pointerLeft = new Button(Constants.WIDTH / 4 - Constants.POINTER_WIDTH
-				,Constants.HEIGHT / 2 - Constants.POINTER_HEIGHT
+		this.pointerLeft = new Button(Constants.WIDTH / 3 - Constants.POINTER_WIDTH * 2
+				,Constants.HEIGHT / 3 + Constants.POINTER_HEIGHT / 2
 				, Constants.POINTER_LEFT);
 		
 		this.pointerLeft.setSize(Constants.POINTER_WIDTH, Constants.POINTER_HEIGHT);
 		this.pointerLeft.setFrames(Assets.pointerLeft);
 		
 		this.pointerRight = new Button(
-				Constants.WIDTH/2 + Constants.POINTER_WIDTH * 2
-				, Constants.HEIGHT/2 - Constants.POINTER_HEIGHT * 2
+				Constants.WIDTH - Constants.WIDTH / 3 
+				+ Constants.POINTER_WIDTH + Constants.STANDARD_MARGIN * 2
+				, Constants.HEIGHT / 3 + Constants.POINTER_HEIGHT / 2
 				,Constants.POINTER_RIGHT);
 		
 		this.pointerRight.setSize(Constants.POINTER_WIDTH, Constants.POINTER_HEIGHT);
 		this.pointerRight.setFrames(Assets.pointerRight);
 	
-		this.load = new Button(Constants.WIDTH / 2, Constants.HEIGHT 
-				- (Constants.HEIGHT / 3)
+		this.load = new Button(Constants.WIDTH / 4
+				, Constants.HEIGHT
+				- (Constants.HEIGHT / 3) + Constants.MENU_BUTTON_HEIGHT / 3 - Constants.STANDARD_PADDING / 3
 				,Constants.BUTTON_LOAD);
 		
 		this.load.setFrames(Assets.loadButton);
+		
+		this.back = new Button(Constants.WIDTH / 2 + Constants.MENU_BUTTON_MARGIN_BOTTOM / 3
+				,Constants.HEIGHT - (Constants.HEIGHT / 3) 
+				+ Constants.MENU_BUTTON_HEIGHT / 3 - Constants.STANDARD_PADDING / 3
+				,Constants.BUTTON_QUIT);
+		this.back.setFrames(Assets.backButton);
+		
 		
 	}
 	
@@ -120,6 +144,12 @@ public class LevelsState extends State implements MouseMotionSensitive{
 			this.load.onMenuButtonHover();
 		}else{
 			this.load.setHover(false);
+		}
+		
+		if(this.back.isInside(args.getX(), args.getY())){
+			this.back.onMenuButtonHover();
+		}else{
+			this.back.setHover(false);
 		}
 		
 	}
@@ -146,6 +176,12 @@ public class LevelsState extends State implements MouseMotionSensitive{
 			this.load.setPressed(false);
 		}
 		
+		if(this.back.isInside(args.getX(), args.getY())){
+			StateManager.setCurrentState(new MenuState());
+		}else{
+			this.back.setPressed(false);
+		}
+		
 	}
 
 
@@ -170,6 +206,13 @@ public class LevelsState extends State implements MouseMotionSensitive{
 		}else{
 			this.load.setHover(false);
 			this.load.setPressed(false);
+		}
+		
+		if(this.back.isInside(args.getX(), args.getY())){
+			this.back.onMenuButtonClick();
+		}else{
+			this.back.setHover(false);
+			this.back.setPressed(false);
 		}
 		
 	}

@@ -131,12 +131,12 @@ public class LootMap implements UnitDrawable{
 				if(!this.lootObjects[row][col].checkCollected()){
 					this.lootObjects[row][col].render(g);
 					
-					
+					/*
 					g.drawRect((int)this.lootObjects[row][col].getPosition().getPositionX()
 							, (int)this.lootObjects[row][col].getPosition().getPositionY()
 							, this.lootObjects[row][col].getWidth()
 							, this.lootObjects[row][col].getHeight());
-							
+					 */	
 					
 				}
 				

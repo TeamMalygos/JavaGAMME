@@ -83,10 +83,7 @@ public class InputHandler implements KeyListener {
         if(keyCode == KeyEvent.VK_RIGHT){state.player.setRight(false);}
         if(keyCode == KeyEvent.VK_UP){state.player.setUp(false);}
         if(keyCode == KeyEvent.VK_DOWN){state.player.setDown(false);}
-        if(keyCode == KeyEvent.VK_SPACE){state.player.setJumping(false);
-        state.player.getPlayerStats().setCurrentHealth(
-        		state.player.getPlayerStats().getCurrentHealth() - 50);
-        }
+        if(keyCode == KeyEvent.VK_SPACE){state.player.setJumping(false);}
       
     }
     

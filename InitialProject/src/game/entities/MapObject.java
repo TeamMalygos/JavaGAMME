@@ -115,6 +115,10 @@ public abstract class MapObject {
 		this.mapY = this.tileMap.getY();
 	}
 	
+	public CollisionBox getCBox(){
+		return this.cBox;
+	}
+	
 	//Check if the object is on screen
 	public boolean notOnScreen(){
 		

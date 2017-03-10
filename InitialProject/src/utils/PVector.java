@@ -1,5 +1,8 @@
 package utils;
 
+import enums.TileType;
+import states.GameState;
+
 public class PVector {
 
 	private double x;
@@ -111,6 +114,7 @@ public class PVector {
 		if(this.directionY > 0){
 			movementState.setJump(false);
 		}
+		
 		if(this.directionY > 0 && !movementState.isJumping()){
 			this.directionY += objectMovementAttr.getUnitStopJump();
 		}
@@ -120,6 +124,33 @@ public class PVector {
 		
 	}
 	
+	if(movementState.isGoingUp() && (movementState.isGoingRight() || movementState.isGoingLeft())){
+		
+		boolean isTileClimbable = GameState.getPlayer().getCBox().isClimbable(this.destX, this.y, GameState.getMap());
+
+		System.out.println(isTileClimbable);
+		if(isTileClimbable){
+			
+			
+			this.directionY -= objectMovementAttr.getUnitAcceleration();
+			
+			if(this.directionY > 0){
+				movementState.setJump(false);
+			}
+
+			if(!movementState.isGoingUp() || !(movementState.isGoingRight() || movementState.isGoingLeft())){
+				movementState.setFalling(true);
+			}
+			
+			
+			if(this.directionY > objectMovementAttr.getUnitMaximumSpeed()){
+				this.directionY = objectMovementAttr.getUnitMaximumSpeed();
+			}
+			
+			
+		}
+		
+	}
 	
 	//TODO: Make it so that player can't attack while moving
 }
