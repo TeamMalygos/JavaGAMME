@@ -13,15 +13,14 @@ public class TextField extends MenuComponent {
 	
 	public TextField(String name) {
 		super(Constants.MENU_BUTTON_X
-				,Constants.MENU_BUTTON_Y + Constants.MENU_BUTTON_MARGIN_BOTTOM, name);
+				,Constants.MENU_BUTTON_Y + Constants.MENU_BUTTON_MARGIN_BOTTOM);
 
 		super.setSize(Constants.MENU_BUTTON_WIDTH, Constants.MENU_BUTTON_HEIGHT);
-		super.currentFrame = Assets.textField;
 		
 		this.setFocused(false);
 		
-		this.box = new Rectangle(super.xAxisPosition
-				,super.yAxisPosition,super.width,super.height);
+		this.box = new Rectangle(super.getxAxisPosition()
+				,super.getyAxisPosition(),super.getWidth(),super.getHeight());
 		
 	}
 	
@@ -39,8 +38,7 @@ public class TextField extends MenuComponent {
 	
 	@Override
 	public void render(Graphics g) {
-		// TODO Auto-generated method stub
-		g.drawImage(this.currentFrame, super.xAxisPosition, super.yAxisPosition, null);
+		g.drawImage(super.getCurrentFrame(), super.getxAxisPosition(), super.getyAxisPosition(), null);
 		
 	}
 

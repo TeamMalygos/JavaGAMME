@@ -202,6 +202,8 @@ public class Constants {
 	public static final int PLAYER_NAME_ERROR_X = WIDTH / 3 + PLAYER_NAME_EXISTS_ERROR.length() / 2 - 2;
 	public static final int PLAYER_NAME_ERROR_Y = WIDTH / 4 - PLAYER_NAME_EXISTS_ERROR.length();
 	public static final String GENERAL_EXCEPTION = "Something went wrong !";
+	public static final int PESHO_WIDTH = 32;
+	public static final int PESHO_HEIGHT = 32;
 
 	
 }

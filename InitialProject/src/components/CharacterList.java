@@ -33,8 +33,8 @@ public class CharacterList extends MenuComponent implements MouseMotionSensitive
 	private RadialGradientPaint paint;
 	private PlayerListItem[] items;
 	
-	public CharacterList(String name) {
-		super(Constants.PLAYERS_LIST_X, Constants.PLAYERS_LIST_Y, name);
+	public CharacterList() {
+		super(Constants.PLAYERS_LIST_X, Constants.PLAYERS_LIST_Y);
 		
 		super.setSize(Constants.PLAYERS_LIST_WIDTH, Constants.PLAYERS_LIST_HEIGHT);
 		
@@ -52,7 +52,7 @@ public class CharacterList extends MenuComponent implements MouseMotionSensitive
 	
 	private void loadRadialGradients(){
 		
-		this.paint = new RadialGradientPaint((float)super.xAxisPosition,(float)super.yAxisPosition
+		this.paint = new RadialGradientPaint((float)super.getxAxisPosition(),(float)super.getyAxisPosition()
 				,Constants.RADIAL_RADIUS,Constants.FRACTIONS,Constants.COLORS);
 		
 	}

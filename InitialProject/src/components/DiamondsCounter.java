@@ -12,7 +12,7 @@ public class DiamondsCounter extends HUDComponent{
 	private String count;
 	
 	public DiamondsCounter(String name){
-		super(Constants.DIAMONDS_COUNTER_X, Constants.DIAMONDS_COUNTER_Y, name);
+		super(Constants.DIAMONDS_COUNTER_X, Constants.DIAMONDS_COUNTER_Y);
 		count = "0";
 		
 		super.setSize(Constants.DIAMONDS_COUTNER_WIDTH, Constants.DIAMONDS_COUNTER_HEIGHT);
@@ -23,9 +23,9 @@ public class DiamondsCounter extends HUDComponent{
 	@Override
 	public void render(Graphics g) {
 		
-		g.drawImage(super.frames[0], super.xAxisPosition, super.yAxisPosition, null);
+		g.drawImage(super.frames[0], super.getxAxisPosition(), super.getyAxisPosition(), null);
 		g.setColor(Color.WHITE);
-		g.drawString(count, super.width/2, super.yAxisPosition + 21);
+		g.drawString(count, super.getWidth()/2, super.getyAxisPosition() + 21);
 		
 	}
 

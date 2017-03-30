@@ -4,14 +4,14 @@ import java.awt.Graphics;
 import java.util.List;
 
 import constants.Constants;
-import game.entities.UnitDrawable;
+import game.entities.Drawable;
 import map.parser.ObjectsLayer;
 import map.parser.ObjectsLayerObject;
 import map.parser.TileLayer;
 import states.GameState;
 import utils.Diploma;
 
-public class ObjectLayer implements UnitDrawable {
+public class ObjectLayer implements Drawable {
 
 	private ObjectsLayer layer; 
 	private TileLayer lootLayer;

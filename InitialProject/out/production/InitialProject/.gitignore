@@ -1,8 +1,6 @@
-/gfx/
-/states/
-/constants/
-/map/
-/game/
 /components/
-/levels/
+/game/
+/map/
+/players/
+/states/
 /utils/

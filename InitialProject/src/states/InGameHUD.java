@@ -6,9 +6,9 @@ import components.DiamondsCounter;
 import components.HealthBar;
 import constants.Constants;
 import game.entities.Player;
-import game.entities.UnitDrawable;
+import game.entities.Drawable;
 
-public class InGameHUD implements UnitDrawable{
+public class InGameHUD implements Drawable{
 
 	private HealthBar bar;
 	private DiamondsCounter counter;
@@ -22,7 +22,7 @@ public class InGameHUD implements UnitDrawable{
 	private void init(){
 		
 		this.bar = new HealthBar(Constants.HEALTH_BAR_X
-				,Constants.HEALTH_BAR_Y,"HealthBar");
+				,Constants.HEALTH_BAR_Y);
 		this.bar.linkToPlayer(p);
 		
 		this.counter = new DiamondsCounter("Diamonds Counter");

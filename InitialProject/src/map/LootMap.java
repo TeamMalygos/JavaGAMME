@@ -7,11 +7,11 @@ import constants.Constants;
 import game.collectibles.Diamond;
 import game.collectibles.LootFactory;
 import game.collectibles.LootObject;
-import game.entities.UnitDrawable;
+import game.entities.Drawable;
 import states.GameState;
 import utils.EffectTrigger;
 
-public class LootMap implements UnitDrawable{
+public class LootMap implements Drawable{
 
 	private double x;
 	private double y;

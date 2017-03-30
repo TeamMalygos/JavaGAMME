@@ -1,13 +1,7 @@
 package components;
 
-import java.awt.AlphaComposite;
-import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
-import constants.Constants;
 
 import events.MenuButtonClickEvent;
 import events.MenuButtonClickListener;
@@ -21,16 +15,16 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	private BufferedImage hover;
 	private State stateInit;
 	
-	private BufferedImage normalReflection;
+	//private BufferedImage normalReflection;
 	private float reflectionOpacity;
 	private float fadeHeight;
 	private int gap;
 	
-	private GradientPaint paint;
-	private AlphaComposite composite;
+	//private GradientPaint paint;
+	//private AlphaComposite composite;
 	
 	public Button(int x,int y,String name){
-		super(x,y,name);
+		super(x,y);
 		
 	}
 	
@@ -67,11 +61,12 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	}
 	
 	public void setFrames(BufferedImage frames){
-		super.frames = frames;
+		super.setFrames(frames);
 		loadFrameHolders();
-		createReflection();
+		//createReflection();
 	}
 	
+	/*
 	private void createReflection(){
 		
 		this.normalReflection = new BufferedImage(this.normal.getWidth(),this.normal.getHeight(),BufferedImage.TYPE_INT_ARGB);
@@ -80,13 +75,13 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 		          0, this.normal.getHeight(), new Color(0.0f, 0.0f, 0.0f, this.reflectionOpacity));
 		
 	}
-	
+	*/
 	private void loadFrameHolders(){
 		
-		normal = super.frames.getSubimage(0,0,super.width,super.height);
-		pressed = super.frames.getSubimage(super.width,0,super.width,super.height);
-		hover = super.frames.getSubimage(super.width*2, 0, super.width, super.height);
-		super.currentFrame = normal;
+		normal = super.getFrames().getSubimage(0,0,super.getWidth(),super.getHeight());
+		pressed = super.getFrames().getSubimage(super.getWidth(),0,super.getWidth(),super.getHeight());
+		hover = super.getFrames().getSubimage(super.getWidth(), 0, super.getWidth(), super.getHeight());
+		super.setCurrentFrame(normal);
 	}
 	
 	
@@ -94,8 +89,6 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 		stateInit = state;
 	}
 	
-	public void setHover(boolean hover){super.hover = hover;}
-	public void setPressed(boolean pressed){super.isPressed = pressed;}
 	public int getStateId(){
 		
 		if(this.stateInit == null){
@@ -107,13 +100,13 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	
 	@Override
 	public void tick(){
-		//I have no fucking idea what this does but it looks fabulous
-		if(super.hover){
-			super.currentFrame = this.hover;
-		}else if(super.isPressed){
-			super.currentFrame = this.pressed;
+
+		if(super.isHover()){
+			super.setCurrentFrame(this.hover);
+		}else if(super.isPressed()){
+			super.setCurrentFrame(this.pressed);
 		}else {
-			super.currentFrame = normal;
+			super.setCurrentFrame(normal);
 		}
 	}
 	
@@ -122,8 +115,8 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	
 		//Graphics2D g2d = (Graphics2D)g;
 		
-		g.drawImage(super.currentFrame, super.xAxisPosition
-				, super.yAxisPosition,null);
+		g.drawImage(super.getCurrentFrame(), super.getxAxisPosition()
+				, super.getyAxisPosition(),null);
 		
 		//Drawing reflection
 		/*
@@ -160,8 +153,8 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	@Override
 	public void onMenuButtonClick() {
 		// TODO Auto-generated method stub
-		super.isPressed = true;
-		super.hover = false;
+		super.setPressed(true);
+		super.setHover(false);
 	}
 
 
@@ -175,9 +168,9 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 
 	@Override
 	public void onMenuButtonHover() {
-		// TODO Auto-generated method stub
-		super.isPressed = false;
-		super.hover = true;
+
+		super.setPressed(false);
+		super.setHover(true);
 	}
 	
 

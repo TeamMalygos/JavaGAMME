@@ -6,10 +6,9 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 import components.Button;
-import components.StringButton;
 import constants.Constants;
 import events.MouseMotionSensitive;
-import game.entities.UnitDrawable;
+import game.entities.Drawable;
 import gfx.Assets;
 import utils.ObjectSerializer;
 
@@ -23,7 +22,7 @@ import utils.ObjectSerializer;
  * the game while playing </p>
  *
  */
-public class InGameMenu implements UnitDrawable,MouseMotionSensitive{
+public class InGameMenu implements Drawable,MouseMotionSensitive{
 
 	private static final int ID = 7;
 	private Button resume;

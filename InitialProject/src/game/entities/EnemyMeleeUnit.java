@@ -7,7 +7,7 @@ import states.GameState;
 
 import java.awt.*;
 
-public class EnemyMeleeUnit implements UnitDrawable {
+public class EnemyMeleeUnit implements Drawable {
 
     private String name;
     private int width, height, x, y, velocityX, velocityY, health, initialX, sightRange, weaponRange, damage;

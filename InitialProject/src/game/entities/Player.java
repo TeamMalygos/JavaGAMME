@@ -19,7 +19,7 @@ import java.awt.*;
 import constants.Constants;
 import enums.ObjectState;
 
-public class Player extends MapObject implements UnitDrawable,StateProvidable {
+public class Player extends MapObject implements Drawable,StateProvidable {
 
     private String name;
     private Rectangle playerPickUpBox;
@@ -54,7 +54,6 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
 
         loadSprites();
 
-        super.movementState = new MovementState();
         //this.boundingBox = new Rectangle(x, y, width, height);
         
     }
@@ -74,7 +73,6 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
 
         loadSprites();
         
-        super.movementState = new MovementState();
         //this.boundingBox = new Rectangle(x, y, width, height);
 
     }
@@ -82,19 +80,21 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     
     public void loadSprites(){
     	
-    	sprite = new SpriteSheet(Assets.nakov_sheet);
+    	this.sprite = new SpriteSheet(Assets.nakov_sheet);
     	
-    	sprite.setFrameLayersCount(numFrames,Constants.PLAYER_WIDTH,Constants.PLAYER_HEIGHT);
+    	this.sprite.setFrameLayersCount(this.numFrames,Constants.PLAYER_WIDTH,Constants.PLAYER_HEIGHT);
     	
-    	super.animation = new Animation();
-    	
-    	super.animation.setDelay(1);
+    	super.getAnimation().setDelay(1);
     	
     }
     
  
     @Override
     public void tick() {
+    	
+    	boolean isTileOfTypeDeath = super.getCollisionBox().isOfTypeDeath(
+    			super.getPVector().getPositionX()
+    			, super.getPVector().getDestinationY(), super.getMap());
     	
     	if(this.playerStats.getCurrentHealth() <= 0){
     		this.isDead = true;
@@ -103,46 +103,46 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     	this.playerStats.tick();
     	getNextPosition();
     	super.checkTileMapCollision();
-    	super.position.setPositionX(super.position.getTemporaryX());
-    	super.position.setPositionY(super.position.getTemporaryY());
+    	super.getPVector().setPositionX(super.getPVector().getTemporaryX());
+    	super.getPVector().setPositionY(super.getPVector().getTemporaryY());
     	//super.position.determineDirection(this.movementState);
     	
-    	if(super.position.getDirectionY() > 0){
+    	if(super.getPVector().getDirectionY() > 0){
     		if(this.state != ObjectState.Falling){
     			
     			this.state = ObjectState.Jumping;
     			//Changing to falling animation
     			
     		}
-    	}else if(this.position.getDirectionY() < 0){
+    	}else if(this.getPVector().getDirectionY() < 0){
     		
     		if(this.state != ObjectState.Jumping){
     			
     			this.state = ObjectState.Jumping;
-    			this.animation.setFrames(this.sprite.getFrameSet(0));
-    			this.animation.setDelay(40);
+    			super.getAnimation().setFrames(this.sprite.getFrameSet(0));
+    			super.getAnimation().setDelay(40);
     			
     		}
     		
-    	}else if(super.movementState.isGoingLeft() || super.movementState.isGoingRight()){
+    	}else if(super.getMovementState().isGoingLeft() || super.getMovementState().isGoingRight()){
     		
     		if(this.state != ObjectState.Walking){
     			
     			this.state = ObjectState.Walking;
-    			this.animation.setFrames(this.sprite.getFrameSet(ObjectState.Walking.ordinal()));
-    			this.animation.setDelay(40);  
+    			super.getAnimation().setFrames(this.sprite.getFrameSet(ObjectState.Walking.ordinal()));
+    			super.getAnimation().setDelay(40);  
     		}
     		
     	}else{
     		if(this.state != ObjectState.Idle){
     			this.state = ObjectState.Idle;
     		}
-    		this.animation.setFrames(this.sprite.getFrameSet(ObjectState.Idle.ordinal()));
-    		this.animation.setDelay(40);
+    		super.getAnimation().setFrames(this.sprite.getFrameSet(ObjectState.Idle.ordinal()));
+    		super.getAnimation().setDelay(40);
     	
     	}
     	
-    	super.animation.update();
+    	super.getAnimation().update();
     	
     	setDirection();
     	
@@ -151,8 +151,8 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     
     private void setDirection(){
     	
-    	if(super.movementState.isGoingLeft()){super.facingRight = false;}
-    	if(super.movementState.isGoingRight()){super.facingRight = true;}
+    	if(super.getMovementState().isGoingLeft()){super.setFacingRight(false);}
+    	if(super.getMovementState().isGoingRight()){super.setFacingRight(true);}
     	
     }
     
@@ -162,28 +162,30 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     	
     	super.setMapPosition();
     	
-    	if(super.facingRight){
+    	if(super.isFacingRight()){
     		
-    			g.drawImage(this.animation.getImage()
-        				, (int)(super.position.getPositionX() + super.mapX - super.width /2)
-        				, (int)(super.position.getPositionY() + super.mapY - super.height / 2)
+    			g.drawImage(super.getAnimation().getImage()
+        				, (int)(super.getPVector().getPositionX() + super.getMapX() - super.getWidth() /2)
+        				, (int)(super.getPVector().getPositionY() + super.getMapY() - super.getHeight() / 2)
         				, null);
     		
     	}else {
-    		g.drawImage(this.animation.getImage()
-    				, (int)(this.position.getPositionX() + super.mapX - super.width / 2 + super.width)
-    				, (int)(this.position.getPositionY() + super.mapY - super.height / 2)
-    				, -super.width
-    				, super.height
+    		g.drawImage(super.getAnimation().getImage()
+    				, (int)(this.getPVector().getPositionX() + super.getMapX() - super.getWidth() / 2 + super.getWidth())
+    				, (int)(this.getPVector().getPositionY() + super.getMapY() - super.getHeight() / 2)
+    				, -super.getWidth()
+    				, super.getHeight()
     				, null);
     	}
+    	
+    	//Player bounding box debug
     	/*
     	g.drawRect((int)(this.position.getPositionX() + super.mapX - super.width / 2 + super.width)
     			,(int)(this.position.getPositionY() + super.mapY - super.height / 2)
     			, width
     			, height);
-    	*/
     	
+    	*/
     }
     
     public void takeDamage(double damage) {
@@ -241,95 +243,105 @@ public class Player extends MapObject implements UnitDrawable,StateProvidable {
     	return this.bag;
     }
 
-    public double getX() {return super.position.getPositionX();}
-    public void setX(int x) {super.position.setPositionX(x);}
-    public double getY() {return super.position.getPositionY();}
-    public void setY(int y) {super.position.setPositionY(y);}
+    public double getX() {return super.getPVector().getPositionX();}
+    public void setX(int x) {super.getPVector().setPositionX(x);}
+    public double getY() {return super.getPVector().getPositionY();}
+    public void setY(int y) {super.getPVector().setPositionY(y);}
     public Rectangle getBoundingBox() {
         return new Rectangle(
-        		(int)super.position.getPositionX(),
-        		(int)super.position.getPositionY(),
-        		super.cBox.getCollisionWidth(),
-        		super.cBox.getCollisionHeight());
+        		(int)super.getPVector().getPositionX(),
+        		(int)super.getPVector().getPositionY(),
+        		super.getCollisionBox().getCollisionWidth(),
+        		super.getCollisionBox().getCollisionHeight());
     }
     public boolean isDead(){
     	return this.isDead;
     }
     public boolean canPickUp(Rectangle o){
-    	this.playerPickUpBox = new Rectangle((super.tileMap.getX() + (int)super.position.getPositionX()) - super.cBox.getCollisionWidth() / 2
-        		,super.tileMap.getY() + (int)super.position.getPositionY() - super.cBox.getCollisionHeight() / 2
-        		,super.cBox.getCollisionWidth()
-        		,super.cBox.getCollisionHeight());
+    	this.playerPickUpBox = new Rectangle((super.getMap().getX() 
+    			+ (int)super.getPVector().getPositionX()) - super.getCollisionBox().getCollisionWidth() / 2
+        		,super.getMap().getY() + (int)super.getPVector().getPositionY() 
+        		- super.getCollisionBox().getCollisionHeight() / 2
+        		,super.getCollisionBox().getCollisionWidth()
+        		,super.getCollisionBox().getCollisionHeight());
     	
     	return this.playerPickUpBox.intersects(o);
     }
     
 	@Override
-	public boolean isMovingLeft() {return super.movementState.isGoingLeft();}
+	public boolean isMovingLeft() {return super.getMovementState().isGoingLeft();}
 	@Override
-	public boolean isMovingRight() {return super.movementState.isGoingRight();}
+	public boolean isMovingRight() {return super.getMovementState().isGoingRight();}
 	@Override
-	public boolean isMovingUp() {return super.movementState.isGoingUp();}
+	public boolean isMovingUp() {return super.getMovementState().isGoingUp();}
 	@Override
-	public boolean isMovingFalling() {return super.movementState.isFalling();}
+	public boolean isMovingFalling() {return super.getMovementState().isFalling();}
 	@Override
-	public boolean isJumping() {return super.movementState.isJumping();}
+	public boolean isJumping() {return super.getMovementState().isJumping();}
 	@Override
-	public boolean isGoingDown() {return super.movementState.isGoingDown();}
+	public boolean isGoingDown() {return super.getMovementState().isGoingDown();}
 
 	//Setters for movement state
 	@Override
-	public void setLeft(boolean left) {super.movementState.setLeft(left);}
+	public void setLeft(boolean left) {super.getMovementState().setLeft(left);}
 	@Override
-	public void setRight(boolean right) {super.movementState.setRight(right);}
+	public void setRight(boolean right) {super.getMovementState().setRight(right);}
 	@Override
-	public void setDown(boolean down) {super.movementState.setDown(down);}
+	public void setDown(boolean down) {super.getMovementState().setDown(down);}
 	@Override
-	public void setUp(boolean up) {super.movementState.setUp(up);}
+	public void setUp(boolean up) {super.getMovementState().setUp(up);}
 	@Override
-	public void setJumping(boolean jump) {super.movementState.setJump(jump);}
+	public void setJumping(boolean jump) {super.getMovementState().setJump(jump);}
 	@Override
-	public void setFalling(boolean fall) {super.movementState.setFalling(fall);}
+	public void setFalling(boolean fall) {super.getMovementState().setFalling(fall);}
 
 	public Rectangle getPickUpRectangle() {
-		return new Rectangle((super.tileMap.getX() + (int)super.position.getPositionX()) - super.cBox.getCollisionWidth() / 2
-        		,super.tileMap.getY() + (int)super.position.getPositionY() - super.cBox.getCollisionHeight() / 2
-        		,super.cBox.getCollisionWidth()
-        		,super.cBox.getCollisionHeight());
+		return new Rectangle((super.getMap().getX() 
+					+ (int)super.getPVector().getPositionX()) 
+					- super.getCollisionBox().getCollisionWidth() / 2
+					
+        		,super.getMap().getY() + (int)super.getPVector().getPositionY() 
+        			- super.getCollisionBox().getCollisionHeight() / 2
+        			
+        		,super.getCollisionBox().getCollisionWidth()
+        		,super.getCollisionBox().getCollisionHeight());
 	}
 	
     private void init(){
 
-        super.facingRight = true;
+        super.setFacingRight(true);
     
         state = ObjectState.Idle;
         
-        super.cBox = new CollisionBox(Constants.PLAYER_COLLISION_WIDTH,Constants.PLAYER_COLLISION_HEIGHT);
-        super.width = Constants.PLAYER_WIDTH;
-        super.height = Constants.PLAYER_HEIGHT;
+        super.setCollisionBox(new CollisionBox(Constants.PLAYER_COLLISION_WIDTH,Constants.PLAYER_COLLISION_HEIGHT));
+        super.setWidth(Constants.PLAYER_WIDTH);
+        super.setHeight(Constants.PLAYER_HEIGHT);
         
     }
     
     private void initPosition(int x,int y){
-        super.position = new PVector();
-        super.position.setPositionX(x);
-        super.position.setPositionY(y);
+        super.setPVector(new PVector());
+        super.getPVector().setPositionX(x);
+        super.getPVector().setPositionY(y);
         
     }
     
     private void initPhysics(){
-        super.objectMovementAttr = new MovementAttributes();
         
-        super.objectMovementAttr.setGravity(Constants.PLAYER_GRAVITY, Constants.PLAYER_TERMINAL_VELOCITY);
-        super.objectMovementAttr.setJumpRate(Constants.PLAYER_JUMP, Constants.PLAYER_STOP_JUMP);
-        super.objectMovementAttr.setMovementRate(Constants.PLAYER_ACCELERATION
+        super.getObjectMovementAttr().setGravity(Constants.PLAYER_GRAVITY, Constants.PLAYER_TERMINAL_VELOCITY);
+        super.getObjectMovementAttr().setJumpRate(Constants.PLAYER_JUMP, Constants.PLAYER_STOP_JUMP);
+        super.getObjectMovementAttr().setMovementRate(Constants.PLAYER_ACCELERATION
         		, Constants.PLAYER_MAXIMUM_SPEED, Constants.PLAYER_DEACCELERATION);
     }
     
     private void getNextPosition(){
-    	super.position.getNewPosition(super.movementState
-    			, super.objectMovementAttr);
+    	super.getPVector().getNewPosition(super.getMovementState()
+    			, super.getObjectMovementAttr());
     }
+
+	public boolean canClimb(double destX, double y, TileMap map) {
+		return super.getCollisionBox().isClimbable(destX, y, map);
+	}
     
 	
 }

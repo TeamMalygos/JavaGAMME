@@ -1,6 +1,5 @@
 package utils;
 
-import enums.TileType;
 import states.GameState;
 
 public class PVector {
@@ -126,9 +125,8 @@ public class PVector {
 	
 	if(movementState.isGoingUp() && (movementState.isGoingRight() || movementState.isGoingLeft())){
 		
-		boolean isTileClimbable = GameState.getPlayer().getCBox().isClimbable(this.destX, this.y, GameState.getMap());
-
-		System.out.println(isTileClimbable);
+		boolean isTileClimbable = GameState.getPlayer().canClimb(this.destX, this.y, GameState.getMap());
+		
 		if(isTileClimbable){
 			
 			
@@ -138,7 +136,7 @@ public class PVector {
 				movementState.setJump(false);
 			}
 
-			if(!movementState.isGoingUp() || !(movementState.isGoingRight() || movementState.isGoingLeft())){
+			if(!movementState.isGoingUp()){
 				movementState.setFalling(true);
 			}
 			

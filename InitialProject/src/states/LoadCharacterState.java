@@ -44,7 +44,7 @@ public class LoadCharacterState extends State implements MouseMotionSensitive{
 				,Constants.BUTTON_QUIT);
 		quit.setFrames(Assets.quitButton);
 		
-		characters = new CharacterList("Characters");
+		characters = new CharacterList();
 		
 	}
 

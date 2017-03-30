@@ -11,7 +11,7 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class EnemyShootingUnit extends MapObject implements UnitDrawable {
+public class EnemyShootingUnit extends MapObject implements Drawable {
 
     private String name;
     private int width, height, velocityX, velocityY, health, initialX, movementRange, shootingRange, damage;
@@ -33,23 +33,16 @@ public class EnemyShootingUnit extends MapObject implements UnitDrawable {
     public EnemyShootingUnit(String name, int width, int height, int x, int y, int shootingRange, int damage, int health,TileMap map) {
     	super(map);
     	
-    	super.position = new PVector(x,y);
+    	super.setPVector(new PVector(x,y));
     	
         this.name = name;
-        
-        super.width = width;
-        super.height = height;
-
+       
         this.shootingRange = shootingRange;
         this.damage = damage;
 
         this.velocityX = this.velocityY = 4;
         this.health = health;
 
-        this.boundingBox = new Rectangle((int)super.position.getPositionX()
-        		, (int)super.position.getPositionY()
-        		, super.width, super.height);
-        //this.enemyImage = new SpriteSheet(Assets.enemy, width, height);
         this.col = 0;
 
         this.direction = "left";
@@ -66,6 +59,7 @@ public class EnemyShootingUnit extends MapObject implements UnitDrawable {
 
     @Override
     public void tick() {
+    	/*
         // Check if enemy is alive
         if (isDead) {
             return;
@@ -123,6 +117,7 @@ public class EnemyShootingUnit extends MapObject implements UnitDrawable {
         for (Projectile projectile : projectiles) {
             projectile.tick();
         }
+        */
     }
 
     @Override
@@ -149,7 +144,7 @@ public class EnemyShootingUnit extends MapObject implements UnitDrawable {
             projectile.render(graphics);
         }
     }
-
+/*
     public boolean isPlayerInRange(Player player) {
         return super.position.getPositionX() - this.shootingRange <= player.getBoundingBox().getMaxX();
     }
@@ -193,4 +188,5 @@ public class EnemyShootingUnit extends MapObject implements UnitDrawable {
     public void setProjectiles(Set<Projectile> projectiles) {
         this.projectiles = projectiles;
     }
+    */
 }

@@ -3,10 +3,10 @@ package components;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import game.entities.UnitDrawable;
+import game.entities.Drawable;
 import utils.PVector;
 
-public class ParallaxPart implements UnitDrawable {
+public class ParallaxPart implements Drawable {
 
 	private BufferedImage part;
 	private int offset;

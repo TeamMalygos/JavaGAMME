@@ -4,10 +4,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import constants.Constants;
-import game.entities.UnitDrawable;
+import game.entities.Drawable;
 import gfx.Assets;
 
-public class ParallaxBackground implements UnitDrawable{
+public class ParallaxBackground implements Drawable{
 
 	private final BufferedImage[] PARTS = new BufferedImage[]{
 			Assets.backgroundSky,Assets.backgroundMountains,Assets.backgroundTrees,Assets.backgroundGrass

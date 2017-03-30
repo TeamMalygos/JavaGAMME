@@ -23,7 +23,7 @@ public class LevelCard extends MenuComponent {
 	private boolean isOnFocus;
 	
 	public LevelCard(int x, int y, File jsonFile) {
-		super(x, y, jsonFile.getName());
+		super(x, y);
 		this.setJsonFile(jsonFile);
 	
 		init();
@@ -43,15 +43,15 @@ public class LevelCard extends MenuComponent {
 	public void render(Graphics g){
 		
 		//Level Thumbnail
-		g.drawImage(this.levelThumb,super.xAxisPosition,super.yAxisPosition,null);
+		g.drawImage(this.levelThumb,super.getxAxisPosition(),super.getyAxisPosition(),null);
 		
 		//Reward string
 		g.setColor(Color.WHITE);
 		g.setFont(new Font(Constants.FONT,Font.BOLD,Constants.FONT_SIZE));
 		g.drawString("Reward: " + this.reward + " Diamonds"
-				, super.xAxisPosition + super.getWidth() / 5 
+				, super.getxAxisPosition() + super.getWidth() / 5 
 				- Constants.STANDARD_PADDING - Constants.STANDARD_MARGIN / 2 - 3
-				, super.yAxisPosition + super.getHeight() * 4 
+				, super.getyAxisPosition() + super.getHeight() * 4 
 				+ Constants.STANDARD_PADDING + Constants.STANDARD_MARGIN / 2);
 		
 	}

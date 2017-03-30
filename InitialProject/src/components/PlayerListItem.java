@@ -24,13 +24,15 @@ public class PlayerListItem extends MenuComponent{
 	private Stats stat;
 	
 	public PlayerListItem(int offset,Stats s){
-		
-		super(Constants.PLAYERS_LIST_X,Constants.PLAYERS_LIST_Y + offset, s.getPlayerName());
+
+		super(Constants.PLAYERS_LIST_X,Constants.PLAYERS_LIST_Y + offset);
 		super.setSize(Constants.PLAYERS_LIST_LISTITEM_WIDTH, Constants.PLAYERS_LIST_LISTITEM_HEIGHT);
+		
+		this.setOffset(offset);
 		this.setStat(s);
 	}
 
-	public void setOffset(int offset){
+	private void setOffset(int offset){
 		
 		if(offset < 0){
 			offset = 0;
@@ -48,11 +50,7 @@ public class PlayerListItem extends MenuComponent{
 		return this.isOnFocus;
 	}
 	
-	public int getOffset(){
-		return this.offset;
-	}
-	
-	public void setStat(Stats s){
+	private void setStat(Stats s){
 		
 		if(s == null){
 			return;

@@ -22,28 +22,32 @@ import enums.TileType;
  */
 public abstract class MapObject {
 
-	protected TileMap tileMap;
-	protected int tileSize;
-	protected int mapX;
-	protected int mapY;
+	private TileMap tileMap;
+	private int tileSize;
+	private int mapX;
+	private int mapY;
 	
-	protected int width;
-	protected int height;
-	protected boolean facingRight;
+	private int width;
+	private int height;
+	private boolean facingRight;
 	
-	protected PVector position;
-	protected int currentRow;
-	protected int currentColumn;
+	private PVector position;
+	private int currentRow;
+	private int currentColumn;
 	
-	protected CollisionBox cBox;
-	protected Animation animation;
+	private CollisionBox cBox;
+	private Animation animation;
 	
-	protected MovementState movementState;
-	protected MovementAttributes objectMovementAttr;
+	private MovementState movementState;
+	private MovementAttributes objectMovementAttr;
 	
 	protected MapObject(TileMap map){
 		tileMap = map;
 		tileSize = map.getTileHeight();
+		
+		this.movementState = new MovementState();
+		this.objectMovementAttr = new MovementAttributes();
+		this.animation = new Animation();
 	}
 	
 	protected boolean intersectsWith(MapObject o){
@@ -52,6 +56,22 @@ public abstract class MapObject {
 
 	public void checkCollisionCorners(double x,double y){
 		this.cBox.checkCollisionCorners(x,y, this.tileMap);
+	}
+	
+	public TileMap getMap(){
+		return this.tileMap;
+	}
+	
+	protected PVector getPVector(){
+		return this.position;
+	}
+	
+	protected void setPVector(PVector position){
+		this.position = position;
+	}
+	
+	protected void setCollisionBox(CollisionBox box){
+		this.cBox = box;
 	}
 
 	/**
@@ -108,15 +128,28 @@ public abstract class MapObject {
 		
 	}
 	
+	protected Animation getAnimation(){
+		return this.animation;
+	}
+	
+
+	protected CollisionBox getCollisionBox() {
+		return this.cBox;
+	}
+
 	
 	//Map position
 	public void setMapPosition(){
 		this.mapX = this.tileMap.getX();
 		this.mapY = this.tileMap.getY();
 	}
+
+    protected MovementState getMovementState() {
+		return this.movementState;
+    }	
 	
-	public CollisionBox getCBox(){
-		return this.cBox;
+	public boolean isFacingRight() {
+		return this.facingRight;
 	}
 	
 	//Check if the object is on screen
@@ -146,7 +179,6 @@ public abstract class MapObject {
 				}
 				
 			}
-			
 			if(this.position.getDirectionX() > 0){
 				
 				if(this.cBox.isTopRightBlocked() || this.cBox.isBottomRightBlocked()){
@@ -197,4 +229,42 @@ public abstract class MapObject {
 			}
 		}
 
+		protected void getNewPosition() {
+			this.position.getNewPosition(this.movementState, this.objectMovementAttr);
+		}
+
+		protected void setFacingRight(boolean facingRight) {
+			this.facingRight = facingRight;
+			
+		}
+
+		protected int getWidth() {
+			return this.width;
+		}
+
+		protected int getHeight() {
+			return this.height;
+		}
+
+		public double getMapX() {
+			return this.mapX;
+		}
+
+		public double getMapY() {
+			return this.mapY;
+		}
+
+		protected void setHeight(int playerHeight) {
+			this.height = playerHeight;
+			
+		}
+
+		protected void setWidth(int playerWidth) {
+			this.width = playerWidth;
+		}
+
+		protected MovementAttributes getObjectMovementAttr() {
+			return this.objectMovementAttr;
+		}
+		
 }

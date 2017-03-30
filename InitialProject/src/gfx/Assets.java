@@ -59,6 +59,7 @@ public class Assets {
     public static BufferedImage diamondsCounter;
 	public static BufferedImage diploma;
 	public static BufferedImage creators;
+	public static BufferedImage pesho;
 
     public static void init() {
     	//Map
@@ -68,6 +69,7 @@ public class Assets {
         levelCompleted = ImageLoader.loadImage("/textures/levelCompleted.png");
         gameover = ImageLoader.loadImage("/textures/gameover.png");
         creators = ImageLoader.loadImage("/textures/creators_intro.png");
+        pesho = ImageLoader.loadImage("/textures/pesho.png");
         
         backgroundSky = ImageLoader.loadImage("/textures/background_sky.png");
         backgroundMountains = ImageLoader.loadImage("/textures/background_mountains.png");

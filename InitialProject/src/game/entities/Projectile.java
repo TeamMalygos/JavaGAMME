@@ -28,45 +28,43 @@ public class Projectile extends MapObject implements Shootable{
     protected MapObject shooter;
 
     protected Projectile(MapObject obj) {
-    	super(obj.tileMap);
+    	super(obj.getMap());
         this.shooter = obj;
         
-    	super.position = new PVector(obj.position.getPositionX()
-    			,obj.position.getPositionY());
+    	super.setPVector(new PVector(obj.getPVector().getPositionX()
+    			,obj.getPVector().getPositionY()));
     }
     
     private void init(){
 
-    	super.position.setDirectionY(0);
+    	super.getPVector().setDirectionY(0);
         
-        super.cBox = new CollisionBox(this.width,this.height);
-
-        super.objectMovementAttr = new MovementAttributes();
-        super.movementState = new MovementState();
+        super.setCollisionBox(new CollisionBox(this.width,this.height));
         
-        this.boundingBox = new Rectangle((int)super.position.getPositionX()
-        		, (int)super.position.getPositionY(), this.width, this.height);
+        this.boundingBox = new Rectangle((int)super.getPVector().getPositionX()
+        		, (int)super.getPVector().getPositionY(), this.width, this.height);
 
         //this.damage = shooter.getDamage();
     }
     
     private void isFlyingRight(){
-    	if(this.shooter.facingRight){
+    	if(this.shooter.isFacingRight()){
     		this.flyingRight = true;
-    		this.position.setDirectionX(1);
+    		this.getPVector().setDirectionX(1);
     		
-    		this.movementState.setRight(true);
-    		this.movementState.setLeft(false);
+    		this.getMovementState().setRight(true);
+    		this.getMovementState().setLeft(false);
     	}else {
     		this.flyingRight = false;
-    		this.position.setDirectionX(-1);
+    		this.getPVector().setDirectionX(-1);
     		
-    		this.movementState.setLeft(true);
-    		this.movementState.setRight(false);
+    		this.getMovementState().setLeft(true);
+    		this.getMovementState().setRight(false);
     	}
     }
     
-    public void loadSprite(BufferedImage sheet,int[] framesCount,int w, int h){
+
+	public void loadSprite(BufferedImage sheet,int[] framesCount,int w, int h){
     	
     	this.sheet = new SpriteSheet(sheet);
     	this.sheet.setFrameLayersCount(framesCount, w,h );
@@ -78,8 +76,8 @@ public class Projectile extends MapObject implements Shootable{
         // Flying in left direction
         //this.x -= this.velocityX;
 
-        this.boundingBox.setBounds((int)super.position.getPositionX()
-        		, (int)super.position.getPositionY(), this.width, this.height);
+        this.boundingBox.setBounds((int)super.getPVector().getPositionX()
+        		, (int)super.getPVector().getPositionY(), this.width, this.height);
         
         
     }
@@ -103,10 +101,11 @@ public class Projectile extends MapObject implements Shootable{
     @Override
     public void render(Graphics g) {
 
-    	super.position.getNewPosition(this.movementState, this.objectMovementAttr);
-    	super.tileMap.setPosition(this.position.getTemporaryX(), this.position.getTemporaryY());
+    	super.getNewPosition();
+    	super.getMap().setPosition(this.getPVector().getTemporaryX(), this.getPVector().getTemporaryY());
     	
-        g.drawImage(super.animation.getImage(), (int)super.position.getPositionX(), (int)super.position.getPositionY(), null);
+        g.drawImage(super.getAnimation().getImage(), (int)super.getPVector().getPositionX()
+        		, (int)super.getPVector().getPositionY(), null);
 
     }
 
@@ -118,7 +117,7 @@ public class Projectile extends MapObject implements Shootable{
     @Override
     public boolean isInRange() {
     	EnemyShootingUnit u = (EnemyShootingUnit)this.shooter;
-        return super.position.getPositionX() >= shooter.position.getPositionX() - u.getShootingRange();
+        return super.getPVector().getPositionX() >= shooter.getPVector().getPositionX();
         
     }
 }

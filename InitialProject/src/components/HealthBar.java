@@ -12,9 +12,9 @@ public class HealthBar extends HUDComponent{
 	private int initialHealth;
 	private HealthState state;
 	
-	public HealthBar(int x, int y, String name) {
+	public HealthBar(int x, int y) {
 		
-		super(x, y, name);
+		super(x, y);
 		super.setSize(Constants.HEALTH_BAR_WIDTH, Constants.HEALTH_BAR_HEIGHT);
 		
 		super.loadSprite(Assets.healthBar, new int[] { 8 });
@@ -24,8 +24,8 @@ public class HealthBar extends HUDComponent{
 	@Override
 	public void render(Graphics g) {
 
-		g.drawImage(this.frames[this.state.ordinal()]
-				,this.xAxisPosition,this.yAxisPosition,null);
+		g.drawImage(super.frames[this.state.ordinal()]
+				,super.getxAxisPosition(),super.getyAxisPosition(),null);
 	}
 
 	@Override

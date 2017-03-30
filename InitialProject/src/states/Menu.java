@@ -73,7 +73,7 @@ public class Menu{
 			
 			if(b.isInside(args.getX(),args.getY())){
 				
-				if(b.getName().equals("Exit")){
+				if(b.getStateId() == -1){
 					System.exit(0);
 				}
 				b.onMenuButtonRelease();
@@ -109,7 +109,6 @@ public class Menu{
 		
 		start = new Button(xposition,yposition,"Start");
 		start.setFrames(Assets.playButton);
-		start.setReflectionProperties(0.3f, 0.4f, 10);
 		
 	  	if(UserAccount.playerExists()){
 	  		start.linkToState(new GameState(Level.Level1));
@@ -118,16 +117,13 @@ public class Menu{
 
 		create = new Button(xposition,yposition + offset,"New");
 		create.setFrames(Assets.newButton);
-		create.setReflectionProperties(0.3f, 0.4f, 10);
 		create.linkToState(new CreateCharacterState());		
 		
 		load = new Button(xposition,yposition + (offset * 2),"Load");
 		load.setFrames(Assets.loadButton);
-		load.setReflectionProperties(0.3f, 0.4f, 10);
 		load.linkToState(new LoadCharacterState());
 		
 		exit = new Button(xposition,yposition + (offset * 3),"Exit");
-		exit.setReflectionProperties(0.3f, 0.4f, 10);
 		exit.setFrames(Assets.quitButton);
 		
 		this.buttonBundle = new Button[]{start,load,exit,create};
