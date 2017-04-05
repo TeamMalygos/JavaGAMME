@@ -4,7 +4,6 @@ import java.awt.Graphics;
 
 import constants.Constants;
 import enums.HealthState;
-import game.entities.Player;
 import gfx.Assets;
 
 public class HealthBar extends HUDComponent{

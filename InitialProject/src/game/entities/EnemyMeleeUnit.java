@@ -63,7 +63,7 @@ public class EnemyMeleeUnit implements Drawable {
 
         if (this.health <= 0) {
             currentPlayer.gainExperience(this.experienceAwardedOnKill);
-            GameState.setPlayer(currentPlayer);
+   
             this.isDead = true;
 
             System.out.println("Enemy " + this.name + " killed! " + experienceAwardedOnKill + " experience awarded!");
@@ -81,7 +81,6 @@ public class EnemyMeleeUnit implements Drawable {
 
             if (attackTimer <= 0) {
                 currentPlayer.takeDamage(this.damage);
-                GameState.setPlayer(currentPlayer);
 
                 // Reset attack timer
                 attackTimer = 20;

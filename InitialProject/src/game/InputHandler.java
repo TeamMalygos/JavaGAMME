@@ -1,7 +1,5 @@
 package game;
 
-
-import display.Display;
 import states.CreateCharacterState;
 import states.GameState;
 import states.StateManager;
@@ -17,8 +15,8 @@ public class InputHandler implements KeyListener {
 
 	private GameState state;
 	
-    public InputHandler(Display display) {
-        display.getCanvas().addKeyListener(this);
+    public InputHandler() {
+    	
     }
 
     @Override
@@ -40,29 +38,27 @@ public class InputHandler implements KeyListener {
     		return;
     	}
     	
-    	state = (GameState) StateManager.getCurrentState();
-    	
     	if(state.isInMenuState()){
     		System.out.println("Sorry you are in menu state");
     		return;
     	}
     	
         int keyCode = e.getKeyCode();
-        if(keyCode == KeyEvent.VK_LEFT){state.player.setLeft(true);}
-        if(keyCode == KeyEvent.VK_RIGHT){state.player.setRight(true);}
-        if(keyCode == KeyEvent.VK_UP){state.player.setUp(true);}
-        if(keyCode == KeyEvent.VK_DOWN){state.player.setDown(true);}
-        if(keyCode == KeyEvent.VK_SPACE){state.player.setJumping(true);}
+        if(keyCode == KeyEvent.VK_LEFT){GameState.getPlayer().setLeft(true);}
+        if(keyCode == KeyEvent.VK_RIGHT){GameState.getPlayer().setRight(true);}
+        if(keyCode == KeyEvent.VK_UP){GameState.getPlayer().setUp(true);}
+        if(keyCode == KeyEvent.VK_DOWN){GameState.getPlayer().setDown(true);}
+        if(keyCode == KeyEvent.VK_SPACE){GameState.getPlayer().setJumping(true);}
 
         // Spell learn
-        if (keyCode == KeyEvent.VK_1) {state.player.learnSpell(HEAL_SPELL_NAME);}
-        if (keyCode == KeyEvent.VK_2) {state.player.learnSpell(FIREWALL_SPELL_NAME);}
-        if (keyCode == KeyEvent.VK_3) {state.player.learnSpell(HARDCORE_ALGORITHM_SPELL_NAME);}
+        if (keyCode == KeyEvent.VK_1) {GameState.getPlayer().learnSpell(HEAL_SPELL_NAME);}
+        if (keyCode == KeyEvent.VK_2) {GameState.getPlayer().learnSpell(FIREWALL_SPELL_NAME);}
+        if (keyCode == KeyEvent.VK_3) {GameState.getPlayer().learnSpell(HARDCORE_ALGORITHM_SPELL_NAME);}
 
         // Spell cast
-        if (keyCode == KeyEvent.VK_Z) {state.player.castSpell(HEAL_SPELL_NAME);}
-        if (keyCode == KeyEvent.VK_X) {state.player.castSpell(FIREWALL_SPELL_NAME);}
-        if (keyCode == KeyEvent.VK_C) {state.player.castSpell(HARDCORE_ALGORITHM_SPELL_NAME);}
+        if (keyCode == KeyEvent.VK_Z) {GameState.getPlayer().castSpell(HEAL_SPELL_NAME);}
+        if (keyCode == KeyEvent.VK_X) {GameState.getPlayer().castSpell(FIREWALL_SPELL_NAME);}
+        if (keyCode == KeyEvent.VK_C) {GameState.getPlayer().castSpell(HARDCORE_ALGORITHM_SPELL_NAME);}
 
     }
 
@@ -79,11 +75,11 @@ public class InputHandler implements KeyListener {
         	return;
         }
         
-        if(keyCode == KeyEvent.VK_LEFT){state.player.setLeft(false);}
-        if(keyCode == KeyEvent.VK_RIGHT){state.player.setRight(false);}
-        if(keyCode == KeyEvent.VK_UP){state.player.setUp(false);}
-        if(keyCode == KeyEvent.VK_DOWN){state.player.setDown(false);}
-        if(keyCode == KeyEvent.VK_SPACE){state.player.setJumping(false);}
+        if(keyCode == KeyEvent.VK_LEFT){GameState.getPlayer().setLeft(false);}
+        if(keyCode == KeyEvent.VK_RIGHT){GameState.getPlayer().setRight(false);}
+        if(keyCode == KeyEvent.VK_UP){GameState.getPlayer().setUp(false);}
+        if(keyCode == KeyEvent.VK_DOWN){GameState.getPlayer().setDown(false);}
+        if(keyCode == KeyEvent.VK_SPACE){GameState.getPlayer().setJumping(false);}
       
     }
     

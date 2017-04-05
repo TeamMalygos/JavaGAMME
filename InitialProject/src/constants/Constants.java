@@ -2,7 +2,17 @@ package constants;
 
 import java.awt.Color;
 
-
+/**
+ * 
+ * <h3>Constants Repository Class</h3>
+ * <p>All the constants used by our simple
+ * application are held here</p>
+ * 
+ * <h3><i><b>Follow the arrangement when creating new CONSTANTS</b></i></h3>
+ * 
+ * @author G_ANGELOV
+ *
+ */
 public class Constants {
 
 	//Display
@@ -132,19 +142,6 @@ public class Constants {
 	public static final int MENU_BUTTON_X = 300;
 	public static final int MENU_BUTTON_Y = 300;
 	
-	//Menu components - names
-	public static final String BUTTON_START = "Start";
-	public static final String BUTTON_QUIT = "Exit";
-	public static final String BUTTON_RESUME = "Resume";
-	public static final String BUTTON_LOAD = "Load";
-	public static final String BUTTON_NEW = "New";
-	public static final String BUTTON_SAVE = "Save";
-	
-	public static final String TEXT_FIELD_NAME = "TextField";
-	public static final String POINTER_LEFT = "Left Pointer";
-	public static final String POINTER_RIGHT = "Right Pointer";
-	public static final String BUTTON_RETRY = "RETRY";
-	
 	
     //Projectiles
     public static final int PROJECTILE_KEY_WIDTH = 9;
@@ -174,6 +171,7 @@ public class Constants {
 	//DIRS
 	public static final String DIRECTORY_PLAYER_SERIALIZATION = "/resources/players";
 	public static final String LEVEL_THUMBNAILS_DIRECTORY = "/levels/level";
+	public static final String TILE_SHEET_PATH = "/textures/Sheet.png";
 	
 	//PlayersList
 	public static final int PLAYERS_LIST_WIDTH = 500;
@@ -194,6 +192,9 @@ public class Constants {
 	public static final float BORDER_RADIUS = 10;
 	public static final int STANDARD_PADDING = 16;
 	public static final int STANDARD_MARGIN = 8;
+	public static final int PESHO_WIDTH = 32;
+	public static final int PESHO_HEIGHT = 32;
+
 	
 	//Error messages
 	public static final String NEGATIVE_OFFSET_ERROR = "WARNING! Negative offsets are not allowed";
@@ -202,8 +203,5 @@ public class Constants {
 	public static final int PLAYER_NAME_ERROR_X = WIDTH / 3 + PLAYER_NAME_EXISTS_ERROR.length() / 2 - 2;
 	public static final int PLAYER_NAME_ERROR_Y = WIDTH / 4 - PLAYER_NAME_EXISTS_ERROR.length();
 	public static final String GENERAL_EXCEPTION = "Something went wrong !";
-	public static final int PESHO_WIDTH = 32;
-	public static final int PESHO_HEIGHT = 32;
-
 	
 }

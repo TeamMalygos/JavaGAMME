@@ -33,15 +33,13 @@ public class LoadCharacterState extends State implements MouseMotionSensitive{
 		
 		//Load button
 		load = new Button(Constants.WIDTH / 2 - Constants.MENU_BUTTON_WIDTH - 20
-				, Constants.HEIGHT - Constants.MENU_BUTTON_HEIGHT - 50
-				, Constants.BUTTON_LOAD);
+				, Constants.HEIGHT - Constants.MENU_BUTTON_HEIGHT - 50);
 		load.setFrames(Assets.loadButton);
 		load.linkToState(new LevelsState());
 		
 		//Quit button
 		quit = new Button(Constants.WIDTH - Constants.MENU_BUTTON_WIDTH * 2
-				,Constants.HEIGHT - Constants.MENU_BUTTON_HEIGHT - 50
-				,Constants.BUTTON_QUIT);
+				,Constants.HEIGHT - Constants.MENU_BUTTON_HEIGHT - 50);
 		quit.setFrames(Assets.quitButton);
 		
 		characters = new CharacterList();

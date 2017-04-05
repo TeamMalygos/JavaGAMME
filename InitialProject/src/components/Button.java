@@ -3,12 +3,13 @@ package components;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import components.interfaces.IButton;
 import events.MenuButtonClickEvent;
 import events.MenuButtonClickListener;
 
 import states.State;
 
-public class Button extends MenuComponent implements MenuButtonClickListener{
+public class Button extends MenuComponent implements IButton{
 	
 	private BufferedImage pressed;
 	private BufferedImage normal;
@@ -23,7 +24,7 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	//private GradientPaint paint;
 	//private AlphaComposite composite;
 	
-	public Button(int x,int y,String name){
+	public Button(int x,int y){
 		super(x,y);
 		
 	}
@@ -80,7 +81,7 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 		
 		normal = super.getFrames().getSubimage(0,0,super.getWidth(),super.getHeight());
 		pressed = super.getFrames().getSubimage(super.getWidth(),0,super.getWidth(),super.getHeight());
-		hover = super.getFrames().getSubimage(super.getWidth(), 0, super.getWidth(), super.getHeight());
+		hover = super.getFrames().getSubimage(super.getWidth() * 2, 0, super.getWidth(), super.getHeight());
 		super.setCurrentFrame(normal);
 	}
 	
@@ -106,7 +107,7 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 		}else if(super.isPressed()){
 			super.setCurrentFrame(this.pressed);
 		}else {
-			super.setCurrentFrame(normal);
+			super.setCurrentFrame(this.normal);
 		}
 	}
 	
@@ -114,7 +115,6 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	public void render(Graphics g){
 	
 		//Graphics2D g2d = (Graphics2D)g;
-		
 		g.drawImage(super.getCurrentFrame(), super.getxAxisPosition()
 				, super.getyAxisPosition(),null);
 		
@@ -151,24 +151,37 @@ public class Button extends MenuComponent implements MenuButtonClickListener{
 	}
 
 	@Override
-	public void onMenuButtonClick() {
-		// TODO Auto-generated method stub
-		super.setPressed(true);
-		super.setHover(false);
-	}
-
-
-	@Override
-	public void onMenuButtonRelease() {
-		if(stateInit != null){
-			MenuButtonClickEvent e = new MenuButtonClickEvent(this,stateInit);
+	public void onMenuButtonClick(int mouseX, int mouseY) {
+		if(this.isInside(mouseX, mouseY)){
+			super.setPressed(true);
+			super.setHover(false);
+		}else{
+			super.setHover(false);
+			super.setPressed(false);
 		}
 	}
 
+	@Override
+	public void onMenuButtonRelease(int mouseX, int mouseY) {
+		
+		if(!this.isInside(mouseX, mouseY)){
+			this.setPressed(false);
+			this.setHover(false);
+		}
+		
+		if(stateInit != null){
+			new MenuButtonClickEvent(this,stateInit);
+		}
+	}
 
 	@Override
-	public void onMenuButtonHover() {
-
+	public void onMenuButtonHover(int mouseX, int mouseY) {
+		
+		if(!this.isInside(mouseX, mouseY)){
+			this.setHover(false);
+			return;
+		}
+		
 		super.setPressed(false);
 		super.setHover(true);
 	}

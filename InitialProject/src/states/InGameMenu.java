@@ -1,8 +1,6 @@
 package states;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
 import components.Button;
@@ -10,6 +8,8 @@ import constants.Constants;
 import events.MouseMotionSensitive;
 import game.entities.Drawable;
 import gfx.Assets;
+import states.gui.InGameMenuInterface;
+import states.gui.Interface;
 import utils.ObjectSerializer;
 
 /**
@@ -23,21 +23,17 @@ import utils.ObjectSerializer;
  *
  */
 public class InGameMenu implements Drawable,MouseMotionSensitive{
-
-	private static final int ID = 7;
-	private Button resume;
-	private Button save;
+	
+	private Interface inGameInterface;
 	
 	public InGameMenu(){
-		init();
+		this.inGameInterface = new InGameMenuInterface();
 	}
 	
 	@Override
 	public void tick() {
 		
-		this.resume.tick();
-		this.save.tick();
-
+		this.inGameInterface.tick();
 	}
 
 	@Override
@@ -47,81 +43,24 @@ public class InGameMenu implements Drawable,MouseMotionSensitive{
 		
 		g.fillRect(Constants.BACKGROUND_X, Constants.BACKGROUND_Y
 				, Constants.WIDTH, Constants.HEIGHT);
-		
-		this.resume.render(g);
-		this.save.render(g);
+		this.inGameInterface.render(g);
+
 	}
 
 	@Override
 	public void onMouseHover(MouseEvent args) {
-		if(this.resume.isInside(args.getX(), args.getY())){
-			this.resume.onMenuButtonHover();
-		}else{
-			this.resume.setHover(false);
-		}
-		
-		if(this.save.isInside(args.getX(), args.getY())){
-			this.save.onMenuButtonHover();
-		}else{
-			this.save.setHover(false);
-		}
-		
+		this.inGameInterface.onMouseHoverOverInterface(args);
 	}
 
 	@Override
 	public void onMouseRelease(MouseEvent args) {
-		
-		if(this.resume.isInside(args.getX(), args.getY())){
-			try{
-				GameState g = (GameState)StateManager.getCurrentState();
-				g.toggleMenu();
-			}catch(ClassCastException ex){
-				ex.printStackTrace();
-			}
-		}else{
-			this.resume.setPressed(false);
-		}
-		
-		if(this.save.isInside(args.getX(), args.getY())){
-			ObjectSerializer.getInstance().saveCurrentGameState();
-			StateManager.setCurrentState(new MenuState());
-		}else{
-			this.save.setPressed(false);
-		}
-		
+		this.inGameInterface.onMouseReleaseOverInterface(args);
 	}
 
 	@Override
 	public void onMouseClick(MouseEvent args) {
-		
-		if(this.resume.isInside(args.getX(), args.getY())){
-			this.resume.onMenuButtonClick();
-		}else{
-			this.resume.setHover(false);
-			this.resume.setPressed(false);
-		}
-		
-		if(this.save.isInside(args.getX(), args.getY())){
-			this.save.onMenuButtonClick();
-		}else{
-			this.save.setHover(false);
-			this.save.setPressed(false);
-		}
-		
+		this.inGameInterface.onMouseClickOverInterface(args);
 	}
 	
-
-	private void init(){
-
-		this.resume = new Button(Constants.MENU_BUTTON_X,Constants.MENU_BUTTON_Y,Constants.BUTTON_RESUME);
-		this.resume.setFrames(Assets.resumeButton);
-		
-		this.save = new Button(Constants.MENU_BUTTON_X
-				,Constants.MENU_BUTTON_Y + Constants.MENU_BUTTON_MARGIN_BOTTOM
-				,Constants.BUTTON_SAVE);
-		this.save.setFrames(Assets.saveButton);
-		
-		
-	}
 	
 }

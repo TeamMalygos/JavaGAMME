@@ -6,20 +6,18 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.io.File;
 
-import components.Button;
-import components.TextField;
 import constants.Constants;
 import events.MouseMotionSensitive;
 import gfx.Assets;
+import states.gui.CreateInterface;
+import states.gui.Interface;
 import utils.ObjectSerializer;
 
 public class CreateCharacterState extends State implements MouseMotionSensitive {
 
 	private static int ID = 5;
 	
-	private TextField field;
-	private Button create;
-	private Button exit;
+	private Interface stateInterface;
 	
 	private StringBuilder name;
 	private boolean nameExists;
@@ -29,26 +27,12 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 		super(ID);
 
 		this.name = new StringBuilder();
-		
-		this.create = new Button(Constants.MENU_BUTTON_X
-				,Constants.MENU_BUTTON_Y + (Constants.MENU_BUTTON_MARGIN_BOTTOM * 2)
-				,Constants.BUTTON_NEW);
-		this.create.setFrames(Assets.createButton);
-		this.create.linkToState(new LevelsState());
-	
-		this.exit = new Button(Constants.MENU_BUTTON_X
-				,Constants.MENU_BUTTON_Y + (Constants.MENU_BUTTON_MARGIN_BOTTOM * 3)
-				,Constants.BUTTON_QUIT);
-		this.exit.setFrames(Assets.quitButton);
-		
-		this.field = new TextField(Constants.TEXT_FIELD_NAME);
-		
+		this.stateInterface = new CreateInterface();
 	}
 
 	@Override
 	public void tick() {
-		this.create.tick();
-		this.exit.tick();
+		this.stateInterface.tick();
 	}
 
 	@Override
@@ -59,31 +43,9 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 				,Constants.BACKGROUND_Y 
 				,Constants.WIDTH	, Constants.HEIGHT, null);
 		
+		this.stateInterface.render(g);
 		g.setColor(Color.WHITE);
-		
-		if(this.nameExists){
-			g.setFont(new Font(Constants.FONT,Font.BOLD,Constants.FONT_SIZE + Constants.STANDARD_MARGIN));
-			g.drawString(Constants.PLAYER_NAME_EXISTS_ERROR
-					, Constants.PLAYER_NAME_ERROR_X
-					, Constants.PLAYER_NAME_ERROR_Y);
-		}else if(this.isNameShort){
-			g.setFont(new Font(Constants.FONT,Font.BOLD,Constants.FONT_SIZE + Constants.STANDARD_MARGIN));
-			g.drawString(Constants.PLAYER_NAME_TOO_SHORT_ERROR
-					, Constants.PLAYER_NAME_ERROR_X
-					, Constants.PLAYER_NAME_ERROR_Y);
-		}
-		
-		
-		g.setFont(new Font(Constants.FONT,Font.PLAIN,Constants.FONT_SIZE));
-
-		this.create.render(g);
-		this.field.render(g);
-		this.exit.render(g);
-		
-		g.drawImage(Assets.selector
-				,Constants.MENU_BUTTON_X + (Constants.MENU_BUTTON_WIDTH/2) - (Assets.selector.getWidth() / 2)
-				,Constants.MENU_BUTTON_Y - Constants.STANDARD_PADDING
-				,null);
+		this.checkForllegalName(g);
 		
 		g.drawString(this.name.toString(), Constants.MENU_BUTTON_X + Constants.STANDARD_PADDING
 				, Constants.MENU_BUTTON_Y + Constants.MENU_BUTTON_MARGIN_BOTTOM + Constants.STANDARD_PADDING * 2);
@@ -94,20 +56,11 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 		
 	}
 
+
 	@Override
 	public void onMouseHover(MouseEvent args) {
-		if(this.create.isInside(args.getX(), args.getY())){
-			this.create.onMenuButtonHover();
-		}else{
-			this.create.setHover(false);
-		}
 		
-		if(this.exit.isInside(args.getX(), args.getY())){
-			this.exit.onMenuButtonHover();
-		}else{
-			this.exit.setHover(false);
-		}
-		
+		this.stateInterface.onMouseHoverOverInterface(args);
 	}
 
 	@Override
@@ -115,60 +68,36 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 		
 		this.isNameShort = this.name.length() < Constants.NAME_MIN_LENGTH;
 		
-		if(this.create.isInside(args.getX(), args.getY())){
-			
+		
+		if(((CreateInterface)this.stateInterface).isInsideClickButton(args.getX(),args.getY())){
+		
 			try {
 				this.nameExists = this.doesNameExist(this.name.toString());
 			} catch (Exception e) {
 				System.out.println("Something went wrong");
 				StateManager.setCurrentState(new MenuState());
 			}
-			
-			if(!this.nameExists && !this.isNameShort){
-				ObjectSerializer.getInstance().serializeNewCharacter(this.name.toString());
-				this.create.onMenuButtonRelease();
+		
+			if(this.nameExists || this.isNameShort){
+				return;
 			}
 			
-		}else {
-			this.create.setPressed(false);
+			ObjectSerializer.getInstance().serializeNewCharacter(this.name.toString());
 		}
 		
-		if(this.field.isInside(args.getX(),args.getY())){
-			this.field.setFocused(true);
-		}else {
-			this.field.setFocused(false);
-		}
-		
-		if(this.exit.isInside(args.getX(), args.getY())){
-			StateManager.setCurrentState(new MenuState());
-		}else{
-			this.exit.setPressed(false);
-		}
+		this.stateInterface.onMouseReleaseOverInterface(args);
 		
 	}
 
 	@Override
 	public void onMouseClick(MouseEvent args) {
 		
-		if(this.create.isInside(args.getX(), args.getY())){
-			this.create.onMenuButtonClick();
-		}else{
-			this.create.setHover(false);
-			this.create.setPressed(false);
-		}
-		
-		if(this.exit.isInside(args.getX(), args.getY())){
-			this.exit.onMenuButtonClick();
-		}else {
-			this.exit.setHover(false);
-			this.exit.setPressed(false);
-		}
-		
+		this.stateInterface.onMouseClickOverInterface(args);
 	}
 
 	public void writeDown(char keyChar){
 			
-			if(!this.field.isFocused()){
+			if(!((CreateInterface)this.stateInterface).isTextFieldFocused()){
 				return;
 			}
 		
@@ -181,19 +110,11 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 				return;
 			}
 			
-			if(keyChar > 90 && keyChar < 97){
+			if((keyChar > 90 && keyChar < 97) || keyChar < 32){
 				return;
 			}
 			
-			if(keyChar < 32){
-				return;
-			}
-			
-			if(keyChar > 32 && keyChar < 65){
-				return;
-			}
-			
-			if(keyChar == 65535){
+			if((keyChar > 32 && keyChar < 65) || keyChar == 65535){
 				return;
 			}
 			
@@ -214,6 +135,11 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 			
 		}
 		
+		return this.playerNameExistsInDirectory(dir);
+	}
+	
+
+	private boolean playerNameExistsInDirectory(File dir){
 		File[] players = dir.listFiles();
 		
 		for(File f : players){
@@ -225,9 +151,21 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 			}
 			
 		}
-	
 		return false;
-		
+	}
+	
+	private void checkForllegalName(Graphics g) {
+		if(this.nameExists){
+			g.setFont(new Font(Constants.FONT,Font.BOLD,Constants.FONT_SIZE + Constants.STANDARD_MARGIN));
+			g.drawString(Constants.PLAYER_NAME_EXISTS_ERROR
+					, Constants.PLAYER_NAME_ERROR_X
+					, Constants.PLAYER_NAME_ERROR_Y);
+		}else if(this.isNameShort){
+			g.setFont(new Font(Constants.FONT,Font.BOLD,Constants.FONT_SIZE + Constants.STANDARD_MARGIN));
+			g.drawString(Constants.PLAYER_NAME_TOO_SHORT_ERROR
+					, Constants.PLAYER_NAME_ERROR_X
+					, Constants.PLAYER_NAME_ERROR_Y);
+		}
 	}
 	
 }

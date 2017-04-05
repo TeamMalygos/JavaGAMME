@@ -1,7 +1,5 @@
 package utils;
 
-import java.awt.Rectangle;
-
 import enums.TileType;
 import map.TileMap;
 
@@ -14,8 +12,6 @@ public class CollisionBox {
 	private boolean collidesTopRight;
 	private boolean collidesBottomLeft;
 	private boolean collidesBottomRight;
-	
-	private PVector currentPosition;
 	
 	/**
 	 * 
@@ -105,11 +101,11 @@ public class CollisionBox {
 		
 		int leftCorner = (int)(x - this.getCollisionWidth() / 2) / tileSize;
 		int rightCorner = (int)(x + this.getCollisionWidth() / 2 - 1) / tileSize;
-		int topCorner = (int)(y - this.getCollisionHeight() / 2) / tileSize;
+		//int topCorner = (int)(y - this.getCollisionHeight() / 2) / tileSize;
 		int bottomCorner = (int)(y + this.getCollisionHeight() / 2 - 1) / tileSize;
 		
-		TileType topLeft = tileMap.getType(topCorner, leftCorner);
-		TileType topRight = tileMap.getType(topCorner, rightCorner);
+		//TileType topLeft = tileMap.getType(topCorner, leftCorner);
+		//TileType topRight = tileMap.getType(topCorner, rightCorner);
 		TileType bottomLeft = tileMap.getType(bottomCorner, leftCorner);
 		TileType bottomRight = tileMap.getType(bottomCorner, rightCorner);
 		System.out.println(bottomRight.name() + " " + bottomLeft.name());

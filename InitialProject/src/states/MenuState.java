@@ -5,10 +5,18 @@ import java.awt.event.MouseEvent;
 
 import components.ParallaxBackground;
 import constants.Constants;
-import display.Display;
 import events.MouseMotionSensitive;
 import gfx.Assets;
 
+/**
+ * <h3>Game Menu</h3>
+ * 
+ * <p>Game Menu State and all of it's child items reside here.
+ * <br>In other words this class is the MainMenu state !</p>
+ * 
+ * @author G_ANGELOV
+ *
+ */
 public class MenuState extends State implements MouseMotionSensitive{
  
 	private ParallaxBackground background;

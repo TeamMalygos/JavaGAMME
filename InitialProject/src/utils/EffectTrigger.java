@@ -19,7 +19,7 @@ public class EffectTrigger {
 		}
 		
 		if(obj instanceof Diamond){
-			GameState.player.getBag().addDiamond();
+			GameState.getPlayer().getBag().addDiamond();
 		}
 		
 		if(obj instanceof Beer){

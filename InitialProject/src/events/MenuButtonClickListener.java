@@ -1,5 +1,7 @@
 package events;
 
+import game.entities.Drawable;
+
 /**
  * 
  * @author G_ANGELOV
@@ -8,10 +10,10 @@ package events;
  * the menu buttons with basic onClick() functionality</p>
  *
  */
-public interface MenuButtonClickListener {
+public interface MenuButtonClickListener extends Drawable{
 
-	public void onMenuButtonClick();
-	public void onMenuButtonRelease();
-	public void onMenuButtonHover();
+	void onMenuButtonClick(int mouseX,int mouseY);
+	void onMenuButtonRelease(int mouseX,int mouseY);
+	void onMenuButtonHover(int mouseX, int mouseY);
 	
 }

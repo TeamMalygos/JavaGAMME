@@ -23,8 +23,7 @@ public class LevelCompletedState extends State implements MouseMotionSensitive {
 		
 		this.exit = new Button(
 				Constants.MENU_BUTTON_X
-				, Constants.MENU_BUTTON_Y + Constants.MENU_BUTTON_MARGIN_BOTTOM * 2
-				, Constants.BUTTON_QUIT);
+				, Constants.MENU_BUTTON_Y + Constants.MENU_BUTTON_MARGIN_BOTTOM * 2);
 		
 		this.exit.setFrames(Assets.backButton);
 		

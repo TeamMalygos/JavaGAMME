@@ -4,6 +4,10 @@ import java.awt.image.BufferedImage;
  
   /**
    * 
+   * <p><b>Animation</b> class to handle the animations
+   * and frame update rates. Simply provide with
+   * delay and frameSet to function properly</p>
+   * 
    * @author G_ANGELOV
    *
    */

@@ -3,8 +3,16 @@ package gfx;
 
 import java.awt.image.BufferedImage;
 
-import com.sun.prism.Image;
 
+/**
+ * <h3>Assets Controller</h3>
+ * <p>This class works in correlation with ImageLoader
+ * static utility class and loads every drawable resource
+ * for the game</p>
+ * 
+ * @author G_ANGELOV
+ *
+ */
 public class Assets {
 	//Scaffold Resources
     public static BufferedImage background;

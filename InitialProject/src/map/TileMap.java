@@ -1,9 +1,6 @@
 package map;
 
 import java.awt.image.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import constants.Constants;
@@ -122,7 +119,7 @@ public class TileMap {
 		}
 		
 	}
-	
+	//Getters
 	public int getX() {return (int)x;}
 	public int getY() { return (int)y; }
 	public int getWidth() {return this.mapWidth;}
@@ -157,6 +154,15 @@ public class TileMap {
 		return TileType.Background;
 	}
 	
+	
+	/**
+	 * <p>This method calculates the offsets it has to use in order
+	 * to draw the right piece of the matrix based on coordinates
+	 * x and y</p>
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public void setPosition(double x,double y){
 		this.x = this.x +  (x - this.x) * this.cameraSpeed;
 		this.y = this.y +  (y - this.y) * this.cameraSpeed;

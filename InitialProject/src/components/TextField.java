@@ -4,14 +4,13 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import constants.Constants;
-import gfx.Assets;
 
-public class TextField extends MenuComponent {
+public class TextField extends MenuComponent{
 	
 	private boolean isFocused;
 	private Rectangle box;
 	
-	public TextField(String name) {
+	public TextField() {
 		super(Constants.MENU_BUTTON_X
 				,Constants.MENU_BUTTON_Y + Constants.MENU_BUTTON_MARGIN_BOTTOM);
 

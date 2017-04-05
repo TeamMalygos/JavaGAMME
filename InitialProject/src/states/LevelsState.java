@@ -11,6 +11,8 @@ import constants.Constants;
 import enums.Level;
 import events.MouseMotionSensitive;
 import gfx.Assets;
+import states.gui.Interface;
+import states.gui.LevelSelectionInterface;
 import utils.UserAccount;
 
 public class LevelsState extends State implements MouseMotionSensitive{
@@ -18,26 +20,16 @@ public class LevelsState extends State implements MouseMotionSensitive{
 	private static final int ID = 3;
 	private LevelCard[] levels;
 	
-	private Button pointerLeft;
-	private Button pointerRight;
-	private Button load;
-	private Button back;
+	private Interface loadLevelInterface;
 	
-	private BufferedImage background;
-	
-	private int indexOnFocus;
-
-	
-	protected LevelsState() {
+	public LevelsState() {
 		super(ID);
-		indexOnFocus = 0;
-		init();
+		this.init();
 		
 	}
 
 	private void init(){
-		
-		this.background = Assets.levelStatePanel;
+		this.loadLevelInterface = new LevelSelectionInterface();
 		
 		String levelsPath = System.getProperty("user.dir") + "/maps";
 		File mapsDir = new File(levelsPath);
@@ -52,8 +44,6 @@ public class LevelsState extends State implements MouseMotionSensitive{
 					,levels[i]);
 			
 		}
-		
-		loadButtons();
 		
 	}
 	
@@ -93,34 +83,6 @@ public class LevelsState extends State implements MouseMotionSensitive{
 	
 	private void loadButtons(){
 		
-		this.pointerLeft = new Button(Constants.WIDTH / 3 - Constants.POINTER_WIDTH * 2
-				,Constants.HEIGHT / 3 + Constants.POINTER_HEIGHT / 2
-				, Constants.POINTER_LEFT);
-		
-		this.pointerLeft.setSize(Constants.POINTER_WIDTH, Constants.POINTER_HEIGHT);
-		this.pointerLeft.setFrames(Assets.pointerLeft);
-		
-		this.pointerRight = new Button(
-				Constants.WIDTH - Constants.WIDTH / 3 
-				+ Constants.POINTER_WIDTH + Constants.STANDARD_MARGIN * 2
-				, Constants.HEIGHT / 3 + Constants.POINTER_HEIGHT / 2
-				,Constants.POINTER_RIGHT);
-		
-		this.pointerRight.setSize(Constants.POINTER_WIDTH, Constants.POINTER_HEIGHT);
-		this.pointerRight.setFrames(Assets.pointerRight);
-	
-		this.load = new Button(Constants.WIDTH / 4
-				, Constants.HEIGHT
-				- (Constants.HEIGHT / 3) + Constants.MENU_BUTTON_HEIGHT / 3 - Constants.STANDARD_PADDING / 3
-				,Constants.BUTTON_LOAD);
-		
-		this.load.setFrames(Assets.loadButton);
-		
-		this.back = new Button(Constants.WIDTH / 2 + Constants.MENU_BUTTON_MARGIN_BOTTOM / 3
-				,Constants.HEIGHT - (Constants.HEIGHT / 3) 
-				+ Constants.MENU_BUTTON_HEIGHT / 3 - Constants.STANDARD_PADDING / 3
-				,Constants.BUTTON_QUIT);
-		this.back.setFrames(Assets.backButton);
 		
 		
 	}

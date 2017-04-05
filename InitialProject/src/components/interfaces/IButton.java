@@ -1,11 +1,7 @@
 package components.interfaces;
 
-import java.awt.Graphics;
+import events.MenuButtonClickListener;
 
-public interface IButton {
+public interface IButton extends MenuButtonClickListener{
 
-	void tick();
-	void draw(Graphics g);
-	boolean isInside();
-	
 }

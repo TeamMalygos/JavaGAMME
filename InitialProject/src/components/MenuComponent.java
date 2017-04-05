@@ -133,8 +133,8 @@ public abstract class MenuComponent implements Drawable{
 		return this.frames;
 	}
 
-	protected void setCurrentFrame(BufferedImage normal) {
-		this.currentFrame = normal;
+	protected void setCurrentFrame(BufferedImage frame) {
+		this.currentFrame = frame;
 	}
 	
 }
