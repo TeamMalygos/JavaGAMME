@@ -68,20 +68,18 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 		
 		this.isNameShort = this.name.length() < Constants.NAME_MIN_LENGTH;
 		
+		if(this.nameExists || this.isNameShort){
+			return;
+		}
+		
+		try {
+			this.nameExists = this.doesNameExist(this.name.toString());
+		} catch (Exception e) {
+			System.out.println("Something went wrong");
+			StateManager.setCurrentState(new MenuState());
+		}
 		
 		if(((CreateInterface)this.stateInterface).isInsideClickButton(args.getX(),args.getY())){
-		
-			try {
-				this.nameExists = this.doesNameExist(this.name.toString());
-			} catch (Exception e) {
-				System.out.println("Something went wrong");
-				StateManager.setCurrentState(new MenuState());
-			}
-		
-			if(this.nameExists || this.isNameShort){
-				return;
-			}
-			
 			ObjectSerializer.getInstance().serializeNewCharacter(this.name.toString());
 		}
 		

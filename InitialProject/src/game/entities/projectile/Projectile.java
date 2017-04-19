@@ -1,31 +1,31 @@
-package game.entities;
+package game.entities.projectile;
 
 import gfx.SpriteSheet;
-import states.GameState;
 import utils.CollisionBox;
-import utils.MovementAttributes;
-import utils.MovementState;
 import utils.PVector;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import game.entities.EnemyShootingUnit;
+import game.entities.MapObject;
+
 public class Projectile extends MapObject implements Shootable{
     
     
-	protected int damage;
+	private int damage;
 
-    protected SpriteSheet sheet;
-    protected Rectangle boundingBox;
+    private SpriteSheet sheet;
+    private Rectangle boundingBox;
 
-    protected int width;
-    protected int height;
+    private int width;
+    private int height;
     
-    protected boolean flyingRight;
+    private boolean flyingRight;
     
-    protected int col;
+    private int col;
 
-    protected MapObject shooter;
+    private MapObject shooter;
 
     protected Projectile(MapObject obj) {
     	super(obj.getMap());
@@ -68,6 +68,10 @@ public class Projectile extends MapObject implements Shootable{
     	
     	this.sheet = new SpriteSheet(sheet);
     	this.sheet.setFrameLayersCount(framesCount, w,h );
+    	
+		super.getAnimation().setDelay(150);
+		super.getAnimation().setFrames(this.sheet.getFrameSet(0));
+    	
     	init();
     }
 

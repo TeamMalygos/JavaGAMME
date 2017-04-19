@@ -9,13 +9,8 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import components.Button;
-import constants.Constants;
-import enums.Level;
-import gfx.Assets;
 import states.gui.Interface;
 import states.gui.MenuInterface;
-import utils.UserAccount;
 
 public class Menu{
 	

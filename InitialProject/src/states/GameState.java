@@ -20,6 +20,7 @@ public class GameState extends State {
 	
     private static final int ID = 2;
     
+    private static Level level;
     private static Player player;
     
     private static TileMap map;
@@ -34,8 +35,6 @@ public class GameState extends State {
     private static boolean finished;
     private boolean isRunning;
     private boolean isMenuOpen;
-    
-    private Level level;
     
     public GameState(Level level) {
     	
@@ -59,7 +58,6 @@ public class GameState extends State {
             }
             isRunning = true;
     	}
-    	
     	this.checkLevelProgress();
     	
         player.tick();
@@ -69,7 +67,6 @@ public class GameState extends State {
     	if(objects != null){
     		objects.tick();
     	}
-    	
         hud.tick();
         
         if(this.isMenuOpen){
@@ -172,6 +169,10 @@ public class GameState extends State {
     		StateManager.setCurrentState(new LevelCompletedState());
     		
     	}
+	}
+
+	public static Level getCurrentLevel() {
+		return level;
 	}
     
 }

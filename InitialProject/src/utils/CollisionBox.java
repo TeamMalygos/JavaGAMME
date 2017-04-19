@@ -108,7 +108,7 @@ public class CollisionBox {
 		//TileType topRight = tileMap.getType(topCorner, rightCorner);
 		TileType bottomLeft = tileMap.getType(bottomCorner, leftCorner);
 		TileType bottomRight = tileMap.getType(bottomCorner, rightCorner);
-		System.out.println(bottomRight.name() + " " + bottomLeft.name());
+		//System.out.println(bottomRight.name() + " " + bottomLeft.name());
 		
 		return bottomLeft == TileType.Death || bottomRight == TileType.Death;
 		

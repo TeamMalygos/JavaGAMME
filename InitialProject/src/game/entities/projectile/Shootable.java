@@ -1,7 +1,9 @@
-package game.entities;
+package game.entities.projectile;
 
 
 import java.awt.*;
+
+import game.entities.MapObject;
 
 public interface Shootable {
 

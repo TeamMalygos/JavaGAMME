@@ -1,10 +1,13 @@
 package map;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import constants.Constants;
 import game.entities.Drawable;
+import game.entities.enemies.Enemy;
 import map.parser.ObjectsLayer;
 import map.parser.ObjectsLayerObject;
 import map.parser.TileLayer;
@@ -18,6 +21,9 @@ public class ObjectLayer implements Drawable {
 	private List<ObjectsLayerObject> objects;
 	private LootMap lootMap;
 	
+	private HostileEntityFactory factory;
+	private List<Enemy> enemies;
+	
 	private Diploma diploma;
 	
 	private boolean isInitialized;
@@ -25,6 +31,9 @@ public class ObjectLayer implements Drawable {
 	public ObjectLayer(ObjectsLayer layer){
 		this.layer = layer;
 		this.isInitialized = false;
+		
+		this.factory = new HostileEntityFactory();
+		this.enemies = new ArrayList<Enemy>();
 		init();
 	}
 
@@ -52,6 +61,9 @@ public class ObjectLayer implements Drawable {
 	
 	@Override
 	public void tick(){
+		this.enemies.forEach(x -> x.tick());
+		this.enemies = this.enemies.stream().filter(x -> !x.isDead()).collect(Collectors.toList());
+		
 		if(this.diploma != null){
 			this.diploma.tick();
 		}
@@ -69,6 +81,7 @@ public class ObjectLayer implements Drawable {
 	
 	@Override
 	public void render(Graphics g){
+		this.enemies.stream().forEach(x -> x.render(g));
 		
 		if(this.lootMap != null){
 			this.lootMap.render(g);
@@ -93,9 +106,13 @@ public class ObjectLayer implements Drawable {
 		}
 		
 		for(ObjectsLayerObject o : this.objects){
+			System.out.println(o.getName());
 			if(o.getName().equals("diploma")){
-				
 				this.diploma = new Diploma(o.getX(),o.getY(),GameState.getMap());
+			}
+			
+			if(o.getType().toLowerCase().equals("enemy")){
+				this.enemies.add(this.factory.translateToEnemy(o));
 			}
 		}
 		

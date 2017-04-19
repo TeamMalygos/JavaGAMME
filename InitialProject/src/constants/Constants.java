@@ -203,5 +203,14 @@ public class Constants {
 	public static final int PLAYER_NAME_ERROR_X = WIDTH / 3 + PLAYER_NAME_EXISTS_ERROR.length() / 2 - 2;
 	public static final int PLAYER_NAME_ERROR_Y = WIDTH / 4 - PLAYER_NAME_EXISTS_ERROR.length();
 	public static final String GENERAL_EXCEPTION = "Something went wrong !";
+	public static final int[] BUG_ENEMY_FRAMES_COUNT = new int[]{8,8};
+	public static final int BUG_ENEMY_HEIGHT = 64;
+	public static final int BUG_ENEMY_WIDTH = 64;
+	
+	//Bug Enemy
+	public static final double BUG_DEACCELERATION = 1.5;
+	public static final double BUG_ACCELERATION = 2.5;
+	public static final double BUG_MAXIMUM_SPEED = 4;
+	
 	
 }

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import components.interfaces.IButton;
 import events.MenuButtonClickEvent;
-import events.MenuButtonClickListener;
+
 
 import states.State;
 
@@ -167,9 +167,10 @@ public class Button extends MenuComponent implements IButton{
 		if(!this.isInside(mouseX, mouseY)){
 			this.setPressed(false);
 			this.setHover(false);
+			return;
 		}
 		
-		if(stateInit != null){
+		if(this.stateInit != null){
 			new MenuButtonClickEvent(this,stateInit);
 		}
 	}
@@ -185,6 +186,5 @@ public class Button extends MenuComponent implements IButton{
 		super.setPressed(false);
 		super.setHover(true);
 	}
-	
 
 }

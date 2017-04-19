@@ -108,17 +108,17 @@ public class Player extends MapObject implements Drawable,StateProvidable {
     	//super.position.determineDirection(this.movementState);
     	
     	if(super.getPVector().getDirectionY() > 0){
-    		if(this.state != ObjectState.Falling){
+    		if(this.state != ObjectState.FALLING){
     			
-    			this.state = ObjectState.Jumping;
+    			this.state = ObjectState.JUMPING;
     			//Changing to falling animation
     			
     		}
     	}else if(this.getPVector().getDirectionY() < 0){
     		
-    		if(this.state != ObjectState.Jumping){
+    		if(this.state != ObjectState.JUMPING){
     			
-    			this.state = ObjectState.Jumping;
+    			this.state = ObjectState.JUMPING;
     			super.getAnimation().setFrames(this.sprite.getFrameSet(0));
     			super.getAnimation().setDelay(40);
     			
@@ -126,18 +126,18 @@ public class Player extends MapObject implements Drawable,StateProvidable {
     		
     	}else if(super.getMovementState().isGoingLeft() || super.getMovementState().isGoingRight()){
     		
-    		if(this.state != ObjectState.Walking){
+    		if(this.state != ObjectState.WALKING){
     			
-    			this.state = ObjectState.Walking;
-    			super.getAnimation().setFrames(this.sprite.getFrameSet(ObjectState.Walking.ordinal()));
+    			this.state = ObjectState.WALKING;
+    			super.getAnimation().setFrames(this.sprite.getFrameSet(ObjectState.WALKING.ordinal()));
     			super.getAnimation().setDelay(40);  
     		}
     		
     	}else{
-    		if(this.state != ObjectState.Idle){
-    			this.state = ObjectState.Idle;
+    		if(this.state != ObjectState.IDLE){
+    			this.state = ObjectState.IDLE;
     		}
-    		super.getAnimation().setFrames(this.sprite.getFrameSet(ObjectState.Idle.ordinal()));
+    		super.getAnimation().setFrames(this.sprite.getFrameSet(ObjectState.IDLE.ordinal()));
     		super.getAnimation().setDelay(40);
     	
     	}
@@ -311,7 +311,7 @@ public class Player extends MapObject implements Drawable,StateProvidable {
 
         super.setFacingRight(true);
     
-        state = ObjectState.Idle;
+        state = ObjectState.IDLE;
         
         super.setCollisionBox(new CollisionBox(Constants.PLAYER_COLLISION_WIDTH,Constants.PLAYER_COLLISION_HEIGHT));
         super.setWidth(Constants.PLAYER_WIDTH);

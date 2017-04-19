@@ -11,6 +11,8 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import game.entities.projectile.Projectile;
+
 public class EnemyShootingUnit extends MapObject implements Drawable {
 
     private String name;

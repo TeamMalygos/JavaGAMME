@@ -27,6 +27,30 @@
                  "width":42,
                  "x":776,
                  "y":217
+                }, 
+                {
+                 "gid":216,
+                 "height":64,
+                 "id":6,
+                 "name":"Bug",
+                 "rotation":0,
+                 "type":"Enemy",
+                 "visible":true,
+                 "width":64,
+                 "x":640,
+                 "y":224
+                }, 
+                {
+                 "gid":216,
+                 "height":64,
+                 "id":8,
+                 "name":"Bug",
+                 "rotation":0,
+                 "type":"Enemy",
+                 "visible":true,
+                 "width":64,
+                 "x":321,
+                 "y":448
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -48,7 +72,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":6,
+ "nextobjectid":9,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":32,
@@ -104,6 +128,19 @@
          "tilecount":8,
          "tileheight":59,
          "tilewidth":42
+        }, 
+        {
+         "columns":8,
+         "firstgid":216,
+         "image":"..\/resources\/textures\/enemy_bug.png",
+         "imageheight":128,
+         "imagewidth":512,
+         "margin":0,
+         "name":"enemy_bug",
+         "spacing":0,
+         "tilecount":16,
+         "tileheight":64,
+         "tilewidth":64
         }],
  "tilewidth":32,
  "version":1,

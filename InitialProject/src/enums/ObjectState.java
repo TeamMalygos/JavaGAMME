@@ -1,8 +1,8 @@
 package enums;
 
 public enum ObjectState {
-	Walking,
-	Jumping,
-	Idle,
-	Falling
+	WALKING,
+	JUMPING,
+	IDLE,
+	FALLING,
 }
