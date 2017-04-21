@@ -1,10 +1,8 @@
 package game.entities;
 
-
-import gfx.Assets;
 import gfx.SpriteSheet;
 import map.TileMap;
-import states.GameState;
+
 import utils.PVector;
 
 import java.awt.*;
@@ -123,7 +121,7 @@ public class EnemyShootingUnit extends MapObject implements Drawable {
     }
 
     @Override
-    public void render(Graphics graphics) {
+    public void render(Graphics g) {
 
         // Check if enemy is alive
         if (isDead) {
@@ -142,9 +140,7 @@ public class EnemyShootingUnit extends MapObject implements Drawable {
      //   }
 
         // If there are any projectiles fired call their render().
-        for (Projectile projectile : projectiles) {
-            projectile.render(graphics);
-        }
+    
     }
 /*
     public boolean isPlayerInRange(Player player) {

@@ -19,67 +19,67 @@ public class TileLayer implements Layered{
 	private int x;
 	private int y;
 	public List<Integer> getData() {
-		return data;
+		return this.data;
 	}
 	public void setData(List<Integer> data) {
 		this.data = data;
 	}
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 	public void setHeight(int height) {
 		this.height = height;
 	}
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
 	public int getOffsetX() {
-		return offsetx;
+		return this.offsetx;
 	}
 	public void setOffsetX(int offsetX) {
 		this.offsetx = offsetX;
 	}
 	public int getOffsetY() {
-		return offsety;
+		return this.offsety;
 	}
 	public void setOffsetY(int offsetY) {
 		this.offsety = offsetY;
 	}
 	public int getOpacity() {
-		return opacity;
+		return this.opacity;
 	}
 	public void setOpacity(int opacity) {
 		this.opacity = opacity;
 	}
 	public String getType() {
-		return type;
+		return this.type;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
 	public boolean isVisible() {
-		return visible;
+		return this.visible;
 	}
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 	public void setWidth(int width) {
 		this.width = width;
 	}
 	public int getX() {
-		return x;
+		return this.x;
 	}
 	public void setX(int x) {
 		this.x = x;
 	}
 	public int getY() {
-		return y;
+		return this.y;
 	}
 	public void setY(int y) {
 		this.y = y;

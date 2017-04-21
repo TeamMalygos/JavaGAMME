@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.util.List;
 
 import constants.Constants;
-import game.collectibles.Diamond;
+
 import game.collectibles.LootFactory;
 import game.collectibles.LootObject;
 import game.entities.Drawable;
@@ -154,6 +154,12 @@ public class LootMap implements Drawable{
 		
 	}
 	
+
+	public LootObject[][] getObjectsMatrix() {
+		return this.lootObjects;
+	}
+	
+	
 	private void fixBoundaries(){
 		if(this.x > xmax){ x = xmax;}
 		if(this.x < xmin){ x = xmin;}
@@ -162,19 +168,16 @@ public class LootMap implements Drawable{
 	}
 	
 	private void populateObjectsMatrix(){
-		
 		this.lootObjects = new LootObject[this.lootMap.length][this.lootMap[0].length];
 		LootFactory lootFactory = new LootFactory();
 		
 		for(int i = 0 ; i < this.lootMap.length;i++){
 			for(int j = 0 ; j < this.lootMap[0].length;j++){
-				System.out.println(this.lootMap[i][j]);
 				this.lootObjects[i][j] = lootFactory.translateToLootObject(this.lootMap[i][j]);	
 			}
 		}
 		
 		
 	}
-	
 	
 }

@@ -40,14 +40,11 @@ public class GameEngine implements Runnable {
         //The current time in nanoseconds
         long now;
         long lastTime = System.nanoTime();
-        
         while (isRunning) {
             //Sets the variable to the current time in nanoseconds
             now = System.nanoTime();
-
             delta += (now - lastTime) / timePerTick;
             lastTime = now;
-
             if (delta >= 1) {
                 //If we don't want to lower the framerate take the this.tick() outside the while loop.
                 this.tick();

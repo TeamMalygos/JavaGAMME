@@ -5,28 +5,27 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 
-import game.entities.Player;
 import utils.Animation;
 import utils.PVector;
 
-public abstract class LootObject implements Collectible {
+public abstract class LootObject implements Collectible{
 
-	protected PVector position;
+	private PVector position;
 	
-	protected String name;
+	private String name;
 	
-	protected int id;
-	protected int width;
-	protected int height;
+	private int id;
+	private int width;
+	private int height;
 	
-	protected boolean collected;
+	private boolean collected;
 	
-	protected Rectangle boundingBox;
-	protected Animation animation;
+	private Rectangle boundingBox;
+	private Animation animation;
 	
-	protected Graphics2D g2d;
+	private Graphics2D g2d;
 	
-	protected AffineTransform t;
+	private AffineTransform t;
 	
 	public LootObject(int id,int w,int h){
 		
@@ -68,10 +67,6 @@ public abstract class LootObject implements Collectible {
 	
 	public abstract void render(Graphics g);
 	
-	public PVector getPosition() {
-		return position;
-	}
-
 	public void setPosition(PVector position) {
 		this.position = position;
 	}
@@ -114,6 +109,14 @@ public abstract class LootObject implements Collectible {
 
 	public boolean checkCollected(){
 		return this.collected;
+	}
+
+	public Animation getAnimation() {
+		return this.animation;
+	}
+
+	public PVector getPVector() {
+		return this.position;
 	}
 	
 	

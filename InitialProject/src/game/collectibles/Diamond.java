@@ -21,9 +21,9 @@ public class Diamond extends LootObject{
 		
 		loadSprite();
 		
-		super.animation.setFrames(sheet.getFrameSet(0));
-		super.animation.setFrame(0);
-		super.animation.setDelay(65);
+		super.getAnimation().setFrames(sheet.getFrameSet(0));
+		super.getAnimation().setFrame(0);
+		super.getAnimation().setDelay(65);
 		
 	}
 	
@@ -33,14 +33,14 @@ public class Diamond extends LootObject{
 	
 	@Override
 	public void tick() {
-		super.animation.update();
+		super.getAnimation().update();
 		
 
 	}
 
 	@Override
 	public void render(Graphics g) {
-		if(super.animation.getFrame() == -1){
+		if(super.getAnimation().getFrame() == -1){
 			return;
 		}
 		
@@ -48,9 +48,9 @@ public class Diamond extends LootObject{
 		//super.g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		
 		//super.g2d.drawImage(super.animation.getImage(),super.t,null);
-		g.drawImage(super.animation.getImage()
-				, (int)super.position.getPositionX()
-				, (int)super.position.getPositionY(), null);
+		g.drawImage(super.getAnimation().getImage()
+				, (int)super.getPVector().getPositionX()
+				, (int)super.getPVector().getPositionY(), null);
 		//super.g2d.draw(new Rectangle2D.Double(super.position.getPositionX(),super.position.getPositionY(),super.width,super.height));
 	}
 
@@ -58,7 +58,7 @@ public class Diamond extends LootObject{
 	public void loadSprite() {
 		
 		sheet = new SpriteSheet(Assets.diamond);
-		sheet.setFrameLayersCount(frameCount,super.width,super.height);
+		sheet.setFrameLayersCount(this.frameCount,super.getWidth(),super.getHeight());
 		
 	}
 

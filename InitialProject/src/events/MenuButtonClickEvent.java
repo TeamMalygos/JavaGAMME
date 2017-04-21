@@ -5,6 +5,7 @@ import java.util.EventObject;
 import states.State;
 import states.StateManager;
 
+@SuppressWarnings("serial")
 public class MenuButtonClickEvent extends EventObject{
 
 	
@@ -13,7 +14,6 @@ public class MenuButtonClickEvent extends EventObject{
 	 * and provides an easy way to change the GameState from the
 	 * menu itself.</p>
 	 */
-	private static final long serialVersionUID = 274677211232625364L;
 
 	public MenuButtonClickEvent(Object source,State state) {
 		super(source);

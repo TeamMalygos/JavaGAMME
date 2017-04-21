@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 
 import components.Button;
 import components.CharacterList;
-import components.interfaces.IButton;
+import components.interfaces.Clickable;
 import constants.Constants;
 import events.MenuButtonClickEvent;
 import gfx.Assets;
@@ -17,8 +17,8 @@ public class LoadCharacterInterface implements Interface{
 
 	
 	private CharacterList characters;
-	private IButton load;
-	private IButton quit;
+	private Clickable load;
+	private Clickable quit;
 	
 	public LoadCharacterInterface(){
 		characters = new CharacterList();

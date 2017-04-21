@@ -100,11 +100,7 @@ public abstract class MenuComponent implements Drawable{
 	public int getyAxisPosition() {
 		return yAxisPosition;
 	}
-
-	private void setyAxisPosition(int yAxisPosition) {
-		this.yAxisPosition = yAxisPosition;
-	}
-
+	
 	public int getWidth() {
 		return width;
 	}
@@ -115,10 +111,6 @@ public abstract class MenuComponent implements Drawable{
 
 	public int getHeight() {
 		return height;
-	}
-
-	private void setHeight(int height) {
-		this.height = height;
 	}
 
 	public BufferedImage getCurrentFrame() {
@@ -135,6 +127,14 @@ public abstract class MenuComponent implements Drawable{
 
 	protected void setCurrentFrame(BufferedImage frame) {
 		this.currentFrame = frame;
+	}
+
+	private void setyAxisPosition(int yAxisPosition) {
+		this.yAxisPosition = yAxisPosition;
+	}
+
+	private void setHeight(int height) {
+		this.height = height;
 	}
 	
 }

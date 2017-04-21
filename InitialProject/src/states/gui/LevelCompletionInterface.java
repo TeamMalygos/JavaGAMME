@@ -4,17 +4,21 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-import components.interfaces.IButton;
+import components.Button;
+import components.interfaces.Clickable;
 import constants.Constants;
+import events.MenuButtonClickEvent;
 import gfx.Assets;
+import states.MenuState;
 
 public class LevelCompletionInterface implements Interface{
 
 	private BufferedImage successBackground;
-	private IButton exit;
+	private Clickable exit;
 	
 	public LevelCompletionInterface(){
 		this.successBackground = Assets.levelCompleted;
+		this.load();
 	}
 	
 	@Override
@@ -43,6 +47,26 @@ public class LevelCompletionInterface implements Interface{
 	@Override
 	public void onMouseClickOverInterface(MouseEvent args) {
 		this.exit.onMenuButtonClick(args.getX(), args.getY());
+	}
+	
+	private void load() {
+		Button exit = new Button(Constants.MENU_BUTTON_X,Constants.MENU_BUTTON_HEIGHT){
+			@Override
+			public void onMenuButtonRelease(int mouseX, int mouseY) {
+				
+				if(!this.isInside(mouseX, mouseY)){
+					this.setPressed(false);
+					this.setHover(false);
+					return;
+				}
+				
+				new MenuButtonClickEvent(this,new MenuState());
+				
+			}
+		};
+		exit.setFrames(Assets.quitButton);
+		
+		this.exit = exit;
 	}
 
 }

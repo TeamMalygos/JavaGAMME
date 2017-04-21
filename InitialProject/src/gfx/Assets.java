@@ -70,7 +70,37 @@ public class Assets {
 	public static BufferedImage pesho;
 
     public static void init() {
-    	//Map
+    	loadStatePrereqs();
+        
+        levelStatePanel = ImageLoader.loadImage("/textures/levelstate.png");
+        
+        loadEntities();
+        
+        loadMenuComponents();
+        
+        //HUD
+        healthBar = ImageLoader.loadImage("/textures/healthbarSprite.png");
+        diamondsCounter = ImageLoader.loadImage("/textures/counter.png");
+        
+        diploma = ImageLoader.loadImage("/textures/diploma.png");
+    }
+
+	private static void loadEntities() {
+		//Entities
+        nakov_sheet = ImageLoader.loadImage("/textures/nakov_sheet.png");
+        enemyBug = ImageLoader.loadImage("/textures/enemy_bug.png");
+        
+        //Entities.Collectible
+        diamond = ImageLoader.loadImage("/textures/diamond.png");
+        beer = ImageLoader.loadImage("/textures/beer.png");
+        
+        //Entities.Projectile
+        projectile = ImageLoader.loadImage("/textures/blast.png");
+        numKeysProjectile = ImageLoader.loadImage("/textures/numKeysProjectile.png");
+	}
+
+	private static void loadStatePrereqs() {
+		//Map
         background = ImageLoader.loadImage("/textures/Back.png");
         tileSheet = ImageLoader.loadImage("/textures/sheet.png");
         logo = ImageLoader.loadImage("/textures/logo.png");
@@ -83,22 +113,10 @@ public class Assets {
         backgroundMountains = ImageLoader.loadImage("/textures/background_mountains.png");
         backgroundTrees = ImageLoader.loadImage("/textures/background_trees.png");
         backgroundGrass = ImageLoader.loadImage("/textures/background_grass.png");
-        
-        levelStatePanel = ImageLoader.loadImage("/textures/levelstate.png");
-        
-        //Entities
-        nakov_sheet = ImageLoader.loadImage("/textures/nakov_sheet.png");
-        enemyBug = ImageLoader.loadImage("/textures/enemy_bug.png");
-        
-        //Entities.Collectible
-        diamond = ImageLoader.loadImage("/textures/diamond.png");
-        beer = ImageLoader.loadImage("/textures/beer.png");
-        
-        //Entities.Projectile
-        projectile = ImageLoader.loadImage("/textures/blast.png");
-        numKeysProjectile = ImageLoader.loadImage("/textures/numKeysProjectile.png");
-        
-        //Menu
+	}
+
+	private static void loadMenuComponents() {
+		//Menu
         playButton = ImageLoader.loadImage("/textures/play.png");
         quitButton = ImageLoader.loadImage("/textures/quit.png");
         newButton = ImageLoader.loadImage("/textures/new.png");
@@ -116,11 +134,5 @@ public class Assets {
         //InGameMenu
         saveButton = ImageLoader.loadImage("/textures/save.png");
         resumeButton = ImageLoader.loadImage("/textures/resume.png");
-        
-        //HUD
-        healthBar = ImageLoader.loadImage("/textures/healthbarSprite.png");
-        diamondsCounter = ImageLoader.loadImage("/textures/counter.png");
-        
-        diploma = ImageLoader.loadImage("/textures/diploma.png");
-    }
+	}
 }

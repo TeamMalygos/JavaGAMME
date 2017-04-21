@@ -1,16 +1,18 @@
 package game.entities.projectile;
 
 import gfx.SpriteSheet;
+import states.GameState;
 import utils.CollisionBox;
 import utils.PVector;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import game.entities.Drawable;
 import game.entities.EnemyShootingUnit;
 import game.entities.MapObject;
 
-public class Projectile extends MapObject implements Shootable{
+public abstract class Projectile extends MapObject implements Shootable{
     
     
 	private int damage;
@@ -27,23 +29,19 @@ public class Projectile extends MapObject implements Shootable{
 
     private MapObject shooter;
 
-    protected Projectile(MapObject obj) {
-    	super(obj.getMap());
-        this.shooter = obj;
-        
-    	super.setPVector(new PVector(obj.getPVector().getPositionX()
-    			,obj.getPVector().getPositionY()));
+    protected Projectile() {
+    	super(GameState.getMap());
     }
     
     private void init(){
 
-    	super.getPVector().setDirectionY(0);
         
         super.setCollisionBox(new CollisionBox(this.width,this.height));
+        super.setPVector(new PVector(0,0));
         
         this.boundingBox = new Rectangle((int)super.getPVector().getPositionX()
         		, (int)super.getPVector().getPositionY(), this.width, this.height);
-
+ 
         //this.damage = shooter.getDamage();
     }
     
@@ -73,44 +71,6 @@ public class Projectile extends MapObject implements Shootable{
 		super.getAnimation().setFrames(this.sheet.getFrameSet(0));
     	
     	init();
-    }
-
-    @Override
-    public void tick() {
-        // Flying in left direction
-        //this.x -= this.velocityX;
-
-        this.boundingBox.setBounds((int)super.getPVector().getPositionX()
-        		, (int)super.getPVector().getPositionY(), this.width, this.height);
-        
-        
-    }
-
-        // Projectile hits target
-        //if (super.intersects(player.getBoundingBox())) {
-
-           // player.takeDamage(this.damage);
-            //GameState.setPlayer(player);
-
-            //System.out.println(GameState.getPlayer().getPlayerStats().getCurrentHealth());
-
-           // this.enemyShootingUnit.getProjectiles().remove(this);
-
-       // } else if (!this.isInRange()) {
-       //     // Check whether projectile is out of range
-         //   this.enemyShootingUnit.getProjectiles().remove(this);
-      //  }
-   // }
-//
-    @Override
-    public void render(Graphics g) {
-
-    	super.getNewPosition();
-    	super.getMap().setPosition(this.getPVector().getTemporaryX(), this.getPVector().getTemporaryY());
-    	
-        g.drawImage(super.getAnimation().getImage(), (int)super.getPVector().getPositionX()
-        		, (int)super.getPVector().getPositionY(), null);
-
     }
 
     @Override

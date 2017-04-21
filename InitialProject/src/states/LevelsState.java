@@ -50,6 +50,7 @@ public class LevelsState extends State implements MouseMotionSensitive{
 
 	@Override
 	public void render(Graphics g) {
+		this.loadLevelInterface.render(g);
 		this.levels[this.getIndexOnFocus()].render(g);
 	}
 

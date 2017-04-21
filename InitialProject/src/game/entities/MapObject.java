@@ -9,7 +9,6 @@ import utils.MovementState;
 import utils.PVector;
 import utils.Animation;
 import constants.Constants;
-import enums.TileType;
 
 /**
  * 
@@ -49,10 +48,6 @@ public abstract class MapObject {
 		this.objectMovementAttr = new MovementAttributes();
 		this.animation = new Animation();
 	}
-	
-	protected boolean intersectsWith(MapObject o){
-		return this.getObjectRectangle().intersects(o.getObjectRectangle());
-	}
 
 	public void checkCollisionCorners(double x,double y){
 		this.cBox.checkCollisionCorners(x,y, this.tileMap);
@@ -64,14 +59,6 @@ public abstract class MapObject {
 	
 	public PVector getPVector(){
 		return this.position;
-	}
-	
-	protected void setPVector(PVector position){
-		this.position = position;
-	}
-	
-	protected void setCollisionBox(CollisionBox box){
-		this.cBox = box;
 	}
 
 	/**
@@ -88,7 +75,6 @@ public abstract class MapObject {
 		checkCollisionCorners(this.position.getPositionX()
 				, this.position.getDestinationY());
 		calculateYMovement();
-
 		//Secondary is x direction
 		checkCollisionCorners(this.position.getDestinationX(),this.position.getPositionY());
 		calculateXMovement();
@@ -103,8 +89,6 @@ public abstract class MapObject {
 			}
 			
 		}
-		
-		
 	}
 	
 	public Rectangle getObjectRectangle(){
@@ -116,26 +100,12 @@ public abstract class MapObject {
 		
 	}
 	
-	protected Animation getAnimation(){
-		return this.animation;
-	}
-	
-
-	protected CollisionBox getCollisionBox() {
-		return this.cBox;
-	}
-
-	
 	//Map position
 	public void setMapPosition(){
 		this.mapX = this.tileMap.getX();
 		this.mapY = this.tileMap.getY();
 	}
 
-    protected MovementState getMovementState() {
-		return this.movementState;
-    }	
-	
 	public boolean isFacingRight() {
 		return this.facingRight;
 	}
@@ -149,15 +119,6 @@ public abstract class MapObject {
 				this.position.getPositionY() + this.mapY - this.height > Constants.HEIGHT;	
 		
 	}
-
-		protected void getNewPosition() {
-			this.position.getNewPosition(this.movementState, this.objectMovementAttr);
-		}
-
-		protected void setFacingRight(boolean facingRight) {
-			this.facingRight = facingRight;
-			
-		}
 
 		protected int getWidth() {
 			return this.width;
@@ -187,6 +148,40 @@ public abstract class MapObject {
 		protected MovementAttributes getObjectMovementAttr() {
 			return this.objectMovementAttr;
 		}
+		
+		protected void setPVector(PVector position){
+			this.position = position;
+		}
+		
+		protected void setCollisionBox(CollisionBox box){
+			this.cBox = box;
+		}
+		
+		protected boolean intersectsWith(MapObject o){
+			return this.getObjectRectangle().intersects(o.getObjectRectangle());
+		}
+		
+		protected void getNewPosition() {
+			this.position.getNewPosition(this.movementState, this.objectMovementAttr);
+		}
+
+		protected void setFacingRight(boolean facingRight) {
+			this.facingRight = facingRight;
+			
+		}
+		
+		protected Animation getAnimation(){
+			return this.animation;
+		}
+		
+
+		protected CollisionBox getCollisionBox() {
+			return this.cBox;
+		}
+
+	    protected MovementState getMovementState() {
+			return this.movementState;
+	    }	
 		
 		private void setTemporaryPosition() {
 			this.currentRow = (int)this.position.getPositionY() / tileMap.getTileWidth();
@@ -281,5 +276,6 @@ public abstract class MapObject {
 						
 			}
 		}
+		
 		
 }

@@ -3,14 +3,9 @@ package states;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
-import components.Button;
-import components.CharacterList;
-import constants.Constants;
 import events.MouseMotionSensitive;
-import gfx.Assets;
 import states.gui.Interface;
 import states.gui.LoadCharacterInterface;
-import utils.ObjectSerializer;
 
 
 /**

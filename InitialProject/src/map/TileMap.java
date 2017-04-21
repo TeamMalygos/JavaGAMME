@@ -9,7 +9,7 @@ import gfx.Assets;
 
 import java.awt.*;
 
-public class TileMap {
+public class TileMap{
 	//Position
 	private double x;
 	private double y;
@@ -52,25 +52,7 @@ public class TileMap {
 	public TileMap(List<Integer> map,int numRows,int numCols){
 		
 			this.cameraSpeed = 1;
-			
-			this.tileSize = 32;
-			this.tileHeight = 32;
-			
-			this.mapRows = numRows;
-			this.mapCols = numCols;
-			
-			this.mapWidth = numCols * tileSize;
-			this.mapHeight = numRows * tileHeight;
-			
-			this.columnsToDraw = Constants.WIDTH / this.tileSize;
-			this.rowsToDraw = Constants.HEIGHT / this.tileHeight;
-			
-			this.xmin = Constants.WIDTH - this.mapWidth;
-			this.xmax = 0;
-			
-			this.ymin = 0;
-			this.ymax = Constants.HEIGHT - this.mapHeight;
-			
+			init(numRows, numCols);
 			this.map = new int[mapHeight][mapWidth];
 			
 			int counter = 0;
@@ -89,28 +71,16 @@ public class TileMap {
 		
 		try {
 			
-			tileSet = Assets.tileSheet;
-			numTilesAcross = tileSet.getWidth() / tileSize;
-			numTileRows = tileSet.getHeight() / tileHeight;
+			this.tileSet = Assets.tileSheet;
+			this.numTilesAcross = tileSet.getWidth() / tileSize;
+			this.numTileRows = tileSet.getHeight() / tileHeight;
 			
 			
-			tiles = new Tile[numTileRows][numTilesAcross];
-			
-			BufferedImage subImage;
+			this.tiles = new Tile[numTileRows][numTilesAcross];
 			int height = 0;
 			
 			for(int row = 0 ; row < numTileRows; row++){
-				for(int col = 0 ; col < numTilesAcross; col++){
-				
-				TileType type = TileType.valueOf(Constants.TILESET_BLOCK_TYPES_OF_ROW[row]);
-				
-				subImage = tileSet.getSubimage(
-						col * tileSize, 
-						height, tileSize, tileHeight);
-				
-				tiles[row][col] = new Tile(subImage,type);
-				
-				}
+				loadTileRow(height, row);
 				height += tileHeight;
 			}
 			
@@ -119,6 +89,7 @@ public class TileMap {
 		}
 		
 	}
+
 	//Getters
 	public int getX() {return (int)x;}
 	public int getY() { return (int)y; }
@@ -127,7 +98,7 @@ public class TileMap {
 	public int getTileWidth() {return this.tileSize;}
 	public int getTileHeight(){return this.tileHeight;}
 	public int getTile(int row, int col){
-		return map[row][col];
+		return this.map[row][col];
 	}
 	public int getColOffset(){return this.colOffset;}
 	public int getRowOffset(){return this.rowOffset;}
@@ -140,13 +111,13 @@ public class TileMap {
 	public TileType getType(int row,int col){
 		
 		try{
-			int rc = map[row][col];
+			int rc = this.map[row][col];
 			if(rc == 0){
 				return TileType.Background;
 			}
-			int r = rc / tiles[0].length;
-			int c = rc % tiles[0].length;
-			return tiles[r][c].getType();
+			int r = rc / this.tiles[0].length;
+			int c = rc % this.tiles[0].length;
+			return this.tiles[r][c].getType();
 		}catch(ArrayIndexOutOfBoundsException ex){
 			
 		}
@@ -170,20 +141,13 @@ public class TileMap {
 		fixBoundaries();	
 		
 		//Where to start drawing from
-		colOffset = (int)-this.x / tileSize;
-		rowOffset = (int)-this.y / tileHeight;
+		this.colOffset = (int)-this.x / this.tileSize;
+		this.rowOffset = (int)-this.y / this.tileHeight;
 		
 	}
-	
-	private void fixBoundaries(){
-		if(this.x > xmax){ x = xmax;}
-		if(this.x < xmin){ x = xmin;}
-		if(this.y > ymax){ y = ymax;}
-		if(this.y < ymin){ y = ymin;}
-	}
-	
-	public void update(){
-		
+	public void setOffset(int offsetX, int offsetY) {
+		this.offsetX = offsetX;
+		this.offsetY = offsetY;
 	}
 	
 	public void draw(Graphics g){
@@ -199,31 +163,73 @@ public class TileMap {
 				break;
 			}
 			
-			for(int col = this.colOffset ; col < this.colOffset + this.columnsToDraw + 1; col++){
-				int rc =  map [row][col]-1;
-				
-				if(rc == -1){
-					continue;
-				}
-				
-				if(col >= this.mapCols){break;}
-				
-				int rw = rc / this.numTilesAcross;
-				int cl = rc % this.numTilesAcross;
-				
-				g.drawImage(
-						tiles[rw][cl].getImage(),
-						(int)x + col * tileSize,
-						(int)y + row * tileSize,
-						null);
-		
-			}
+			this.drawRows(g, row);
 		}
 	}
 
-	public void setOffset(int offsetX, int offsetY) {
-		this.offsetX = offsetX;
-		this.offsetY = offsetY;
+	private void drawRows(Graphics g, int row) {
+		for(int col = this.colOffset ; col < this.colOffset + this.columnsToDraw + 1; col++){
+			int rc =  this.map [row][col]-1;
+			
+			if(rc == -1){
+				continue;
+			}
+			
+			if(col >= this.mapCols){break;}
+			
+			int rw = rc / this.numTilesAcross;
+			int cl = rc % this.numTilesAcross;
+			
+			g.drawImage(
+					this.tiles[rw][cl].getImage(),
+					(int)x + col * this.tileSize,
+					(int)y + row * this.tileSize,
+					null);
+
+		}
+	}
+
+	private void fixBoundaries(){
+		if(this.x > this.xmax){ this.x = this.xmax;}
+		if(this.x < this.xmin){ this.x = this.xmin;}
+		if(this.y > this.ymax){ this.y = this.ymax;}
+		if(this.y < this.ymin){ this.y = this.ymin;}
+	}
+	
+	
+	private void init(int numRows, int numCols) {
+		this.tileSize = 32;
+		this.tileHeight = 32;
+		
+		this.mapRows = numRows;
+		this.mapCols = numCols;
+		
+		this.mapWidth = numCols * tileSize;
+		this.mapHeight = numRows * tileHeight;
+		
+		this.columnsToDraw = Constants.WIDTH / this.tileSize;
+		this.rowsToDraw = Constants.HEIGHT / this.tileHeight;
+		
+		this.xmin = Constants.WIDTH - this.mapWidth;
+		this.xmax = 0;
+		
+		this.ymin = 0;
+		this.ymax = Constants.HEIGHT - this.mapHeight;
+	}
+	
+	private void loadTileRow(int height, int row) {
+		BufferedImage subImage;
+		for(int col = 0 ; col < numTilesAcross; col++){
+		
+		TileType type = TileType.valueOf(Constants.TILESET_BLOCK_TYPES_OF_ROW[row]);
+		
+		subImage = tileSet.getSubimage(
+				col * tileSize, 
+				height, tileSize, tileHeight);
+		
+		this.tiles[row][col] = new Tile(subImage,type);
+		
+		}
 	}
 	
 }

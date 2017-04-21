@@ -1,21 +1,22 @@
 package states.gui;
 
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 
 import components.Button;
 import components.TextField;
-import components.interfaces.IButton;
+import components.interfaces.Clickable;
 import constants.Constants;
+import events.MenuButtonClickEvent;
 import gfx.Assets;
 import states.LevelsState;
+import states.MenuState;
 
 public class CreateInterface implements Interface {
 
 	private TextField field;
-	private IButton create;
-	private IButton exit;
+	private Clickable create;
+	private Clickable exit;
 	
 	public CreateInterface(){
 		this.init();		
@@ -30,8 +31,6 @@ public class CreateInterface implements Interface {
 
 	@Override
 	public void render(Graphics g) {
-		
-		g.setFont(new Font(Constants.FONT,Font.PLAIN,Constants.FONT_SIZE));
 
 		this.create.render(g);
 		this.field.render(g);
@@ -83,20 +82,35 @@ public class CreateInterface implements Interface {
 	
 	
 	private void init() {
-		
 		Button create = new Button(Constants.MENU_BUTTON_X
 				,Constants.MENU_BUTTON_Y + (Constants.MENU_BUTTON_MARGIN_BOTTOM * 2));
 		create.setFrames(Assets.createButton);
 		create.linkToState(new LevelsState());
 	
-		Button exit = new Button(Constants.MENU_BUTTON_X
-				,Constants.MENU_BUTTON_Y + (Constants.MENU_BUTTON_MARGIN_BOTTOM * 3));
-		exit.setFrames(Assets.quitButton);
+		Button exit = loadExitButton();
 		
 		TextField field = new TextField();
+		
 		
 		this.create = create;
 		this.exit = exit;
 		this.field = field;
+	}
+
+	private Button loadExitButton() {
+		Button exit = new Button(Constants.MENU_BUTTON_X
+				,Constants.MENU_BUTTON_Y + (Constants.MENU_BUTTON_MARGIN_BOTTOM * 3)){
+			@Override
+			public void onMenuButtonRelease(int x,int y){
+				if(!this.isInside(x, y)){
+					this.setHover(false);
+					this.setPressed(false);
+					return;
+				}
+				new MenuButtonClickEvent(this,new MenuState());
+			}
+		};
+		exit.setFrames(Assets.quitButton);
+		return exit;
 	}
 }

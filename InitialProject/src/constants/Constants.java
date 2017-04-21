@@ -21,8 +21,7 @@ public class Constants {
 	public static final int BACKGROUND_Y = 0;
 	public static final int BACKGROUND_X = 0;
 	public static final Color COLOR_OPAQUE_BLACK = new Color(0,0,0,0.6f);
-	public static final int WIZARD_WIDTH = 58;
-	public static final int WIZARD_HEIGHT = 64;
+	public static final double MISSING_ROW_HEIGHT = 24;
 	
 	public static final int[] PARALLAX_DELAY = new int[] {
 			1,3,6,15
@@ -48,6 +47,10 @@ public class Constants {
 	
 	public static final int[] LEVEL_REWARD = new int[] {
 			30,50,70,90,110,150,200
+	};
+	
+	public static final int[] LEVEL_REQUIRED_DIAMONDS_TO_ENTER = {
+		0,150,160,170,180	
 	};
 	
 	public static final int[] LEVEL_START_POSITION_X = new int[]{
@@ -192,9 +195,12 @@ public class Constants {
 	public static final float BORDER_RADIUS = 10;
 	public static final int STANDARD_PADDING = 16;
 	public static final int STANDARD_MARGIN = 8;
-	public static final int PESHO_WIDTH = 32;
-	public static final int PESHO_HEIGHT = 32;
-
+	public static final int PESHO_WIDTH = 128;
+	public static final int PESHO_HEIGHT = 128;
+	public static final int PESHO_Y = MENU_BUTTON_Y + PESHO_HEIGHT / 2;
+	public static final int PESHO_X = MENU_BUTTON_X - PESHO_WIDTH * 2 + STANDARD_PADDING * 3;
+	public static final long PESHO_ANIMATION_DELAY = 79;
+	
 	
 	//Error messages
 	public static final String NEGATIVE_OFFSET_ERROR = "WARNING! Negative offsets are not allowed";
@@ -208,9 +214,10 @@ public class Constants {
 	public static final int BUG_ENEMY_WIDTH = 64;
 	
 	//Bug Enemy
-	public static final double BUG_DEACCELERATION = 1.5;
-	public static final double BUG_ACCELERATION = 2.5;
+	public static final double BUG_DEACCELERATION = 0.0;
+	public static final double BUG_ACCELERATION = 0.743;
 	public static final double BUG_MAXIMUM_SPEED = 4;
+	public static final double NUMPAD_KEY_PROJECTILE_SPEED = 2.712;
 	
 	
 }

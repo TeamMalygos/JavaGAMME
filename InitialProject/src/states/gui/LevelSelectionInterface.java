@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import components.Button;
-import components.interfaces.IButton;
+import components.interfaces.Clickable;
 
 import constants.Constants;
 import enums.Level;
@@ -19,18 +19,15 @@ import utils.UserAccount;
 
 public class LevelSelectionInterface implements Interface {
 	
-	private IButton pointerLeft;
-	private IButton pointerRight;
-	private IButton load;
-	private IButton back;
-	private IButton[] buttonsBundle;
+	private Clickable pointerLeft;
+	private Clickable pointerRight;
+	private Clickable load;
+	private Clickable back;
+	private Clickable[] buttonsBundle;
 	
 	private int indexOnFocus;
 	
-	private BufferedImage background;
-	
 	public LevelSelectionInterface(){
-		this.background = Assets.levelStatePanel;
 		this.indexOnFocus = 0;
 		this.init();
 	}
@@ -38,7 +35,7 @@ public class LevelSelectionInterface implements Interface {
 
 	@Override
 	public void tick() {
-		for(IButton b : this.buttonsBundle){
+		for(Clickable b : this.buttonsBundle){
 			b.tick();
 		}
 	}
@@ -52,13 +49,13 @@ public class LevelSelectionInterface implements Interface {
 				, Constants.HEIGHT
 				, null);
 		
-		g.drawImage(this.background
+		g.drawImage(Assets.levelStatePanel
 				,Constants.WIDTH / 2 - Constants.LEVELS_STATE_PANEL_WIDTH / 2
 				,Constants.HEIGHT / 2 - Constants.LEVELS_STATE_PANEL_HEIGHT /2
 				,null);
 		
 		
-		for(IButton b : this.buttonsBundle){
+		for(Clickable b : this.buttonsBundle){
 			b.render(g);
 		}
 		
@@ -70,7 +67,7 @@ public class LevelSelectionInterface implements Interface {
 	
 	@Override
 	public void onMouseHoverOverInterface(MouseEvent args) {
-		for(IButton b: this.buttonsBundle){
+		for(Clickable b: this.buttonsBundle){
 			b.onMenuButtonHover(args.getX(), args.getY());
 		}
 	}
@@ -79,14 +76,14 @@ public class LevelSelectionInterface implements Interface {
 	public void onMouseReleaseOverInterface(MouseEvent args) {
 		((Button)this.load).linkToState(new GameState(this.getLevelOnFocus()));
 
-		for(IButton b : this.buttonsBundle){
+		for(Clickable b : this.buttonsBundle){
 			b.onMenuButtonRelease(args.getX(), args.getY());
 		}
 	}
 
 	@Override
 	public void onMouseClickOverInterface(MouseEvent args) {
-		for(IButton b : this.buttonsBundle){
+		for(Clickable b : this.buttonsBundle){
 			b.onMenuButtonClick(args.getX(), args.getY());
 		}
 	}
@@ -104,7 +101,7 @@ public class LevelSelectionInterface implements Interface {
 		
 		loadBackButton();
 		
-		this.buttonsBundle = new IButton[]{this.pointerLeft,this.pointerRight,this.load,this.back};
+		this.buttonsBundle = new Clickable[]{this.pointerLeft,this.pointerRight,this.load,this.back};
 	}
 
 	
@@ -197,7 +194,8 @@ public class LevelSelectionInterface implements Interface {
 	}
 	
 	private void focusRight() {
-		if(this.indexOnFocus < UserAccount.getStats().getProgress()){
+		if(this.indexOnFocus < UserAccount.getStats().getProgress() && GameState.getPlayer()
+				.getBag().getDiamondsCount() >= Constants.LEVEL_REQUIRED_DIAMONDS_TO_ENTER[this.indexOnFocus+1]){
 			this.indexOnFocus +=1;
 		}
 		

@@ -18,15 +18,14 @@ public class MapStructure {
 	private List<Tileset> tilesets;
 	private int tileWidth;
 	private int version;
-	
-	
-	
+
 	public int getHeight() {
 		return height;
 	}
 	public int getWidth() {
 		return width;
 	}
+	
 	public TileLayer getTileLayer() {
 		try{
 			return (TileLayer)layers[0];
@@ -37,6 +36,7 @@ public class MapStructure {
 		}
 		return null;
 	}
+	
 	public ObjectsLayer getObjectsLayer() {
 		try{
 			return (ObjectsLayer)layers[1];
@@ -45,6 +45,7 @@ public class MapStructure {
 		}
 		return null;
 	}
+	
 	public TileLayer getLootLayer(){
 		try{
 			return (TileLayer)layers[2];
@@ -56,25 +57,25 @@ public class MapStructure {
 		return null;
 	}
 	public int getNextobjectid() {
-		return nextobjectid;
+		return this.nextobjectid;
 	}
 	public String getOrientation() {
-		return orientation;
+		return this.orientation;
 	}
 	public String getRenderorder() {
-		return renderorder;
+		return this.renderorder;
 	}
 	public int getTileHeight() {
-		return tileHeight;
+		return this.tileHeight;
 	}
 	public List<Tileset> getTilesets() {
-		return tilesets;
+		return this.tilesets;
 	}
 	public int getTileWidth() {
-		return tileWidth;
+		return this.tileWidth;
 	}
 	public int getVersion() {
-		return version;
+		return this.version;
 	}
 	
 	public void setHeight(int height){this.height = height;}

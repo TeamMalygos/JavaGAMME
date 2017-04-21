@@ -19,7 +19,6 @@ import game.entities.playerProperties.Stats;
 
 public class PlayerListItem extends MenuComponent{
 
-	private int offset;
 	private boolean isOnFocus;
 	private Stats stat;
 	
@@ -27,36 +26,16 @@ public class PlayerListItem extends MenuComponent{
 
 		super(Constants.PLAYERS_LIST_X,Constants.PLAYERS_LIST_Y + offset);
 		super.setSize(Constants.PLAYERS_LIST_LISTITEM_WIDTH, Constants.PLAYERS_LIST_LISTITEM_HEIGHT);
-		
-		this.setOffset(offset);
+
 		this.setStat(s);
 	}
 
-	private void setOffset(int offset){
-		
-		if(offset < 0){
-			offset = 0;
-			System.out.println(Constants.NEGATIVE_OFFSET_ERROR);
-		}
-		
-		this.offset = offset;
-	}
-	
 	public void setFocus(boolean focus){
 		this.isOnFocus = focus;
 	}
 	
 	public boolean isOnFocus(){
 		return this.isOnFocus;
-	}
-	
-	private void setStat(Stats s){
-		
-		if(s == null){
-			return;
-		}
-		
-		this.stat = s;
 	}
 	
 	public Stats getStats(){
@@ -87,6 +66,16 @@ public class PlayerListItem extends MenuComponent{
 	@Override
 	public void tick() {
 		
+	}
+	
+	
+	private void setStat(Stats s){
+		
+		if(s == null){
+			return;
+		}
+		
+		this.stat = s;
 	}
 	
 }

@@ -2,16 +2,14 @@ package game.entities;
 
 
 import game.entities.playerProperties.Stats;
-import game.entities.playerProperties.spells.abstractions.Spell;
+import game.entities.projectile.Weapon;
 import gfx.Assets;
 import gfx.SpriteSheet;
 import map.TileMap;
-import providable.StateProvidable;
-import utils.Animation;
+
 import utils.CollisionBox;
 import utils.LootBag;
-import utils.MovementAttributes;
-import utils.MovementState;
+
 import utils.PVector;
 
 import java.awt.*;
@@ -19,7 +17,7 @@ import java.awt.*;
 import constants.Constants;
 import enums.ObjectState;
 
-public class Player extends MapObject implements Drawable,StateProvidable {
+public class Player extends MapObject implements Drawable {
 
     private String name;
     private Rectangle playerPickUpBox;
@@ -31,6 +29,7 @@ public class Player extends MapObject implements Drawable,StateProvidable {
     private boolean isDead;
     
     private LootBag bag;
+    private Weapon weapon;
     
     //Animation frames - Containers and helpful prereqs
     private SpriteSheet sprite;
@@ -58,12 +57,10 @@ public class Player extends MapObject implements Drawable,StateProvidable {
         
     }
 
-    public Player(String name,TileMap map, Stats loadedStats,int x,int y) {
+    public Player(TileMap map, Stats loadedStats,int x,int y) {
         super(map);
-
-        this.name = name;
-        this.playerStats = loadedStats;
         
+        this.playerStats = loadedStats;
         this.bag = this.playerStats.getBag();
         this.playerStats.setCurrentHealth(Constants.INITIAL_HEALTH);
         
@@ -76,7 +73,6 @@ public class Player extends MapObject implements Drawable,StateProvidable {
         //this.boundingBox = new Rectangle(x, y, width, height);
 
     }
-    
     
     public void loadSprites(){
     	
@@ -92,9 +88,9 @@ public class Player extends MapObject implements Drawable,StateProvidable {
     @Override
     public void tick() {
     	
-    	boolean isTileOfTypeDeath = super.getCollisionBox().isOfTypeDeath(
-    			super.getPVector().getPositionX()
-    			, super.getPVector().getDestinationY(), super.getMap());
+    	///boolean isTileOfTypeDeath = super.getCollisionBox().isOfTypeDeath(
+    			//super.getPVector().getPositionX()
+    			//, super.getPVector().getDestinationY(), super.getMap());
     	
     	if(this.playerStats.getCurrentHealth() <= 0){
     		this.isDead = true;
@@ -107,77 +103,22 @@ public class Player extends MapObject implements Drawable,StateProvidable {
     	super.getPVector().setPositionY(super.getPVector().getTemporaryY());
     	//super.position.determineDirection(this.movementState);
     	
-    	if(super.getPVector().getDirectionY() > 0){
-    		if(this.state != ObjectState.FALLING){
-    			
-    			this.state = ObjectState.JUMPING;
-    			//Changing to falling animation
-    			
-    		}
-    	}else if(this.getPVector().getDirectionY() < 0){
-    		
-    		if(this.state != ObjectState.JUMPING){
-    			
-    			this.state = ObjectState.JUMPING;
-    			super.getAnimation().setFrames(this.sprite.getFrameSet(0));
-    			super.getAnimation().setDelay(40);
-    			
-    		}
-    		
-    	}else if(super.getMovementState().isGoingLeft() || super.getMovementState().isGoingRight()){
-    		
-    		if(this.state != ObjectState.WALKING){
-    			
-    			this.state = ObjectState.WALKING;
-    			super.getAnimation().setFrames(this.sprite.getFrameSet(ObjectState.WALKING.ordinal()));
-    			super.getAnimation().setDelay(40);  
-    		}
-    		
-    	}else{
-    		if(this.state != ObjectState.IDLE){
-    			this.state = ObjectState.IDLE;
-    		}
-    		super.getAnimation().setFrames(this.sprite.getFrameSet(ObjectState.IDLE.ordinal()));
-    		super.getAnimation().setDelay(40);
-    	
-    	}
+    	changePlayerAnimation();
     	
     	super.getAnimation().update();
     	
     	setDirection();
     	
     }
-
-    
-    private void setDirection(){
-    	
-    	if(super.getMovementState().isGoingLeft()){super.setFacingRight(false);}
-    	if(super.getMovementState().isGoingRight()){super.setFacingRight(true);}
-    	
-    }
-    
     
     @Override
     public void render(Graphics g){
     	
     	super.setMapPosition();
     	
-    	if(super.isFacingRight()){
-    		
-    			g.drawImage(super.getAnimation().getImage()
-        				, (int)(super.getPVector().getPositionX() + super.getMapX() - super.getWidth() /2)
-        				, (int)(super.getPVector().getPositionY() + super.getMapY() - super.getHeight() / 2)
-        				, null);
-    		
-    	}else {
-    		g.drawImage(super.getAnimation().getImage()
-    				, (int)(this.getPVector().getPositionX() + super.getMapX() - super.getWidth() / 2 + super.getWidth())
-    				, (int)(this.getPVector().getPositionY() + super.getMapY() - super.getHeight() / 2)
-    				, -super.getWidth()
-    				, super.getHeight()
-    				, null);
-    	}
+    	drawPlayer(g);
     	
+    	this.weapon.render(g);
     	//Player bounding box debug
     	/*
     	g.drawRect((int)(this.position.getPositionX() + super.mapX - super.width / 2 + super.width)
@@ -268,31 +209,19 @@ public class Player extends MapObject implements Drawable,StateProvidable {
     	return this.playerPickUpBox.intersects(o);
     }
     
-	@Override
 	public boolean isMovingLeft() {return super.getMovementState().isGoingLeft();}
-	@Override
 	public boolean isMovingRight() {return super.getMovementState().isGoingRight();}
-	@Override
 	public boolean isMovingUp() {return super.getMovementState().isGoingUp();}
-	@Override
 	public boolean isMovingFalling() {return super.getMovementState().isFalling();}
-	@Override
 	public boolean isJumping() {return super.getMovementState().isJumping();}
-	@Override
 	public boolean isGoingDown() {return super.getMovementState().isGoingDown();}
 
 	//Setters for movement state
-	@Override
 	public void setLeft(boolean left) {super.getMovementState().setLeft(left);}
-	@Override
 	public void setRight(boolean right) {super.getMovementState().setRight(right);}
-	@Override
 	public void setDown(boolean down) {super.getMovementState().setDown(down);}
-	@Override
 	public void setUp(boolean up) {super.getMovementState().setUp(up);}
-	@Override
 	public void setJumping(boolean jump) {super.getMovementState().setJump(jump);}
-	@Override
 	public void setFalling(boolean fall) {super.getMovementState().setFalling(fall);}
 
 	public Rectangle getPickUpRectangle() {
@@ -306,6 +235,65 @@ public class Player extends MapObject implements Drawable,StateProvidable {
         		,super.getCollisionBox().getCollisionWidth()
         		,super.getCollisionBox().getCollisionHeight());
 	}
+	
+	public boolean canClimb(double destX, double y, TileMap map) {
+		return super.getCollisionBox().isClimbable(destX, y, map);
+	}
+
+
+	public void shoot() {
+		this.weapon.attack(super.getPVector().getPositionX(),super.getPVector().getPositionY());
+	}
+	
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
+    private void initPhysics(){
+        
+        super.getObjectMovementAttr().setGravity(Constants.PLAYER_GRAVITY, Constants.PLAYER_TERMINAL_VELOCITY);
+        super.getObjectMovementAttr().setJumpRate(Constants.PLAYER_JUMP, Constants.PLAYER_STOP_JUMP);
+        super.getObjectMovementAttr().setMovementRate(Constants.PLAYER_ACCELERATION
+        		, Constants.PLAYER_MAXIMUM_SPEED, Constants.PLAYER_DEACCELERATION);
+    }
+    
+    private void getNextPosition(){
+    	super.getPVector().getNewPosition(super.getMovementState()
+    			, super.getObjectMovementAttr());
+    }
+    
+	private void changePlayerAnimation() {
+		if(super.getPVector().getDirectionY() > 0){
+    		if(this.state != ObjectState.FALLING){
+    			this.state = ObjectState.JUMPING;
+    		}
+    	}else if(this.getPVector().getDirectionY() < 0){
+    		
+    		if(this.state != ObjectState.JUMPING){
+    			this.state = ObjectState.JUMPING;
+    			super.getAnimation().setFrames(this.sprite.getFrameSet(0));
+    			
+    		}    		
+    	}else if(super.getMovementState().isGoingLeft() || super.getMovementState().isGoingRight()){
+    		if(this.state != ObjectState.WALKING){
+    			this.state = ObjectState.WALKING;
+    			super.getAnimation().setFrames(this.sprite.getFrameSet(ObjectState.WALKING.ordinal()));
+    		}
+    	}else{
+    		if(this.state != ObjectState.IDLE){
+    			this.state = ObjectState.IDLE;
+    		}
+    		super.getAnimation().setFrames(this.sprite.getFrameSet(ObjectState.IDLE.ordinal()));
+    		
+    	}
+		super.getAnimation().setDelay(40);
+	}
+    
+    private void setDirection(){
+    	
+    	if(super.getMovementState().isGoingLeft()){super.setFacingRight(false);}
+    	if(super.getMovementState().isGoingRight()){super.setFacingRight(true);}
+    	
+    }
 	
     private void init(){
 
@@ -326,21 +314,23 @@ public class Player extends MapObject implements Drawable,StateProvidable {
         
     }
     
-    private void initPhysics(){
-        
-        super.getObjectMovementAttr().setGravity(Constants.PLAYER_GRAVITY, Constants.PLAYER_TERMINAL_VELOCITY);
-        super.getObjectMovementAttr().setJumpRate(Constants.PLAYER_JUMP, Constants.PLAYER_STOP_JUMP);
-        super.getObjectMovementAttr().setMovementRate(Constants.PLAYER_ACCELERATION
-        		, Constants.PLAYER_MAXIMUM_SPEED, Constants.PLAYER_DEACCELERATION);
-    }
-    
-    private void getNextPosition(){
-    	super.getPVector().getNewPosition(super.getMovementState()
-    			, super.getObjectMovementAttr());
-    }
 
-	public boolean canClimb(double destX, double y, TileMap map) {
-		return super.getCollisionBox().isClimbable(destX, y, map);
+	private void drawPlayer(Graphics g) {
+		if(super.isFacingRight()){
+    		
+    			g.drawImage(super.getAnimation().getImage()
+        				, (int)(super.getPVector().getPositionX() + super.getMapX() - super.getWidth() /2)
+        				, (int)(super.getPVector().getPositionY() + super.getMapY() - super.getHeight() / 2)
+        				, null);
+    		
+    	}else {
+    		g.drawImage(super.getAnimation().getImage()
+    				, (int)(this.getPVector().getPositionX() + super.getMapX() - super.getWidth() / 2 + super.getWidth())
+    				, (int)(this.getPVector().getPositionY() + super.getMapY() - super.getHeight() / 2)
+    				, -super.getWidth()
+    				, super.getHeight()
+    				, null);
+    	}
 	}
     
 	

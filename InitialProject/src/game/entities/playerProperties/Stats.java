@@ -2,12 +2,15 @@ package game.entities.playerProperties;
 
 import java.io.Serializable;
 import java.util.HashMap;
+
 import java.util.Map;
 
 import constants.Constants;
 import enums.Level;
+import game.collectibles.LootObject;
 import game.entities.playerProperties.spells.abstractions.Spell;
 import game.entities.playerProperties.spells.implementations.SpellFactory;
+
 import utils.LootBag;
 
 import static constants.Constants.*;
@@ -16,7 +19,7 @@ import static constants.Constants.*;
 public class Stats implements Serializable {
 
 	private LootBag bag;
-	
+    
     private String playerName;
     private int progress;
     

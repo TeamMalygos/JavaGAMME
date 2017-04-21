@@ -5,9 +5,11 @@ import java.awt.Graphics;
 import constants.Constants;
 import gfx.Assets;
 import gfx.SpriteSheet;
+import states.GameState;
 
 public class Beer extends LootObject implements PowerProvidable{
 
+	private static final double HEALTH_REGENERATION_AMMOUNT = 50;
 	private SpriteSheet sheet;
 	private final int[] framesCount = {
 		19
@@ -23,36 +25,38 @@ public class Beer extends LootObject implements PowerProvidable{
 		
 		this.sheet = new SpriteSheet(Assets.beer);
 		
-		this.sheet.setFrameLayersCount(this.framesCount, super.width, super.height);
+		this.sheet.setFrameLayersCount(this.framesCount, super.getWidth(), super.getHeight());
 		
-		super.animation.setFrames(this.sheet.getFrameSet(0));
-		super.animation.setFrame(0);
-		super.animation.setDelay(30);
+		super.getAnimation().setFrames(this.sheet.getFrameSet(0));
+		super.getAnimation().setFrame(0);
+		super.getAnimation().setDelay(30);
 		
 	}
 
 	@Override
 	public void tick() {
-		super.animation.update();
+		super.getAnimation().update();
 		
 	}
 
 	@Override
 	public void render(Graphics g) {
 		
-		if(super.animation.getFrame() == -1){
+		if(super.getAnimation().getFrame() == -1){
 			return;
 		}
 		
-		g.drawImage(super.animation.getImage()
-				, (int)super.position.getPositionX()
-				, (int)super.position.getPositionY(), null);
+		g.drawImage(super.getAnimation().getImage()
+				, (int)super.getPVector().getPositionX()
+				, (int)super.getPVector().getPositionY(), null);
 	}
 
 	@Override
 	public void onPickUp() {
 		
-		
+		GameState.getPlayer().getPlayerStats().setCurrentHealth(
+				GameState.getPlayer().getPlayerStats().getCurrentHealth()
+				+ HEALTH_REGENERATION_AMMOUNT);
 		
 	}
 	

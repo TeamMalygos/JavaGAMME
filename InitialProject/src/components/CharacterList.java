@@ -132,7 +132,6 @@ public class CharacterList extends MenuComponent implements MouseMotionSensitive
 			for(PlayerListItem li : this.items){
 
 				if(li.isInside(args.getX(),args.getY())){
-					System.out.println("Focus");
 					li.setFocus(true);
 				}else{
 					li.setFocus(false);

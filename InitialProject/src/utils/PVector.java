@@ -57,28 +57,39 @@ public class PVector {
 			,MovementAttributes objectMovementAttr){
 
 	double newDestX = 0d;
-	if(movementState.isGoingLeft()){
+	desideMovement(movementState, objectMovementAttr, newDestX);
+	
+	//TODO: Make it so that player can't attack while moving
+}
 
-		newDestX = this.directionX - 
-				objectMovementAttr.getUnitAcceleration();
-		
-		if(newDestX < -objectMovementAttr.getUnitMaximumSpeed()){
-			newDestX = -objectMovementAttr.getUnitMaximumSpeed();
-		}
-		
-		this.directionX = newDestX;
-		
-	}else if(movementState.isGoingRight()){
+	private void desideMovement(MovementState movementState
+			, MovementAttributes objectMovementAttr, double newDestX) {	
+		if(movementState.isGoingLeft()){
+			newDestX = this.directionX - 
+					objectMovementAttr.getUnitAcceleration();
+			if(newDestX < -objectMovementAttr.getUnitMaximumSpeed()){
+				newDestX = -objectMovementAttr.getUnitMaximumSpeed();
+			}
+			
+			this.directionX = newDestX;
+			
+		}else if(movementState.isGoingRight()){
 
-		newDestX = this.directionX 
-				+ objectMovementAttr.getUnitAcceleration();
-		
-		if(newDestX > objectMovementAttr.getUnitMaximumSpeed()){
-			newDestX = objectMovementAttr.getUnitMaximumSpeed();
+			newDestX = this.directionX 
+					+ objectMovementAttr.getUnitAcceleration();
+			
+			if(newDestX > objectMovementAttr.getUnitMaximumSpeed()){
+				newDestX = objectMovementAttr.getUnitMaximumSpeed();
+			}
+			this.directionX = newDestX;
+		}else {
+			directionUpOrDown(objectMovementAttr, newDestX);
 		}
-		this.directionX = newDestX;
-		//Else if we are not moving left or right
-	}else {
+		jumpingOrFalling(movementState, objectMovementAttr);
+		checkIfClimbing(movementState, objectMovementAttr);
+	}
+
+	private void directionUpOrDown(MovementAttributes objectMovementAttr, double newDestX) {
 		if(this.directionX > 0){
 		
 			newDestX = this.directionX
@@ -100,58 +111,48 @@ public class PVector {
 		}
 		this.directionX = newDestX;
 	}
-	//Greshka
-	if(movementState.isJumping() && !movementState.isFalling()){
-		this.directionY += objectMovementAttr.getUnitStartJump();
-		movementState.setFalling(true);
-	}
-	
-	if(movementState.isFalling()){
-		
-		this.directionY += objectMovementAttr.getUnitStopJump();
-		
-		if(this.directionY > 0){
-			movementState.setJump(false);
+
+	private void jumpingOrFalling(MovementState movementState, MovementAttributes objectMovementAttr) {
+		if(movementState.isJumping() && !movementState.isFalling()){
+			this.directionY += objectMovementAttr.getUnitStartJump();
+			movementState.setFalling(true);
 		}
-		
-		if(this.directionY > 0 && !movementState.isJumping()){
+		if(movementState.isFalling()){	
 			this.directionY += objectMovementAttr.getUnitStopJump();
-		}
-		if(this.directionY > objectMovementAttr.getUnitTerminalVelocity()){
-			this.directionY = objectMovementAttr.getUnitTerminalVelocity();
-		}
-		
-	}
-	
-	if(movementState.isGoingUp() && (movementState.isGoingRight() || movementState.isGoingLeft())){
-		
-		boolean isTileClimbable = GameState.getPlayer().canClimb(this.destX, this.y, GameState.getMap());
-		
-		if(isTileClimbable){
-			
-			
-			this.directionY -= objectMovementAttr.getUnitAcceleration();
 			
 			if(this.directionY > 0){
 				movementState.setJump(false);
 			}
-
-			if(!movementState.isGoingUp()){
-				movementState.setFalling(true);
+			
+			if(this.directionY > 0 && !movementState.isJumping()){
+				this.directionY += objectMovementAttr.getUnitStopJump();
 			}
-			
-			
-			if(this.directionY > objectMovementAttr.getUnitMaximumSpeed()){
-				this.directionY = objectMovementAttr.getUnitMaximumSpeed();
-			}
-			
-			
+			if(this.directionY > objectMovementAttr.getUnitTerminalVelocity()){
+				this.directionY = objectMovementAttr.getUnitTerminalVelocity();
+			}	
 		}
-		
 	}
-	
-	//TODO: Make it so that player can't attack while moving
-}
+
+	private void checkIfClimbing(MovementState movementState, MovementAttributes objectMovementAttr) {
+		if(movementState.isGoingUp() && (movementState.isGoingRight() || movementState.isGoingLeft())){		
+			boolean isTileClimbable = GameState.getPlayer().canClimb(this.destX, this.y, GameState.getMap());
+			
+			if(isTileClimbable){
+			this.directionY -= objectMovementAttr.getUnitAcceleration();
+				
+				if(this.directionY > 0){
+					movementState.setJump(false);
+				}
+
+				if(!movementState.isGoingUp()){
+					movementState.setFalling(true);
+				}
+				if(this.directionY > objectMovementAttr.getUnitMaximumSpeed()){
+					this.directionY = objectMovementAttr.getUnitMaximumSpeed();
+				}	
+			}		
+		}
+	}
 	
 	//Setters
 	public void setPositionX(double x){this.x = x;}

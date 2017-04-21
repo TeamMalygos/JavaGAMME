@@ -12,8 +12,6 @@ import static constants.Constants.HARDCORE_ALGORITHM_SPELL_NAME;
 import static constants.Constants.HEAL_SPELL_NAME;
 
 public class InputHandler implements KeyListener {
-
-	private GameState state;
 	
     public InputHandler() {
     	
@@ -34,31 +32,17 @@ public class InputHandler implements KeyListener {
     		
     	}
     	
-    	if(!isGameState()){
-    		return;
-    	}
-    	
-    	if(state.isInMenuState()){
-    		System.out.println("Sorry you are in menu state");
+    	if(!isGameState() || GameState.isInMenuState()){
     		return;
     	}
     	
         int keyCode = e.getKeyCode();
-        if(keyCode == KeyEvent.VK_LEFT){GameState.getPlayer().setLeft(true);}
-        if(keyCode == KeyEvent.VK_RIGHT){GameState.getPlayer().setRight(true);}
-        if(keyCode == KeyEvent.VK_UP){GameState.getPlayer().setUp(true);}
-        if(keyCode == KeyEvent.VK_DOWN){GameState.getPlayer().setDown(true);}
-        if(keyCode == KeyEvent.VK_SPACE){GameState.getPlayer().setJumping(true);}
-
-        // Spell learn
-        if (keyCode == KeyEvent.VK_1) {GameState.getPlayer().learnSpell(HEAL_SPELL_NAME);}
-        if (keyCode == KeyEvent.VK_2) {GameState.getPlayer().learnSpell(FIREWALL_SPELL_NAME);}
-        if (keyCode == KeyEvent.VK_3) {GameState.getPlayer().learnSpell(HARDCORE_ALGORITHM_SPELL_NAME);}
-
-        // Spell cast
-        if (keyCode == KeyEvent.VK_Z) {GameState.getPlayer().castSpell(HEAL_SPELL_NAME);}
-        if (keyCode == KeyEvent.VK_X) {GameState.getPlayer().castSpell(FIREWALL_SPELL_NAME);}
-        if (keyCode == KeyEvent.VK_C) {GameState.getPlayer().castSpell(HARDCORE_ALGORITHM_SPELL_NAME);}
+        
+        playerMotion(keyCode);
+        playerMagic(keyCode);
+        
+        if(keyCode == KeyEvent.VK_A){ GameState.getPlayer().shoot();}
+        
 
     }
 
@@ -66,12 +50,12 @@ public class InputHandler implements KeyListener {
     public void keyReleased(KeyEvent e) {
     	
     	if(!isGameState()){return;}
-    	state = (GameState) StateManager.getCurrentState();
     	
         int keyCode = e.getKeyCode();
-        if(keyCode == KeyEvent.VK_ESCAPE){state.toggleMenu();}
+        if(keyCode == KeyEvent.VK_ESCAPE){
+        	((GameState)StateManager.getCurrentState()).toggleMenu();}
         
-        if(state.isInMenuState()){
+        if(GameState.isInMenuState()){
         	return;
         }
         
@@ -86,4 +70,24 @@ public class InputHandler implements KeyListener {
     private boolean isGameState(){
     	return StateManager.getCurrentState().getID() == 2;
     }
+    
+	private void playerMagic(int keyCode) {
+		// Spell learn
+        if (keyCode == KeyEvent.VK_1) {GameState.getPlayer().learnSpell(HEAL_SPELL_NAME);}
+        if (keyCode == KeyEvent.VK_2) {GameState.getPlayer().learnSpell(FIREWALL_SPELL_NAME);}
+        if (keyCode == KeyEvent.VK_3) {GameState.getPlayer().learnSpell(HARDCORE_ALGORITHM_SPELL_NAME);}
+
+        // Spell cast
+        if (keyCode == KeyEvent.VK_Z) {GameState.getPlayer().castSpell(HEAL_SPELL_NAME);}
+        if (keyCode == KeyEvent.VK_X) {GameState.getPlayer().castSpell(FIREWALL_SPELL_NAME);}
+        if (keyCode == KeyEvent.VK_C) {GameState.getPlayer().castSpell(HARDCORE_ALGORITHM_SPELL_NAME);}
+	}
+
+	private void playerMotion(int keyCode) {
+		if(keyCode == KeyEvent.VK_LEFT){GameState.getPlayer().setLeft(true);}
+        if(keyCode == KeyEvent.VK_RIGHT){GameState.getPlayer().setRight(true);}
+        if(keyCode == KeyEvent.VK_UP){GameState.getPlayer().setUp(true);}
+        if(keyCode == KeyEvent.VK_DOWN){GameState.getPlayer().setDown(true);}
+        if(keyCode == KeyEvent.VK_SPACE){GameState.getPlayer().setJumping(true);}
+	}
 }

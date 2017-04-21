@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 
 import enums.Level;
 import events.MouseMotionSensitive;
-
+import states.gui.GameOverInterface;
 import states.gui.Interface;
 
 public class GameOverState extends State implements MouseMotionSensitive{
@@ -18,8 +18,9 @@ public class GameOverState extends State implements MouseMotionSensitive{
 	
 	public GameOverState(Level l){
 		super(ID);
-		this.setLevel(l);
 		
+		this.gameOverInterface = new GameOverInterface();
+		this.setLevel(l);
 		
 	}
 	

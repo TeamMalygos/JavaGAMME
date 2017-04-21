@@ -81,8 +81,6 @@ public class ObjectLayer implements Drawable {
 	
 	@Override
 	public void render(Graphics g){
-		this.enemies.stream().forEach(x -> x.render(g));
-		
 		if(this.lootMap != null){
 			this.lootMap.render(g);
 		}
@@ -90,6 +88,7 @@ public class ObjectLayer implements Drawable {
 			
 			this.diploma.render(g);
 		}
+		this.enemies.stream().forEach(x -> x.render(g));
 	}
 	
 	public LootMap getLootMap(){

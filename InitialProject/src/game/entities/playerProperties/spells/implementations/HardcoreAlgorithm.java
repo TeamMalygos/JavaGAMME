@@ -49,11 +49,6 @@ public class HardcoreAlgorithm extends BuffingSpell {
         super.setActive(false);
         System.out.println("Oh..too much Rakia last night...what was that algorithm again?");
     }
-
-    private double getDamageIncrease() {
-        return damageIncrease;
-    }
-
     @Override
     public void levelUp() {
         super.levelUp();
@@ -63,4 +58,9 @@ public class HardcoreAlgorithm extends BuffingSpell {
         }
         super.setActiveTime(super.getActiveTime() + HARDCORE_ALGORITHM_SPELL_LEVEL_UP_ACTIVE_TIME_INCREASE);
     }
+    
+    private double getDamageIncrease() {
+        return damageIncrease;
+    }
+
 }

@@ -42,11 +42,12 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 				, Constants.BACKGROUND_X
 				,Constants.BACKGROUND_Y 
 				,Constants.WIDTH	, Constants.HEIGHT, null);
-		
+
 		this.stateInterface.render(g);
 		g.setColor(Color.WHITE);
 		this.checkForllegalName(g);
 		
+		g.setFont(new Font(Constants.FONT,Font.PLAIN,Constants.FONT_SIZE));
 		g.drawString(this.name.toString(), Constants.MENU_BUTTON_X + Constants.STANDARD_PADDING
 				, Constants.MENU_BUTTON_Y + Constants.MENU_BUTTON_MARGIN_BOTTOM + Constants.STANDARD_PADDING * 2);
 		
@@ -65,12 +66,9 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 
 	@Override
 	public void onMouseRelease(MouseEvent args) {
+		this.stateInterface.onMouseReleaseOverInterface(args);
 		
 		this.isNameShort = this.name.length() < Constants.NAME_MIN_LENGTH;
-		
-		if(this.nameExists || this.isNameShort){
-			return;
-		}
 		
 		try {
 			this.nameExists = this.doesNameExist(this.name.toString());
@@ -79,11 +77,13 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 			StateManager.setCurrentState(new MenuState());
 		}
 		
+		if(this.nameExists || this.isNameShort){
+			return;
+		}
+		
 		if(((CreateInterface)this.stateInterface).isInsideClickButton(args.getX(),args.getY())){
 			ObjectSerializer.getInstance().serializeNewCharacter(this.name.toString());
 		}
-		
-		this.stateInterface.onMouseReleaseOverInterface(args);
 		
 	}
 
@@ -94,7 +94,7 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 	}
 
 	public void writeDown(char keyChar){
-			
+		
 			if(!((CreateInterface)this.stateInterface).isTextFieldFocused()){
 				return;
 			}
@@ -117,7 +117,6 @@ public class CreateCharacterState extends State implements MouseMotionSensitive 
 			}
 			
 			this.name.append(keyChar);
-			
 	}
 
 	private boolean doesNameExist(String name) throws Exception{

@@ -23,61 +23,61 @@ public class Tileset {
 		this.columns = columns;
 	}
 	public int getFirstgrid() {
-		return firstgrid;
+		return this.firstgrid;
 	}
 	public void setFirstgrid(int firstgrid) {
 		this.firstgrid = firstgrid;
 	}
 	public String getImage() {
-		return image;
+		return this.image;
 	}
 	public void setImage(String image) {
 		this.image = image;
 	}
 	public int getImageHeight() {
-		return imageHeight;
+		return this.imageHeight;
 	}
 	public void setImageHeight(int imageHeight) {
 		this.imageHeight = imageHeight;
 	}
 	public int getImageWidth() {
-		return imageWidth;
+		return this.imageWidth;
 	}
 	public void setImageWidth(int imageWidth) {
 		this.imageWidth = imageWidth;
 	}
 	public int getMargin() {
-		return margin;
+		return this.margin;
 	}
 	public void setMargin(int margin) {
 		this.margin = margin;
 	}
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
 	public int getSpacing() {
-		return spacing;
+		return this.spacing;
 	}
 	public void setSpacing(int spacing) {
 		this.spacing = spacing;
 	}
 	public int getTileCount() {
-		return tileCount;
+		return this.tileCount;
 	}
 	public void setTileCount(int tileCount) {
 		this.tileCount = tileCount;
 	}
 	public int getTileHeight() {
-		return tileHeight;
+		return this.tileHeight;
 	}
 	public void setTileHeight(int tileHeight) {
 		this.tileHeight = tileHeight;
 	}
 	public int getTileWidth() {
-		return tileWidth;
+		return this.tileWidth;
 	}
 	public void setTileWidth(int tileWidth) {
 		this.tileWidth = tileWidth;

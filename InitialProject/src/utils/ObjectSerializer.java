@@ -1,6 +1,5 @@
 package utils;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -26,7 +25,6 @@ import game.entities.playerProperties.Stats;
  * <p><i>2.Call ser or deser methods using the instance<i></p>
  *
  */
-
 public class ObjectSerializer {
 
 	private static ObjectSerializer serializer = new ObjectSerializer();

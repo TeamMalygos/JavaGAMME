@@ -58,23 +58,6 @@ public class CollisionBox {
 	public boolean isBottomLeftBlocked(){return this.collidesBottomLeft;}
 	public boolean isBottomRightBlocked(){return this.collidesBottomRight;}
 
-	/**
-	 * 
-	 * <p>setCollisionBoundaries sets the four angles of collision<p>
-	 * @param topLeft
-	 * @param topRight
-	 * @param bottomLeft
-	 * @param bottomRight
-	 * 
-	 */
-	private void setCollisionBoundaries(TileType topLeft,TileType topRight
-			,TileType bottomLeft,TileType bottomRight){
-		
-		this.collidesBottomLeft = (bottomLeft != TileType.Background);
-		this.collidesBottomRight = (bottomRight != TileType.Background);
-		this.collidesTopLeft = (topLeft != TileType.Background);
-		this.collidesTopRight = (topRight != TileType.Background);
-	}
 	
 	public boolean isClimbable(double x,double y,TileMap tileMap){
 		
@@ -113,6 +96,23 @@ public class CollisionBox {
 		return bottomLeft == TileType.Death || bottomRight == TileType.Death;
 		
 	}
-
+	
+	/**
+	 * 
+	 * <p>setCollisionBoundaries sets the four angles of collision<p>
+	 * @param topLeft
+	 * @param topRight
+	 * @param bottomLeft
+	 * @param bottomRight
+	 * 
+	 */
+	private void setCollisionBoundaries(TileType topLeft,TileType topRight
+			,TileType bottomLeft,TileType bottomRight){
+		
+		this.collidesBottomLeft = (bottomLeft != TileType.Background);
+		this.collidesBottomRight = (bottomRight != TileType.Background);
+		this.collidesTopLeft = (topLeft != TileType.Background);
+		this.collidesTopRight = (topRight != TileType.Background);
+	}
 	
 }

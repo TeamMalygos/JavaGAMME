@@ -25,7 +25,7 @@ public class ObjectsLayerObject{
 		this.gid = gid;
 	}
 	public int getHeight() {
-		return height;
+		return this.height;
 	}
 	public void setHeight(int height) {
 		this.height = height;
@@ -37,43 +37,43 @@ public class ObjectsLayerObject{
 		this.id = id;
 	}
 	public int getWidth() {
-		return width;
+		return this.width;
 	}
 	public void setWidth(int width) {
 		this.width = width;
 	}
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
 	public int getRotation() {
-		return rotation;
+		return this.rotation;
 	}
 	public void setRotation(int rotation) {
 		this.rotation = rotation;
 	}
 	public String getType() {
-		return type;
+		return this.type;
 	}
 	public void setType(String type) {
 		this.type = type;
 	}
 	public boolean isVisible() {
-		return visible;
+		return this.visible;
 	}
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
 	public double getX() {
-		return x;
+		return this.x;
 	}
 	public void setX(double x) {
 		this.x = x;
 	}
 	public double getY() {
-		return y;
+		return this.y;
 	}
 	public void setY(double y) {
 		this.y = y;

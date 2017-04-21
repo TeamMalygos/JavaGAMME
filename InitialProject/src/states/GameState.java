@@ -1,6 +1,7 @@
 package states;
 
 import game.entities.Player;
+import game.entities.projectile.NumpadKeysProjectile;
 import gfx.Assets;
 import map.MapFactory;
 import map.ObjectLayer;
@@ -34,10 +35,10 @@ public class GameState extends State {
     
     private static boolean finished;
     private boolean isRunning;
-    private boolean isMenuOpen;
+    private static boolean isMenuOpen;
     
     public GameState(Level level) {
-    	
+
     	super(ID);
     	this.level = level;
         this.loader = new LevelLoader(this.level);
@@ -105,8 +106,8 @@ public class GameState extends State {
     	return map;
     }
     
-    public boolean isInMenuState(){
-    	return this.isMenuOpen;
+    public static boolean isInMenuState(){
+    	return isMenuOpen;
     }
     
     public void toggleMenu() {
@@ -133,8 +134,16 @@ public class GameState extends State {
 	public static void setFinished(boolean b) {
 		finished = b;
 	}
-
 	
+
+	public static Level getCurrentLevel() {
+		return level;
+	}
+
+	public static void deactivateInGameMenu() {
+		isMenuOpen = false;
+	}
+
     private void init() throws IOException {
 
         Assets.init();
@@ -143,11 +152,11 @@ public class GameState extends State {
         
         this.menu = new InGameMenu();
 
-        player = new Player(UserAccount.getStats().getPlayerName()   		
-        		,map,UserAccount.getStats()
+        this.player = new Player(map,UserAccount.getStats()
         		,Constants.LEVEL_START_POSITION_X[this.level.ordinal()]
         		,Constants.LEVEL_START_POSITION_Y[this.level.ordinal()]);
-        
+        this.player.setWeapon(new NumpadKeysProjectile());
+
         this.hud = new InGameHUD(player);
         
         setFinished(false);
@@ -160,19 +169,16 @@ public class GameState extends State {
     		StateManager.setCurrentState(new GameOverState(this.level));
     	}
    
-    	if(finished){
+    	if(this.finished){
 			
-    		player.getBag()
+    		this.player.getBag()
     			.rewardWith(Constants.LEVEL_REWARD[this.level.ordinal()]);
-    		player.getPlayerStats().levelPassed(this.level);
+    		this.player.getPlayerStats().levelPassed(this.level);
+    		
     		ObjectSerializer.getInstance().saveCurrentGameState();
     		StateManager.setCurrentState(new LevelCompletedState());
     		
     	}
-	}
-
-	public static Level getCurrentLevel() {
-		return level;
 	}
     
 }

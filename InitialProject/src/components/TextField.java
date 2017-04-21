@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import constants.Constants;
+import gfx.Assets;
 
 public class TextField extends MenuComponent{
 	
@@ -17,6 +18,7 @@ public class TextField extends MenuComponent{
 		super.setSize(Constants.MENU_BUTTON_WIDTH, Constants.MENU_BUTTON_HEIGHT);
 		
 		this.setFocused(false);
+		super.setCurrentFrame(Assets.textField);
 		
 		this.box = new Rectangle(super.getxAxisPosition()
 				,super.getyAxisPosition(),super.getWidth(),super.getHeight());

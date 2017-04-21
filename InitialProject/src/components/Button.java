@@ -3,13 +3,13 @@ package components;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import components.interfaces.IButton;
+import components.interfaces.Clickable;
 import events.MenuButtonClickEvent;
 
 
 import states.State;
 
-public class Button extends MenuComponent implements IButton{
+public class Button extends MenuComponent implements Clickable{
 	
 	private BufferedImage pressed;
 	private BufferedImage normal;
@@ -113,15 +113,11 @@ public class Button extends MenuComponent implements IButton{
 	
 	@Override
 	public void render(Graphics g){
-	
 		//Graphics2D g2d = (Graphics2D)g;
 		g.drawImage(super.getCurrentFrame(), super.getxAxisPosition()
 				, super.getyAxisPosition(),null);
-		
 		//Drawing reflection
 		/*
-		try{
-			
 			g2d.setPaint( new GradientPaint( 0, 0, Color.black, 0, Constants.HEIGHT, Color.darkGray ) );
 			g2d.fillRect( 0, 0, Constants.WIDTH, Constants.HEIGHT);
 	
@@ -131,22 +127,14 @@ public class Button extends MenuComponent implements IButton{
 					
 			g2d.translate(0 , this.gap + this.normal.getHeight() * 2);
 			g2d.scale(1, -1);
-			
 			Graphics2D rg = this.normalReflection.createGraphics();
 			rg.drawRenderedImage(this.normal,null);
-			
 			rg.setComposite(this.composite);
 			rg.setPaint(this.paint);
 			rg.fillRect(0, 0, this.getWidth(), this.getHeight());
 			rg.dispose();
 			
-			g2d.drawImage(this.normalReflection,0,0, null);
-			
-			
-		}
-		catch(Exception ex){
-			ex.printStackTrace();
-		}
+			g2d.drawImage(this.normalReflection,0,0, null);	
 		*/
 	}
 
